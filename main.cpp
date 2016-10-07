@@ -114,13 +114,16 @@ failSaver:
 
 		break;
 	case 2:
-		printString("If you like to get fucked in the ass then this is the class for you!");
-		printString("With the warrior calss you can slash your boss as sword at your enemies.");
-		printString("Just look at He-Han");
+		//not sure vad jag har skrivit xD
+		printString("If you have less than 10 braincells then this is the class for you. ");
+		printString("I mean who would choose a class that just runs in to battle with their,");
+		printString("head first. The smartest class would be hunter, but nevermind. ");
+		printString("With the warrior class you can slash your baws ass sword at your enemies.");
+		printString("Just look at He-Man, he's the boss.");
 	case 3:
-		printString("");
-		printString("");
-		printString("");
+		printString("VIKTOR SKRIVER");
+		printString("VIKTOR SKRIVER");
+		printString("VIKTOR SKRIVER");
 
 
 	default:
@@ -216,7 +219,7 @@ void printString(string stringInput)
 		Sleep(70);
 	}
 
-		cout << endl;
+	cout << endl;
 }
 
 void inputSign()
