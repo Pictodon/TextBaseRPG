@@ -9,7 +9,8 @@
 using namespace std;
 
 //Define functions
-void printString(string String);
+void printString(string stringInput, bool pauseAfter);
+void pause();
 
 //Create an array with a structure for every item
 struct items
@@ -28,6 +29,15 @@ int winWide = 0;
 //Main
 void main()
 {
+	CONSOLE_FONT_INFOEX cfi;
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = 0;                   // Width of each character in the font
+	cfi.dwFontSize.Y = 24;                  // Height
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
+	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
 	//Set text color
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
 
@@ -99,37 +109,65 @@ void main()
 		default:
 			cout << "Wrong input!" << endl;
 			//Pause and clear screen on the same line
-			system("pause&cls");
+			pause();
+			system("cls");
 			goto failSaver;
 	}
 
 	//Call the function to print text
-	printString("Hello my friend, how are you?");
+	cout << endl;
+	printString("Hello my friend, how are you?", true);
 
-	system("pause&cls");
+	pause();
+	system("cls");
 
-	printString("Oh thats right, I dont care.");
-	system("pause&cls");
+	cout << endl;
+	printString("Oh that's right, I dont care.", true);
 
-	printString("What's your name?");
+	pause();
+	system("cls");
+
+	cout << endl;
+	printString("What's your name?", false);
 	cin >> cName;
 	system("cls");
 
-	printString("Was poppin " + cName + "?");
+	cout << endl;
+	printString("Was poppin " + cName + "?", true);
 
-	system("pause");
+	pause();
 }
 
 //Function to print text
-void printString(string String)
+void printString(string stringInput, bool pauseAfter)
 {
+	int spacing = winWide / 2 - stringInput.length() / 2;
+	cout << string(spacing, ' ');
 	//For every letter in string do this
-	for (int i = 0; i < String.length(); i++)
+	for (int i = 0; i < stringInput.length(); i++)
 	{
 		//Print character and sleep for 70ms
-		cout << String[i];
+		cout << stringInput[i];
 		Sleep(70);
 	}
-	//Create a new line in the end
-	cout << endl;
+	if (pauseAfter)
+	{
+		cout << endl;
+	}
+	else
+	{
+		//Create a new line in the end
+		cout << endl << string(spacing, ' ');
+	}
+}
+
+void pause()
+{
+	string pauseText = "Press any key to proceed";
+	int pauseTextLength = pauseText.length();
+	int pauseTextPos = winWide / 2 - pauseTextLength / 2;
+
+	printString("Press any key to proceed", false);
+	cout << "> ";
+	system("pause >nul");
 }
