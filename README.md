@@ -11,6 +11,6 @@ printString("", false/true);
 Efter kommat kan det vara både false eller true, true om ni sätter en pause(); efter att den skrivit något
 och false om ni inte gjort det.
 
-
-#pause();
-#printString("", false/true);
+Användbara saker
+pause();
+printString("", false/true);
