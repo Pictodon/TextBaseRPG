@@ -6,6 +6,8 @@ Skriv istället bara pause(); Det är en funktion som jag gjort för att snygga 
 
 Samma sak gäller om ni ska printa text i konsollen. Använd printString("Texten ni ska skriva");
 
+För console in(cin) bör även inputSign(); läggas precis ovanför cin som visas i exemplet nedan.
+
 Exempel:
 
 string input;
