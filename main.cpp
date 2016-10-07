@@ -30,6 +30,7 @@ struct items
 string cName;
 int winHeight = 0;
 int winWide = 0;
+int playerClass;
 
 //Main
 void main()
@@ -80,6 +81,9 @@ void nameGreeting()
 
 void classMenu()
 {
+	int classConfirm;
+failSaver:
+
 	system("cls");
 
 	cout << endl;
@@ -95,6 +99,59 @@ void classMenu()
 	printString("[3] Shaman", false);
 
 	cout << "> ";
+	
+	cin >> playerClass;
+	cout << endl;
+
+	switch (playerClass)
+	{
+	case 1:
+		printString("Oh so you're a hunter type. ", true);
+		printString("This class it especially good when you want to attack at a long range.", true);
+		printString("You have a really powerfull arrow that you can fire at your enemy. ", true);
+		printString("If you are easily scared by monsters then you should play this class. ", false);
+		
+		break;
+	case 2:
+		printString("", true);
+		printString("", true);
+		printString("", true);
+	case 3:
+		printString("", true);
+		printString("", true);
+		printString("", true);
+
+
+	default:
+		printString("That is not an option.", false);
+		pause();
+		goto failSaver;
+	}
+	cout << endl;
+	printString("Are you sure you want to play this class? ", true);
+	printString("[1] Yes I am sure.", true);
+	printString("[2] No I want to browse the other classes.", false);
+
+	
+	cout << "> ";
+	cin >> classConfirm;
+	switch (classConfirm)
+	{
+	case 1:
+		printString("Then let's gooooo!", false);
+		pause();
+		break;
+	case 2:
+		printString("Okay", false);
+		pause();
+		goto failSaver;
+	default:
+		printString("That is not an option.", false);
+		pause();
+		goto failSaver;
+		
+	}
+	pause();
 
 }
 
@@ -175,6 +232,9 @@ void pause()
 
 void screenResolution()
 {
+	//Define a goto point
+failSaver:
+
 	//Throw an error if you can't retrieve screen res.
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
@@ -211,9 +271,6 @@ void screenResolution()
 	//Define a variable to store the input
 	int screenResInput;
 
-	//Define a goto point
-failSaver:
-
 	cout << "Is the screen resolution above correct?\n[1] Yes\n[2] No" << endl;
 
 	cin >> screenResInput;
@@ -230,6 +287,7 @@ failSaver:
 		system("cls");
 		winHeight = 20;
 		winWide = 20;
+		break;
 		//If the others didn't match go back to top and clear sceen
 	default:
 		cout << "Wrong input!" << endl;
