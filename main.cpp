@@ -4,5 +4,7 @@
 using namespace std;
 
 void main()
-  
-hdiashgjdhgasjdgja
+{
+
+}  
+
