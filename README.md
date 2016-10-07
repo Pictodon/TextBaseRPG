@@ -23,7 +23,9 @@ printString(input);
 Detta ger resultatet:
 
 Enter an input:
+
 \> String
+
 String
 
 
