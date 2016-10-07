@@ -20,6 +20,12 @@ cin >> input;
 
 printString(input);
 
+Detta ger resultatet:
+
+Enter an input:
+> String
+String
+
 
 **Användbara saker**
 
