@@ -23,7 +23,7 @@ pause();
 
 string name;
 
-printString("TEnter your name: ", false);
+printString("Enter your name: ", false);
 
 cin >> name;
 
