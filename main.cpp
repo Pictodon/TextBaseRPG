@@ -9,13 +9,14 @@
 using namespace std;
 
 //Define functions
-void printString(string stringInput, bool boolAddSpacing);
+void printString(string stringInput);
 void pause();
 void screenResolution();
 void setTextColor(int col);
 void nameGreeting();
 void choseFontSize();
 void classMenu();
+void inputSign();
 
 //Create an array with a structure for every item
 struct items
@@ -56,25 +57,25 @@ void nameGreeting()
 {
 	//Call the function to print text
 	cout << endl;
-	printString("Hello my friend, how are you?", true);
+	printString("Hello my friend, how are you?");
 
 	pause();
 	system("cls");
 
 	cout << endl;
-	printString("Oh, that's right. I dont care.", true);
+	printString("Oh, that's right. I dont care.");
 
 	pause();
 	system("cls");
 
 	cout << endl;
-	printString("What's your name?", false);
-	cout << "> ";
+	printString("What's your name?");
+	inputSign();
 	cin >> cName;
 	system("cls");
 
 	cout << endl;
-	printString("Was poppin, " + cName + "?", true);
+	printString("Was poppin, " + cName + "?");
 
 	pause();
 }
@@ -88,17 +89,17 @@ failSaver:
 
 	cout << endl;
 
-	printString("It's time to pick a class", true);
+	printString("It's time to pick a class");
 
-	printString("What would you like to play?", true);
+	printString("What would you like to play?");
 
-	printString("[1] Hunter", true);
+	printString("[1] Hunter");
 
-	printString("[2] Warrior", true);
+	printString("[2] Warrior");
 
-	printString("[3] Shaman", false);
+	printString("[3] Shaman");
 
-	cout << "> ";
+	inputSign();
 
 	cin >> playerClass;
 	cout << endl;
@@ -106,47 +107,47 @@ failSaver:
 	switch (playerClass)
 	{
 	case 1:
-		printString("Oh so you're a hunter type. ", true);
-		printString("This class is especially good when you want to attack at a long range.", true);
-		printString("You have a really powerfull arrow that you can fire at your enemy. ", true);
-		printString("If you are easily scared by monsters then this is the class for you. ", false);
+		printString("Oh so you're a hunter type. ");
+		printString("This class is especially good when you want to attack at a long range.");
+		printString("You have a really powerfull arrow that you can fire at your enemy. ");
+		printString("If you are easily scared by monsters then this is the class for you. ");
 
 		break;
 	case 2:
-		printString("If you like to get fucked in the ass then this is the class for you!", true);
-		printString("With the warrior calss you can slash your boss as sword at your enemies.", true);
-		printString("Just look at He-Han", true);
+		printString("If you like to get fucked in the ass then this is the class for you!");
+		printString("With the warrior calss you can slash your boss as sword at your enemies.");
+		printString("Just look at He-Han");
 	case 3:
-		printString("", true);
-		printString("", true);
-		printString("", true);
+		printString("");
+		printString("");
+		printString("");
 
 
 	default:
-		printString("That is not an option.", true);
+		printString("That is not an option.");
 		pause();
 		goto failSaver;
 	}
 	cout << endl;
-	printString("Are you sure you want to play this class? ", true);
-	printString("[1] Yes I am sure.", true);
-	printString("[2] No I want to browse the other classes.", false);
+	printString("Are you sure you want to play this class? ");
+	printString("[1] Yes I am sure.");
+	printString("[2] No I want to browse the other classes.");
 
 
-	cout << "> ";
+	inputSign();
 	cin >> classConfirm;
 	switch (classConfirm)
 	{
 	case 1:
-		printString("Then let's gooooo!", true);
+		printString("Then let's gooooo!");
 		pause();
 		break;
 	case 2:
-		printString("Okay", true);
+		printString("Okay");
 		pause();
 		goto failSaver;
 	default:
-		printString("That is not an option.", true);
+		printString("That is not an option.");
 		pause();
 		goto failSaver;
 
@@ -203,7 +204,7 @@ void setTextColor(int col)
 }
 
 //Function to print text
-void printString(string stringInput, bool boolAddSpacing)
+void printString(string stringInput)
 {
 	int spacing = winWide / 2 - stringInput.length() / 2;
 	cout << string(spacing, ' ');
@@ -214,16 +215,17 @@ void printString(string stringInput, bool boolAddSpacing)
 		cout << stringInput[i];
 		Sleep(70);
 	}
-	//If boolAddSpacing is true, just make a new line
-	if (boolAddSpacing)
-	{
+
 		cout << endl;
-	}
-	else
-	{
-		//Create a new line in the end with spacing
-		cout << endl << string(spacing, ' ');
-	}
+}
+
+void inputSign()
+{
+	//Define variable types and calculate string length and assign position
+	string pauseText = "Press any key to proceed";
+	int pauseTextLength = pauseText.length();
+	int pauseTextPos = winWide / 2 - pauseTextLength / 2;
+	cout << string(pauseTextPos, ' ') << "> ";
 }
 
 void pause()
@@ -234,8 +236,8 @@ void pause()
 	int pauseTextPos = winWide / 2 - pauseTextLength / 2;
 
 	//Print Press any key to proceed and pause
-	printString(pauseText, false);
-	cout << "> ";
+	printString(pauseText);
+	inputSign();
 	system("pause >nul");
 }
 
