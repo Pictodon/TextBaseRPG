@@ -14,4 +14,5 @@ och false om ni inte gjort det.
 **Användbara saker**
 
 **pause();**
+
 **printString("", false/true);**
