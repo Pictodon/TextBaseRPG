@@ -15,6 +15,7 @@ void screenResolution();
 void setTextColor(int col);
 void nameGreeting();
 void choseFontSize();
+void classMenu();
 
 //Create an array with a structure for every item
 struct items
@@ -45,9 +46,9 @@ void main()
 
 	//Tell the compiler what number to base rand of
 	srand(time(NULL));
-	
-	nameGreeting();
 
+	nameGreeting();
+	classMenu();
 }
 
 void nameGreeting()
@@ -75,6 +76,17 @@ void nameGreeting()
 	printString("Was poppin, " + cName + "?", true);
 
 	pause();
+}
+
+void classMenu()
+{
+	printString("It´s time to pick a class", false);
+	printString("What would you like to play?", false);
+	printString("[1] Hunter", false);
+	printString("[2] Warrior", false);
+	printString("[3] Shaman", false);
+	
+	
 }
 
 void choseFontSize()
