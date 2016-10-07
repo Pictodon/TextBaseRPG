@@ -4,7 +4,9 @@
 #include <windows.h>
 
 using namespace std;
-string cName;
+
+void printString(string String);
+
 struct items
 {
 	string name;
@@ -13,22 +15,14 @@ struct items
 	int damage;
 } invItems[10];
 
-void printString(string String)
-{
-	for (int i = 0; i < String.length(); i++)
-	{
-		cout << String[i];
-		Sleep(70);
-	}
-	cout << endl;
-}
+string cName;
 
 void main()
 {
-	
+
 	invItems[0].name = "Bottle"; invItems[0].quantity = 1; invItems[0].rarity = "Legendary";
 
-		cout << "Hello my friend, how are you? " << endl;
+	cout << "Hello my friend, how are you? " << endl;
 
 	Sleep(1001);
 	system("cls");
@@ -42,7 +36,7 @@ void main()
 	system("cls");
 
 	cout << "Was poppin " << cName << endl;
-	
+
 	printString("How dank isn't this?");
 
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -57,4 +51,14 @@ void main()
 	}
 
 	system("pause");
+}
+
+void printString(string String)
+{
+	for (int i = 0; i < String.length(); i++)
+	{
+		cout << String[i];
+		Sleep(70);
+	}
+	cout << endl;
 }
