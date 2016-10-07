@@ -80,13 +80,15 @@ void nameGreeting()
 
 void classMenu()
 {
+	system("cls");
+
 	printString("It´s time to pick a class", false);
 	printString("What would you like to play?", false);
 	printString("[1] Hunter", false);
 	printString("[2] Warrior", false);
 	printString("[3] Shaman", false);
-	
-	
+
+
 }
 
 void choseFontSize()
