@@ -9,7 +9,7 @@
 using namespace std;
 
 //Define functions
-void printString(string stringInput, bool pauseAfter);
+void printString(string stringInput, bool boolAddSpacing);
 void pause();
 void screenResolution();
 void setTextColor(int col);
@@ -82,12 +82,19 @@ void classMenu()
 {
 	system("cls");
 
-	printString("It´s time to pick a class", false);
-	printString("What would you like to play?", false);
-	printString("[1] Hunter", false);
-	printString("[2] Warrior", false);
+	cout << endl;
+
+	printString("It's time to pick a class", true);
+
+	printString("What would you like to play?", true);
+
+	printString("[1] Hunter", true);
+
+	printString("[2] Warrior", true);
+
 	printString("[3] Shaman", false);
 
+	cout << "> ";
 
 }
 
@@ -130,7 +137,7 @@ void setTextColor(int col)
 }
 
 //Function to print text
-void printString(string stringInput, bool pauseAfter)
+void printString(string stringInput, bool boolAddSpacing)
 {
 	int spacing = winWide / 2 - stringInput.length() / 2;
 	cout << string(spacing, ' ');
@@ -141,8 +148,8 @@ void printString(string stringInput, bool pauseAfter)
 		cout << stringInput[i];
 		Sleep(70);
 	}
-	//If pauseAfter is true, just make a new line
-	if (pauseAfter)
+	//If boolAddSpacing is true, just make a new line
+	if (boolAddSpacing)
 	{
 		cout << endl;
 	}
