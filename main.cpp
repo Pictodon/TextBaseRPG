@@ -107,15 +107,15 @@ failSaver:
 	{
 	case 1:
 		printString("Oh so you're a hunter type. ", true);
-		printString("This class it especially good when you want to attack at a long range.", true);
+		printString("This class is especially good when you want to attack at a long range.", true);
 		printString("You have a really powerfull arrow that you can fire at your enemy. ", true);
-		printString("If you are easily scared by monsters then you should play this class. ", false);
+		printString("If you are easily scared by monsters then this is the class for you. ", false);
 
 		break;
 	case 2:
-		printString("", true);
-		printString("", true);
-		printString("", true);
+		printString("If you like to get fucked in the ass then this is the class for you!", true);
+		printString("With the warrior calss you can slash your boss as sword at your enemies.", true);
+		printString("Just look at He-Han", true);
 	case 3:
 		printString("", true);
 		printString("", true);
@@ -123,7 +123,7 @@ failSaver:
 
 
 	default:
-		printString("That is not an option.", false);
+		printString("That is not an option.", true);
 		pause();
 		goto failSaver;
 	}
@@ -138,15 +138,15 @@ failSaver:
 	switch (classConfirm)
 	{
 	case 1:
-		printString("Then let's gooooo!", false);
+		printString("Then let's gooooo!", true);
 		pause();
 		break;
 	case 2:
-		printString("Okay", false);
+		printString("Okay", true);
 		pause();
 		goto failSaver;
 	default:
-		printString("That is not an option.", false);
+		printString("That is not an option.", true);
 		pause();
 		goto failSaver;
 
@@ -294,8 +294,8 @@ failSaver:
 		//Set Screen res to a default one 
 	case 2:
 		system("cls");
-		winHeight = 100;
-		winWide = 60;
+		winHeight = 60;
+		winWide = 100;
 		break;
 		//If the others didn't match go back to top and clear sceen
 	default:
