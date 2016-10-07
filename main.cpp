@@ -29,14 +29,34 @@ int winWide = 0;
 //Main
 void main()
 {
+	int fontInput = 18;
+
+	top:
+
+	//Set font size
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);
 	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;                   // Width of each character in the font
-	cfi.dwFontSize.Y = 24;                  // Height
-	cfi.FontFamily = FF_DONTCARE;
-	cfi.FontWeight = FW_NORMAL;
+	cfi.dwFontSize.X = 0;
+	cfi.dwFontSize.Y = fontInput;
 	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
+	cout << "Font size: " + to_string(cfi.dwFontSize.Y) << endl;
+
+	cout << "Enter a number to change font size, and type the current font size to proceed" << endl;
+
+	cin >> fontInput;
+
+	if (fontInput == cfi.dwFontSize.Y)
+	{
+		system("cls");
+	}
+	else
+	{
+		cfi.dwFontSize.Y = fontInput;
+		system("cls");
+		goto top;
+	}
 
 	//Set text color
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
@@ -129,11 +149,12 @@ void main()
 
 	cout << endl;
 	printString("What's your name?", false);
+	cout << "> ";
 	cin >> cName;
 	system("cls");
 
 	cout << endl;
-	printString("Was poppin " + cName + "?", true);
+	printString("Was poppin, " + cName + "?", true);
 
 	pause();
 }
@@ -150,24 +171,27 @@ void printString(string stringInput, bool pauseAfter)
 		cout << stringInput[i];
 		Sleep(70);
 	}
+	//If pauseAfter is true, just make a new line
 	if (pauseAfter)
 	{
 		cout << endl;
 	}
 	else
 	{
-		//Create a new line in the end
+		//Create a new line in the end with spacing
 		cout << endl << string(spacing, ' ');
 	}
 }
 
 void pause()
 {
+	//Define variable types and calculate string length and assign position
 	string pauseText = "Press any key to proceed";
 	int pauseTextLength = pauseText.length();
 	int pauseTextPos = winWide / 2 - pauseTextLength / 2;
 
-	printString("Press any key to proceed", false);
+	//Print Press any key to proceed and pause
+	printString(pauseText, false);
 	cout << "> ";
 	system("pause >nul");
 }
