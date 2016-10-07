@@ -13,6 +13,6 @@ och false om ni inte gjort det.
 
 **Användbara saker**
 
-**pause();**
+>**pause();**
 
-**printString("", false/true);**
+>**printString("", false/true);**
