@@ -28,6 +28,8 @@ Enter an input:
 
 String
 
+Där andra "String" är vad som skrivs i konsollen av programmet
+
 
 **Användbara saker**
 
