@@ -99,7 +99,7 @@ failSaver:
 	printString("[3] Shaman", false);
 
 	cout << "> ";
-	
+
 	cin >> playerClass;
 	cout << endl;
 
@@ -110,7 +110,7 @@ failSaver:
 		printString("This class it especially good when you want to attack at a long range.", true);
 		printString("You have a really powerfull arrow that you can fire at your enemy. ", true);
 		printString("If you are easily scared by monsters then you should play this class. ", false);
-		
+
 		break;
 	case 2:
 		printString("", true);
@@ -132,7 +132,7 @@ failSaver:
 	printString("[1] Yes I am sure.", true);
 	printString("[2] No I want to browse the other classes.", false);
 
-	
+
 	cout << "> ";
 	cin >> classConfirm;
 	switch (classConfirm)
@@ -149,7 +149,7 @@ failSaver:
 		printString("That is not an option.", false);
 		pause();
 		goto failSaver;
-		
+
 	}
 	pause();
 
@@ -174,6 +174,15 @@ top:
 	cout << "Enter a number to change font size,\nand type the current font size to proceed" << endl;
 
 	cin >> fontInput;
+
+	if (!cin)
+	{
+		system("cls");
+		cin.clear();
+		string failSaver;
+		getline(cin, failSaver);
+		goto top;
+	}
 
 	if (fontInput == cfi.dwFontSize.Y)
 	{
@@ -232,9 +241,6 @@ void pause()
 
 void screenResolution()
 {
-	//Define a goto point
-failSaver:
-
 	//Throw an error if you can't retrieve screen res.
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
@@ -270,6 +276,9 @@ failSaver:
 
 	//Define a variable to store the input
 	int screenResInput;
+
+	//Define a goto point
+failSaver:
 
 	cout << "Is the screen resolution above correct?\n[1] Yes\n[2] No" << endl;
 
