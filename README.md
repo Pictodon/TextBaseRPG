@@ -8,8 +8,25 @@ Samma sak gäller om ni ska printa text i konsollen. Använd printString("Texten
 
 printString("", false/true);
 
-Efter kommat kan det vara både false eller true, true om ni sätter en pause(); efter att den skrivit något
+Efter kommat kan det vara både false eller true, true om ni sätter en pause(); precis efter att den skrivit något
 och false om ni inte gjort det.
+
+Exempel:
+
+1.
+
+printString("This is some text", true);
+
+pause();
+
+2.
+
+string name;
+
+printString("TEnter your name: ", false);
+
+cin >> name;
+
 
 **Användbara saker**
 
