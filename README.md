@@ -15,7 +15,7 @@ Exempel:
 
 1.
 
-printString("This is some text", true);
+printString("This is some text with a pause directly afterwards", true);
 
 pause();
 
