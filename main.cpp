@@ -294,8 +294,8 @@ failSaver:
 		//Set Screen res to a default one 
 	case 2:
 		system("cls");
-		winHeight = 20;
-		winWide = 20;
+		winHeight = 100;
+		winWide = 60;
 		break;
 		//If the others didn't match go back to top and clear sceen
 	default:
