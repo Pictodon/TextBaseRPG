@@ -28,6 +28,9 @@ int winWide = 0;
 //Main
 void main()
 {
+	//Set text color
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
+
 	//Assign name and info for every item in the game
 	invItems[0].name = "Bottle"; invItems[0].quantity = 1; invItems[0].rarity = "Legendary";
 
@@ -63,6 +66,8 @@ void main()
 		else if (i == winHeight - 1)
 		{
 			cout << string(winWide, '#');
+		//Stop the loop
+			break;
 		}
 		//For every other row print in beginning and end
 			cout << "#" << string(winWide - 2, ' ') << "#";
@@ -83,9 +88,11 @@ void main()
 	{
 		//Just continue here
 		case 1:
+			system("cls");
 			break;
 		//Set Screen res to a default one 
 		case 2:
+			system("cls");
 			winHeight = 20;
 			winWide = 20;
 		//If the others didn't match go back to top and clear sceen
