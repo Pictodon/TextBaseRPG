@@ -50,6 +50,7 @@ void main()
 	srand(time(NULL));
 
 	nameGreeting();
+
 	classMenu();
 }
 
@@ -94,11 +95,19 @@ failSaver:
 differentClass:
 	printString("What would you like to play?");
 
+	setTextColor(2);
+
 	printString("[1] Hunter");
+
+	setTextColor(8);
 
 	printString("[2] Warrior");
 
+	setTextColor(9);
+
 	printString("[3] Shaman");
+
+	setTextColor(7);
 
 	inputSign();
 
@@ -163,8 +172,7 @@ differentClass:
 		goto failSaver;
 
 	}
-	pause();
-
+	system("cls");
 }
 
 void choseFontSize()
