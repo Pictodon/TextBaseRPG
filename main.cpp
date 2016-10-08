@@ -236,9 +236,17 @@ top:
 	{
 		system("cls");
 	}
-	else
+	else if (fontInput > 14 && fontInput <= 26)
 	{
 		cfi.dwFontSize.Y = fontInput;
+		system("cls");
+		goto top;
+	}
+	else
+	{
+		cout << "No, just. No." << endl;
+		fontInput = 18;
+		system("pause");
 		system("cls");
 		goto top;
 	}
@@ -507,7 +515,6 @@ top:
 				//Tell the program which item id is in which array slot and increase the the int invsort by 1 for each item
 				invSortPos[invSort] = i;
 				invSort++;
-				cout << invSort;
 			}
 
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
