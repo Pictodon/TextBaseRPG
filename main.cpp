@@ -81,6 +81,7 @@ void nameGreeting()
 }
 
 void classMenu()
+
 {
 	int classConfirm;
 failSaver:
@@ -88,9 +89,9 @@ failSaver:
 	system("cls");
 
 	cout << endl;
-
+	//user picks a class
 	printString("It's time to pick a class");
-
+differentClass:
 	printString("What would you like to play?");
 
 	printString("[1] Hunter");
@@ -106,6 +107,7 @@ failSaver:
 
 	switch (playerClass)
 	{
+		//class choice switchcase
 	case 1:
 		printString("Oh so you're a hunter type. ");
 		printString("This class is especially good when you want to attack at a long range.");
@@ -120,10 +122,12 @@ failSaver:
 		printString("head first. The smartest class would be hunter, but nevermind. ");
 		printString("With the warrior class you can slash your baws ass sword at your enemies.");
 		printString("Just look at He-Man, he's the boss.");
+		break;
 	case 3:
 		printString("VIKTOR SKRIVER");
 		printString("VIKTOR SKRIVER");
 		printString("VIKTOR SKRIVER");
+		break;
 
 
 	default:
@@ -132,6 +136,7 @@ failSaver:
 		goto failSaver;
 	}
 	cout << endl;
+	//confirm the users choice
 	printString("Are you sure you want to play this class? ");
 	printString("[1] Yes I am sure.");
 	printString("[2] No I want to browse the other classes.");
@@ -141,14 +146,16 @@ failSaver:
 	cin >> classConfirm;
 	switch (classConfirm)
 	{
+		//switchcase confirm choice
 	case 1:
 		printString("Then let's gooooo!");
 		pause();
 		break;
 	case 2:
-		printString("Okay");
+		printString("Okay then.");
 		pause();
-		goto failSaver;
+		system("cls");
+		goto differentClass;
 	default:
 		printString("That is not an option.");
 		pause();
@@ -284,6 +291,7 @@ void screenResolution()
 
 	//Define a goto point
 failSaver:
+	differentClass:
 
 	cout << "Is the screen resolution above correct?\n[1] Yes\n[2] No" << endl;
 
