@@ -17,27 +17,52 @@ void nameGreeting();
 void choseFontSize();
 void classMenu();
 void inputSign();
+void drawInventory();
+void instantPrint(string stringInput);
+void removeFromInvSortArray(int itemID);
+void grantItem(int itemID, int quantity);
+void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, bool instant);
 
 //Create an array with a structure for every item
-struct items
-{
+struct inventoryItems {
+	string quality = "Common";
 	string name;
-	int quantity;
-	string rarity;
-	int damage;
-} invItems[10];
+	int quantity = 0;
+	bool weapon = false;
+	bool consumable = false;
+	int damage = 0;
+	string type = "Quest";
+	int healthRegen = 0;
+	string desc = "";
+	bool questItem = false;
+} invItems[11];
 
 //Global var
-string cName;
+int numberOfItems = 10;
 int winHeight = 0;
 int winWide = 0;
+int invSort = 1;
+int equipedWeapon;
+string playerName = "Viktor";
 int playerClass;
+int playerGold = 0;
+int playerLevel = 1;
+int playerExperience = 0;
+int playerMaxHealth = 10;
+int playerHealth = playerMaxHealth;
+int invSortPos[11];
+bool firstInvLoad = true;
+
 
 //Main
 void main()
 {
 	//Assign name and info for every item in the game
-	invItems[0].name = "Bottle"; invItems[0].quantity = 1; invItems[0].rarity = "Legendary";
+	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary";
+	invItems[6].name = "dada"; invItems[6].quantity = 1; invItems[6].quality = "Rare";
+	invItems[5].name = "asdsdadsad"; invItems[5].quantity = 1; invItems[5].quality = "Common";
+	invItems[7].name = "as31221dsdadsad"; invItems[7].quantity = 0; invItems[7].quality = "Legendary";
+	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true;
 
 	choseFontSize();
 
@@ -52,6 +77,11 @@ void main()
 	nameGreeting();
 
 	classMenu();
+
+	grantItem(7, 3);
+
+	drawInventory();
+
 }
 
 void nameGreeting()
@@ -72,11 +102,11 @@ void nameGreeting()
 	cout << endl;
 	printString("What's your name?");
 	inputSign();
-	cin >> cName;
+	cin >> playerName;
 	system("cls");
 
 	cout << endl;
-	printString("Was poppin, " + cName + "?");
+	printString("Was poppin, " + playerName + "?");
 
 	pause();
 }
@@ -95,23 +125,14 @@ failSaver:
 differentClass:
 	printString("What would you like to play?");
 
-	//Set text color to 2
-	setTextColor(2);
+	//Set text color to 2 and print
+	printStringColor(7, "[1] ", 2, "Hunter", 7, "", 7, "", false);
 
-	printString("[1] Hunter");
+	//Set text color to 8 and print
+	printStringColor(7, "[2] ", 8, "Warrior", 7, "", 7, "", false);
 
-	//Set text color to 8
-	setTextColor(8);
-
-	printString("[2] Warrior");
-
-	//Set text color to 9
-	setTextColor(9);
-
-	printString("[3] Shaman");
-
-	//Change back to default color
-	setTextColor(7);
+	//Set text color to 9 and print
+	printStringColor(7, "[3] ", 9, "Shaman", 7, "", 7, "", false);
 
 	//Add the sign > where the input is supposed to go
 	inputSign();
@@ -179,7 +200,6 @@ differentClass:
 	}
 	system("cls");
 }
-
 void choseFontSize()
 {
 	int fontInput = 18;
@@ -189,6 +209,8 @@ top:
 	//Set font size
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = 0;
 	cfi.dwFontSize.Y = fontInput;
 	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 
@@ -221,13 +243,14 @@ top:
 	}
 }
 
+//Function to set text color the proper way
 void setTextColor(int col)
 {
 	//Set text color
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (col & 0x0F));
 }
 
-//Function to print text
+//Function to print text in the center
 void printString(string stringInput)
 {
 	int spacing = winWide / 2 - stringInput.length() / 2;
@@ -239,6 +262,73 @@ void printString(string stringInput)
 		cout << stringInput[i];
 		Sleep(30);
 	}
+
+	cout << endl;
+}
+
+//Function to print text with color in the center
+void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, bool instant)
+{
+	//Add every stirng together and caculate string length to center content
+	int totalLength = stringInput.length() + stringInput2.length() + stringInput3.length() + stringInput4.length();
+	int spacing = winWide / 2 - totalLength / 2;
+	cout << string(spacing, ' ');
+
+	//Set color to color
+	setTextColor(color);
+	//For every letter in string do this
+	for (int i = 0; i < stringInput.length(); i++)
+	{
+		cout << stringInput[i];
+		//Add a delay between each character if wanted
+		if (instant == false)
+			Sleep(30);
+	}
+
+	//Set color to color3
+	setTextColor(color2);
+	//For every letter in string do this
+	for (int i = 0; i < stringInput2.length(); i++)
+	{
+		cout << stringInput2[i];
+		//Add a delay between each character if wanted
+		if (instant == false)
+			Sleep(30);
+	}
+
+	//Set color to color3
+	setTextColor(color3);
+	//For every letter in string do this
+	for (int i = 0; i < stringInput3.length(); i++)
+	{
+		cout << stringInput3[i];
+		//Add a delay between each character if wanted
+		if (instant == false)
+			Sleep(30);
+	}
+
+	//Set color to color4
+	setTextColor(color4);
+	//For every letter in string do this
+	for (int i = 0; i < stringInput4.length(); i++)
+	{
+		cout << stringInput4[i];
+		//Add a delay between each character if wanted
+		if (instant == false)
+			Sleep(30);
+	}
+
+	//Add a new line
+	cout << endl;
+}
+
+//Function to print text instantly in the center
+void instantPrint(string stringInput)
+{
+	int spacing = winWide / 2 - stringInput.length() / 2;
+	cout << string(spacing, ' ');
+
+	cout << stringInput;
 
 	cout << endl;
 }
@@ -331,4 +421,310 @@ failSaver:
 		system("cls");
 		goto failSaver;
 	}
+}
+
+//Function to draw the inventory
+void drawInventory()
+{
+	//Create a string with playername and 's inventory, as well as some others
+	string inventoryTitle = playerName + "'s inventory", input, damageString;
+	int additionForOddNames = 0, numDigits = 1, numDigitsXp = 1, numDigitsGold, quantityOrDamage, secondInput;
+
+	//IF the inventory title (name) is odd compensate in positioning later on
+	if (inventoryTitle.length() % 2 == 1)
+	{
+		additionForOddNames = additionForOddNames + -1;
+	}
+
+	//Check the length of playerExperience and playerGold in character amount and not value 321 = 3 chars
+	if (playerExperience > 99)
+		numDigitsXp = 3;
+	else if (playerExperience > 9)
+		numDigitsXp = 2;
+	else
+		numDigitsXp = 1;
+	if (playerGold > 999)
+		numDigitsGold = 4;
+	else if (playerGold > 99)
+		numDigitsGold = 3;
+	else if (playerGold > 9)
+		numDigitsGold = 2;
+	else
+		numDigitsGold = 1;
+
+	//Defines a goto point
+top:
+
+	system("cls");
+	//Add some spaces
+	cout << endl << endl << endl << endl << endl << endl;
+	//Start drawing the inventory screen with spaces for each element to fit starting with drawing plaeyr name, level, xp and health as well as some ascii art
+	instantPrint(" _____________________________________________________*____________________________________________________");
+	instantPrint(" \\ |****************************************************************************************************| /");
+	instantPrint(" \\ |                     Level: " + to_string(playerLevel) + " " + to_string(playerExperience) + "/500" + string(14 - numDigitsXp - inventoryTitle.length() / 2, ' ') + "[" + inventoryTitle + "]" + string(4, ' ') + "HP: " + string(playerHealth, '#') + string(playerMaxHealth - playerHealth, 'O') + string(41 - playerMaxHealth + additionForOddNames - 1 - inventoryTitle.length() / 2, ' ') + "| /");
+	instantPrint(" /______________________________________________________________________________________________________\\");
+	instantPrint(" /                                                                                                        \\");
+	instantPrint(" |    Quality:        Name:              Quantity/Damage:     Type:         Description:                  |");
+	instantPrint(" I|______________________________________________________________________________________________________|I");
+
+	//For every item in the game
+	for (int i = 0; i < numberOfItems; i++)
+	{
+		//Check the quantity or damage of the item to compensate the gui layout
+		if (invItems[i].quantity > 9 || invItems[i].damage > 9)
+			numDigits = 2;
+		else
+			numDigits = 1;
+
+		//If item is a weapon, instead of printing quantity, print damage and tell the user it's damage else just set the value to the quantity of the item
+		if (invItems[i].weapon == true)
+		{
+			quantityOrDamage = invItems[i].damage;
+			numDigits = numDigits + 8;
+			damageString = "(damage)";
+		}
+		else
+		{
+			quantityOrDamage = invItems[i].quantity;
+			damageString = "";
+		}
+
+		//If quantity is more than 0, meaning the user has the item. Do this
+		if (invItems[i].quantity > 0)
+		{
+			//Check if this code is ran for the first time to add the item id's to the sorting array
+			if (firstInvLoad)
+			{
+				//Tell the program which item id is in which array slot and increase the the int invsort by 1 for each item
+				invSortPos[invSort] = i;
+				invSort++;
+			}
+
+			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
+			//If no quality matched, make default color
+			if (invItems[i].quality == "Legendary")
+			{
+				printStringColor(7, " I|" + string(3, ' '), 14, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
+			}
+			else if (invItems[i].quality == "Rare")
+			{
+				printStringColor(7, " I|" + string(3, ' '), 11, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
+			}
+			else if (invItems[i].quality == "Common")
+			{
+				printStringColor(7, " I|" + string(3, ' '), 8, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
+			}
+			else
+			{
+				instantPrint(" I|" + string(3, ' ') + invItems[i].quality + string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I");
+
+			}
+		}
+	}
+	//Set the firstInLoad to false to prevent items being added twice to array earlier in code
+	firstInvLoad = false;
+	//Continue the ascii art and print gold in the center, compensating for number of digits in gold amount
+	instantPrint(" |I|****************************************************************************************************|I|");
+	printStringColor(7, " | Gold: ", 6, to_string(playerGold), 7, string(95 - numDigitsGold, ' ') + "|", 7, "", true);
+	instantPrint(" |I|----------------------------------------------------------------------------------------------------|I|");
+
+	printString("'Equip', 'Use', 'Delete' or 'Back'");
+
+	inputSign();
+	cin >> input;
+
+	//Check the user input for various spelling probabilities
+	if (input == "equip" || input == "Equip" || input == "EQUIP")
+	{
+		//For every item
+		for (int i = 1; i < numberOfItems; i++)
+		{
+			//If the array slot is greater than 1
+			if (invSortPos[i] > 0)
+				//Print the array slot nubmer and the item name
+				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
+		}
+		//Defines a goto point
+	failcheck:
+		inputSign();
+		cin >> secondInput;
+
+		//Cleares the cin if input isn't numreric
+		if (!cin)
+		{
+			cin.clear();
+			string ignore;
+			getline(cin, ignore);
+			goto failcheck;
+		}
+
+		//If input is between 0 and numberOfItems
+		if (secondInput < numberOfItems && secondInput > 0)
+		{
+			//If number is less than items in sorting array and also item is a weapon since this is the equip part else throw an error to the user
+			if (secondInput < invSort && invItems[invSortPos[secondInput]].weapon == true)
+			{
+				//Set equipedWeapon to the selected item
+				equipedWeapon = invSortPos[secondInput];
+				printString(invItems[invSortPos[secondInput]].name + " has been equiped!");
+				pause();
+				goto top;
+			}
+			else
+			{
+				printString("You can only equip weapons!");
+				pause();
+				goto top;
+			}
+		}
+
+	}
+	//Used when removing an item from the inventory
+	else if (input == "delete" || input == "Delete" || input == "DELETE")
+	{
+		//For every item
+		for (int i = 1; i < numberOfItems; i++)
+		{
+			//If the array slot is greater than 1
+			if (invSortPos[i] > 0)
+				//Print the array slot nubmer and the item name
+				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
+		}
+		//Defines a goto point
+	failchecksecond:
+		inputSign();
+		cin >> secondInput;
+		//Cleares the cin if input isn't numreric
+		if (!cin)
+		{
+			cin.clear();
+			string ignore;
+			getline(cin, ignore);
+			goto failcheck;
+		}
+
+		//If input is between 0 and numberOfItems
+		if (secondInput < numberOfItems && secondInput > 0)
+		{
+			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item
+			if (secondInput < invSort && invItems[invSortPos[secondInput]].quantity > 0 && secondInput != equipedWeapon && invItems[invSortPos[secondInput]].questItem == false)
+			{
+				printString(invItems[invSortPos[secondInput]].name + " has been removed sucessfully!");
+
+				//Set the quantity to 0
+				invItems[invSortPos[secondInput]].quantity = 0;
+
+				//Call the function to update the array
+				removeFromInvSortArray(secondInput);
+			}
+			else
+			{
+				printString("You can't delete your currently equiped weapon or quest items!");
+			}
+		}
+		pause();
+		goto top;
+	}
+
+	//Used for consuming an item
+	else if (input == "use" || input == "Use" || input == "USE")
+	{
+		//For every item
+		for (int i = 1; i < numberOfItems; i++)
+		{
+			//If the array slot is greater than 1
+			if (invSortPos[i] > 0)
+				//Print the array slot nubmer and the item name
+				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
+		}
+		//Defines a goto point
+	failcheckthird:
+		inputSign();
+		cin >> secondInput;
+		//Cleares the cin if input isn't numreric
+		if (!cin)
+		{
+			cin.clear();
+			string ignore;
+			getline(cin, ignore);
+			goto failcheck;
+		}
+
+		//Check if item is a consumable and that you are bellow max health
+		if (invItems[invSortPos[secondInput]].consumable == true && playerHealth < playerMaxHealth)
+		{
+			//Set the quantity to the quantity - 1
+			invItems[invSortPos[secondInput]].quantity--;
+
+			//Add the health to the user from the item
+			playerHealth = playerHealth + invItems[invSortPos[secondInput]].healthRegen;
+
+			//If health goes above max health, set to max health
+			if (playerHealth > playerMaxHealth)
+				playerHealth = playerMaxHealth;
+
+			//Tell the user how much the user was healed for
+			printString("You have been healed for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " health points!");
+			
+			printString("Current HP " + to_string(playerHealth) + "/" + to_string(playerMaxHealth));
+		}
+		//If item is a comsumable, but user health is full. Tell the user
+		else if (invItems[invSortPos[secondInput]].consumable == true && playerHealth == playerMaxHealth)
+		{
+			printString("Your HP is full!");
+		}
+		//Otherwise print error
+		else
+		{
+			printString("Item type is not a consumable!");
+		}
+
+		pause();
+		goto top;
+	}
+	
+	//Used for leaving the inventory and does nothing
+	else if (input == "back" || input == "Back" || input == "BACK")
+	{
+
+	}
+	
+	//If input matched nothing, print error and return to top
+	else
+	{
+		printString("Wrong input!");
+		pause();
+		goto top;
+	}
+}
+
+//Function to add items to the player's inventory
+void grantItem(int itemID, int quantity)
+{
+	//Set item quantity to current quantity plus 1
+	invItems[itemID].quantity = invItems[itemID].quantity + quantity;
+
+	//Update array for inventory sortation
+	invSortPos[invSort] = itemID;
+
+	//Tell the program how many sorted values there is in total
+	invSort++;
+}
+
+//Used when removing an inventory item
+void removeFromInvSortArray(int itemID)
+{
+	//For every spot in array that is larger than the removed one
+	for (int i = itemID; i < numberOfItems + 1; i++)
+	{
+		//If it isn't the last slot in array set current slot to next slot
+		if (i != numberOfItems)
+		invSortPos[i] = invSortPos[i + 1];
+		else
+		{
+
+		}
+	}
+	//Tell the program there's one less sorted value
+	invSort--;
 }
