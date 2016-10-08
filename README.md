@@ -29,11 +29,11 @@ printString(input);
 
 Detta ger resultatet:
 
-Enter an input:
+     Enter an input:
 
-\> String
+       \> String
 
-String
+         String
 
 Där andra "String" är vad som skrivs i konsollen av programmet
 
