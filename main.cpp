@@ -78,9 +78,10 @@ void main()
 
 	classMenu();
 
-	grantItem(7, 3);
-
+	//Random shiz
 	drawInventory();
+
+	grantItem(7, 3);
 
 }
 
@@ -506,6 +507,7 @@ top:
 				//Tell the program which item id is in which array slot and increase the the int invsort by 1 for each item
 				invSortPos[invSort] = i;
 				invSort++;
+				cout << invSort;
 			}
 
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
