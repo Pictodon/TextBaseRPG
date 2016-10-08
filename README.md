@@ -1,3 +1,7 @@
+#Back up done
+>08-10-2016
+>08-10-2016
+
 #VIKTIG INFORMATION!
 
 Om ni vill göra en pause i spelet, använd INTE system("pause");
