@@ -155,6 +155,7 @@ differentClass:
 		printString("Okay then.");
 		pause();
 		system("cls");
+		cout << endl;
 		goto differentClass;
 	default:
 		printString("That is not an option.");
@@ -223,7 +224,7 @@ void printString(string stringInput)
 	{
 		//Print character and sleep for 70ms
 		cout << stringInput[i];
-		Sleep(70);
+		Sleep(30);
 	}
 
 	cout << endl;
@@ -291,7 +292,6 @@ void screenResolution()
 
 	//Define a goto point
 failSaver:
-	differentClass:
 
 	cout << "Is the screen resolution above correct?\n[1] Yes\n[2] No" << endl;
 
