@@ -400,6 +400,14 @@ failSaver:
 
 	cin >> screenResInput;
 
+	if (!cin)
+	{
+		cin.clear();
+		string ignore;
+		getline(cin, ignore);
+		goto failSaver;
+	}
+
 	//Take action by input
 	switch (screenResInput)
 	{
@@ -461,7 +469,7 @@ top:
 	//Start drawing the inventory screen with spaces for each element to fit starting with drawing plaeyr name, level, xp and health as well as some ascii art
 	instantPrint(" _____________________________________________________*____________________________________________________");
 	instantPrint(" \\ |****************************************************************************************************| /");
-	instantPrint(" \\ |                     Level: " + to_string(playerLevel) + " " + to_string(playerExperience) + "/500" + string(14 - numDigitsXp - inventoryTitle.length() / 2, ' ') + "[" + inventoryTitle + "]" + string(4, ' ') + "HP: " + string(playerHealth, '#') + string(playerMaxHealth - playerHealth, 'O') + string(41 - playerMaxHealth + additionForOddNames - 1 - inventoryTitle.length() / 2, ' ') + "| /");
+	printStringColor(7, " \\ |                     Level: " + to_string(playerLevel) + " " + to_string(playerExperience) + "/500" + string(14 - numDigitsXp - inventoryTitle.length() / 2, ' ') + "[" + inventoryTitle + "]" + string(4, ' ') + "HP: ", 4, string(playerHealth, '#'), 8, string(playerMaxHealth - playerHealth, '#'), 7, string(41 - playerMaxHealth + additionForOddNames - 1 - inventoryTitle.length() / 2, ' ') + "| /", true);
 	instantPrint(" /______________________________________________________________________________________________________\\");
 	instantPrint(" /                                                                                                        \\");
 	instantPrint(" |    Quality:        Name:              Quantity/Damage:     Type:         Description:                  |");
