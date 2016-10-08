@@ -95,20 +95,25 @@ failSaver:
 differentClass:
 	printString("What would you like to play?");
 
+	//Set text color to 2
 	setTextColor(2);
 
 	printString("[1] Hunter");
 
+	//Set text color to 8
 	setTextColor(8);
 
 	printString("[2] Warrior");
 
+	//Set text color to 9
 	setTextColor(9);
 
 	printString("[3] Shaman");
 
+	//Change back to default color
 	setTextColor(7);
 
+	//Add the sign > where the input is supposed to go
 	inputSign();
 
 	cin >> playerClass;
@@ -184,8 +189,6 @@ top:
 	//Set font size
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof(cfi);
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;
 	cfi.dwFontSize.Y = fontInput;
 	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 
@@ -195,6 +198,7 @@ top:
 
 	cin >> fontInput;
 
+	//If input is not a number, go to top and clear cin
 	if (!cin)
 	{
 		system("cls");
@@ -204,6 +208,7 @@ top:
 		goto top;
 	}
 
+	//Just continue if input is same as current font otherwise update font
 	if (fontInput == cfi.dwFontSize.Y)
 	{
 		system("cls");
