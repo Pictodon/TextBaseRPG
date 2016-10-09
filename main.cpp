@@ -730,8 +730,6 @@ top:
 
 	printString("'Equip', 'Use', 'Delete' or 'Back'");
 
-	printStringColor(20, "Testing", 7, " this", 20, " shit", 7, " lmao", false);
-
 	inputSign();
 	cin >> input;
 
