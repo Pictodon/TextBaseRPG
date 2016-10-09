@@ -22,8 +22,9 @@ void instantPrint(string stringInput);
 void removeFromInvSortArray(int itemID);
 void grantItem(int itemID, int quantity);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, bool instant);
+void loadingAnimation(int durationSeconds);
 
-//Create an array with a structure for every item
+//Create a structure of type array for every item
 struct inventoryItems {
 	string quality = "Common";
 	string name;
@@ -37,21 +38,24 @@ struct inventoryItems {
 	bool questItem = false;
 } invItems[11];
 
-//Global var
-int numberOfItems = 10;
+//Global vars
+//Vars used for loading
+bool firstInvLoad = true;
 int winHeight = 0;
 int winWide = 0;
+//Inventory related vars
+int numberOfItems = 10;
 int invSort = 1;
 int equipedWeapon;
-string playerName = "Viktor";
+int invSortPos[11];
+//Player related vars
+string playerName = "";
 int playerClass;
 int playerGold = 0;
 int playerLevel = 1;
 int playerExperience = 0;
 int playerMaxHealth = 10;
 int playerHealth = playerMaxHealth;
-int invSortPos[11];
-bool firstInvLoad = true;
 
 
 //Main
@@ -71,7 +75,7 @@ void main()
 
 	screenResolution();
 
-	//Tell the compiler what number to base rand of
+	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
 
 	nameGreeting();
@@ -80,9 +84,6 @@ void main()
 
 	//Random shiz
 	drawInventory();
-
-	grantItem(7, 3);
-
 }
 
 void nameGreeting()
@@ -95,7 +96,7 @@ void nameGreeting()
 	system("cls");
 
 	cout << endl;
-	printString("Oh, that's right. I dont care.");
+	printString("Oh, that's right. I don't care.");
 
 	pause();
 	system("cls");
@@ -107,7 +108,7 @@ void nameGreeting()
 	system("cls");
 
 	cout << endl;
-	printString("Was poppin, " + playerName + "?");
+	printString("Was poppin', " + playerName + "?");
 
 	pause();
 }
@@ -253,6 +254,9 @@ top:
 }
 
 //Function to set text color the proper way
+/// <summary>Used to set text color the proper way
+/// <para>Usage: setTextColor(0-16);</para>
+/// </summary>
 void setTextColor(int col)
 {
 	//Set text color
@@ -260,6 +264,9 @@ void setTextColor(int col)
 }
 
 //Function to print text in the center
+/// <summary>Used to print text slowly
+/// <para>Usage: printString("Text here");</para>
+/// </summary>
 void printString(string stringInput)
 {
 	int spacing = winWide / 2 - stringInput.length() / 2;
@@ -267,7 +274,7 @@ void printString(string stringInput)
 	//For every letter in string do this
 	for (int i = 0; i < stringInput.length(); i++)
 	{
-		//Print character and sleep for 70ms
+		//Print character and sleep for 30ms
 		cout << stringInput[i];
 		Sleep(30);
 	}
@@ -276,62 +283,150 @@ void printString(string stringInput)
 }
 
 //Function to print text with color in the center
+/// <summary>Used to print text slowly and with mixed color with a feature of rainbow when color 16 is specified. Default col is 7
+/// <para>Usage: printStringColor(16, "", 7, "", 7, "", 7, "", false/true wether you want it to be instant or not);</para>
+/// </summary>
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, bool instant)
 {
 	//Add every stirng together and caculate string length to center content
 	int totalLength = stringInput.length() + stringInput2.length() + stringInput3.length() + stringInput4.length();
 	int spacing = winWide / 2 - totalLength / 2;
+	int rainbowColors[5]{ 4, 6, 2, 1, 5 };
+	int colorLoop = 0;
+	bool isRainbow = false;
+
 	cout << string(spacing, ' ');
 
-	//Set color to color
-	setTextColor(color);
+	//Set color to color if int isn't 16 = rainbow
+	if (color == 16)
+	{
+		isRainbow = true;
+	}
+	else
+	{
+		setTextColor(color);
+		isRainbow = false;
+	}
+	
 	//For every letter in string do this
 	for (int i = 0; i < stringInput.length(); i++)
 	{
+		//If isRainbow is true change color for each character
+		if (isRainbow)
+		{
+			setTextColor(rainbowColors[colorLoop]);
+			colorLoop++;
+			if (colorLoop > 4)
+			{
+				colorLoop = 0;
+			}
+		}
 		cout << stringInput[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
 	}
 
-	//Set color to color3
-	setTextColor(color2);
+	//Set color to color if int isn't 16 = rainbow
+	if (color2 == 16)
+	{
+		isRainbow = true;
+	}
+	else
+	{
+		setTextColor(color2);
+		isRainbow = false;
+	}
+
 	//For every letter in string do this
 	for (int i = 0; i < stringInput2.length(); i++)
 	{
+		//If isRainbow is true change color for each character
+		if (isRainbow)
+		{
+			setTextColor(rainbowColors[colorLoop]);
+			colorLoop++;
+			if (colorLoop > 4)
+			{
+				colorLoop = 0;
+			}
+		}
 		cout << stringInput2[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
 	}
 
-	//Set color to color3
-	setTextColor(color3);
-	//For every letter in string do this
+	//Set color to color if int isn't 16 = rainbow
+	if (color3 == 16)
+	{
+		isRainbow = true;
+	}
+	else
+	{
+		setTextColor(color3);
+		isRainbow = false;
+	}
+
+	//Set color to color if int isn't 16 = rainbow
 	for (int i = 0; i < stringInput3.length(); i++)
 	{
+		//If isRainbow is true change color for each character
+		if (isRainbow)
+		{
+			setTextColor(rainbowColors[colorLoop]);
+			colorLoop++;
+			if (colorLoop > 4)
+			{
+				colorLoop = 0;
+			}
+		}
 		cout << stringInput3[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
 	}
 
-	//Set color to color4
-	setTextColor(color4);
+	//Set color to color
+	if (color4 == 16)
+	{
+		isRainbow = true;
+	}
+	else
+	{
+		setTextColor(color4);
+		isRainbow = false;
+	}
+
 	//For every letter in string do this
 	for (int i = 0; i < stringInput4.length(); i++)
 	{
+		//If isRainbow is true change color for each character
+		if (isRainbow)
+		{
+			setTextColor(rainbowColors[colorLoop]);
+			colorLoop++;
+			if (colorLoop > 4)
+			{
+				colorLoop = 0;
+			}
+		}
 		cout << stringInput4[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
 	}
 
+	setTextColor(7);
+
 	//Add a new line
 	cout << endl;
 }
 
 //Function to print text instantly in the center
+/// <summary>Used to print text instantly and centered
+/// <para>Usage: instantPrint("This is printed instanly");</para>
+/// </summary>
 void instantPrint(string stringInput)
 {
 	int spacing = winWide / 2 - stringInput.length() / 2;
@@ -342,6 +437,10 @@ void instantPrint(string stringInput)
 	cout << endl;
 }
 
+//Function to draw the '> ' sign before the input
+/// <summary>Used to draw the input sign '> '
+/// <para>Usage: inputSign();</para>
+/// </summary>
 void inputSign()
 {
 	//Define variable types and calculate string length and assign position
@@ -351,6 +450,10 @@ void inputSign()
 	cout << string(pauseTextPos, ' ') << "> ";
 }
 
+//Function to pause the console until an input is present
+/// <summary>Used to pause the console and prevent it from continuing
+/// <para>Usage: pause();</para>
+/// </summary>
 void pause()
 {
 	//Define variable types and calculate string length and assign position
@@ -364,6 +467,7 @@ void pause()
 	system("pause >nul");
 }
 
+//Function to determine console line width and number of line height
 void screenResolution()
 {
 	//Throw an error if you can't retrieve screen res.
@@ -440,7 +544,86 @@ failSaver:
 	}
 }
 
+//Draws the loading animation when called
+/// <summary>Used to to draw the loading animation
+/// <para>Usage: loadingAnimation(2);</para>
+/// </summary>
+void loadingAnimation(int durationSeconds)
+{
+	for (int i = 0; i < durationSeconds; i++)
+	{
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << ">))'>";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << " >))'>";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << "  >))'>";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << "   >))'>";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << "    >))'>";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << "   <'((<";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << "  <'((<";
+		Sleep(125);
+		system("cls");
+		for (int i = 0; i < winHeight + 1 - 4; i++)
+		{
+			cout << endl;
+		}
+		cout << string(winWide + 1 - 15, ' ') << "Loading..";
+		cout << string(winWide + 1 - 11, ' ') << " <'((<";
+		Sleep(125);
+	}
+	system("cls");
+}
+
 //Function to draw the inventory
+/// <summary>Used to draw the inventory on the screen
+/// <para>Usage: drawInventory();</para>
+/// </summary>
 void drawInventory()
 {
 	//Create a string with playername and 's inventory, as well as some others
@@ -547,6 +730,8 @@ top:
 
 	printString("'Equip', 'Use', 'Delete' or 'Back'");
 
+	printStringColor(20, "Testing", 7, " this", 20, " shit", 7, " lmao", false);
+
 	inputSign();
 	cin >> input;
 
@@ -562,7 +747,6 @@ top:
 				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
 		}
 		//Defines a goto point
-	failcheck:
 		inputSign();
 		cin >> secondInput;
 
@@ -572,7 +756,7 @@ top:
 			cin.clear();
 			string ignore;
 			getline(cin, ignore);
-			goto failcheck;
+			goto top;
 		}
 
 		//If input is between 0 and numberOfItems
@@ -607,8 +791,6 @@ top:
 				//Print the array slot nubmer and the item name
 				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
 		}
-		//Defines a goto point
-	failchecksecond:
 		inputSign();
 		cin >> secondInput;
 		//Cleares the cin if input isn't numreric
@@ -617,7 +799,7 @@ top:
 			cin.clear();
 			string ignore;
 			getline(cin, ignore);
-			goto failcheck;
+			goto top;
 		}
 
 		//If input is between 0 and numberOfItems
@@ -654,8 +836,6 @@ top:
 				//Print the array slot nubmer and the item name
 				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
 		}
-		//Defines a goto point
-	failcheckthird:
 		inputSign();
 		cin >> secondInput;
 		//Cleares the cin if input isn't numreric
@@ -664,7 +844,7 @@ top:
 			cin.clear();
 			string ignore;
 			getline(cin, ignore);
-			goto failcheck;
+			goto top;
 		}
 
 		//Check if item is a consumable and that you are bellow max health
@@ -716,6 +896,9 @@ top:
 }
 
 //Function to add items to the player's inventory
+/// <summary>Used to give items to the player
+/// <para>Usage: grantItem(e.g 1, 12);</para>
+/// </summary>
 void grantItem(int itemID, int quantity)
 {
 	//Set item quantity to current quantity plus 1
