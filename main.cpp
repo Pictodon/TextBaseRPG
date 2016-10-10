@@ -23,6 +23,27 @@ void removeFromInvSortArray(int itemID);
 void grantItem(int itemID, int quantity);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, bool instant);
 void loadingAnimation(int durationSeconds);
+void asignDefaultRarityColor();
+
+//Global vars
+//Vars used for loading
+bool firstInvLoad = true;
+int winHeight = 0;
+int winWide = 0;
+//Inventory related vars
+int numberOfItems = 10;
+int invSort = 1;
+int equipedWeapon;
+int invSortPos[11];
+int defaultColor = 7;
+//Player related vars
+string playerName = "";
+int playerClass;
+int playerGold = 0;
+int playerLevel = 1;
+int playerExperience = 0;
+int playerMaxHealth = 10;
+int playerHealth = playerMaxHealth;
 
 //Create a structure of type array for every item
 struct inventoryItems {
@@ -36,27 +57,8 @@ struct inventoryItems {
 	int healthRegen = 0;
 	string desc = "";
 	bool questItem = false;
+	int inventoryColor = defaultColor;
 } invItems[11];
-
-//Global vars
-//Vars used for loading
-bool firstInvLoad = true;
-int winHeight = 0;
-int winWide = 0;
-//Inventory related vars
-int numberOfItems = 10;
-int invSort = 1;
-int equipedWeapon;
-int invSortPos[11];
-//Player related vars
-string playerName = "";
-int playerClass;
-int playerGold = 0;
-int playerLevel = 1;
-int playerExperience = 0;
-int playerMaxHealth = 10;
-int playerHealth = playerMaxHealth;
-
 
 //Main
 void main()
@@ -66,7 +68,9 @@ void main()
 	invItems[6].name = "dada"; invItems[6].quantity = 1; invItems[6].quality = "Rare";
 	invItems[5].name = "asdsdadsad"; invItems[5].quantity = 1; invItems[5].quality = "Common";
 	invItems[7].name = "as31221dsdadsad"; invItems[7].quantity = 0; invItems[7].quality = "Legendary";
-	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true;
+	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16;
+
+	asignDefaultRarityColor();
 
 	choseFontSize();
 
@@ -250,6 +254,39 @@ top:
 		system("pause");
 		system("cls");
 		goto top;
+	}
+}
+
+//Function to asign default color values based on item quality
+void asignDefaultRarityColor()
+{
+	// For every item in te game
+	for (int i = 1; i < numberOfItems + 1; i++)
+	{
+		//Check if item is of rarity legendary and has not been assigned a custom value
+		if (invItems[i].quality == "Legendary" && invItems[i].inventoryColor == defaultColor)
+		{
+			//Set color to color 14
+			invItems[i].inventoryColor = 14;
+		}
+		//Check if item is of rarity Rare and has not been assigned a custom value
+		else if (invItems[i].quality == "Rare" && invItems[i].inventoryColor == defaultColor)
+		{
+			//Set color to color 11
+			invItems[i].inventoryColor = 11;
+		}
+		//Check if item is of rarity Uncommon and has not been assigned a custom value
+		else if (invItems[i].quality == "Uncommon" && invItems[i].inventoryColor == defaultColor)
+		{
+			//Set color to color 2
+			invItems[i].inventoryColor = 2;
+		}
+		//Check if item has not been assigned a rarity and not a custom color
+		else if (invItems[i].quality == "Commmon" && invItems[i].inventoryColor == defaultColor)
+		{
+			//Set color to color 7
+			invItems[i].inventoryColor = 7;
+		}
 	}
 }
 
@@ -702,23 +739,8 @@ top:
 
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
 			//If no quality matched, make default color
-			if (invItems[i].quality == "Legendary")
-			{
-				printStringColor(7, " I|" + string(3, ' '), 14, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
-			}
-			else if (invItems[i].quality == "Rare")
-			{
-				printStringColor(7, " I|" + string(3, ' '), 11, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
-			}
-			else if (invItems[i].quality == "Common")
-			{
-				printStringColor(7, " I|" + string(3, ' '), 8, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
-			}
-			else
-			{
-				instantPrint(" I|" + string(3, ' ') + invItems[i].quality + string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I");
 
-			}
+			printStringColor(7, " I|" + string(3, ' '), invItems[i].inventoryColor, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
 		}
 	}
 	//Set the firstInLoad to false to prevent items being added twice to array earlier in code
