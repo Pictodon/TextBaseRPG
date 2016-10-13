@@ -58,33 +58,36 @@ struct inventoryItems {
 	string desc = "";
 	bool questItem = false;
 	int inventoryColor = defaultColor;
+	int levelRequirement = 0;
 } invItems[11];
 
 //Main
 void main()
 {
 	//Assign name and info for every item in the game
-	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary";
+	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3;
 	invItems[6].name = "dada"; invItems[6].quantity = 1; invItems[6].quality = "Rare";
 	invItems[5].name = "asdsdadsad"; invItems[5].quantity = 1; invItems[5].quality = "Common";
 	invItems[7].name = "as31221dsdadsad"; invItems[7].quantity = 0; invItems[7].quality = "Legendary";
-	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16;
+	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2;
 
 	asignDefaultRarityColor();
 
 	choseFontSize();
 
 	//Set console to be fulscreen
-	SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+	system("mode 1000");
 
 	screenResolution();
 
 	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
 
-	nameGreeting();
+	//nameGreeting();
 
-	classMenu();
+	//classMenu();
+
+	loadingAnimation(10);
 
 	//Random shiz
 	drawInventory();
@@ -181,7 +184,6 @@ differentClass:
 	printString("Are you sure you want to play this class? ");
 	printString("[1] Yes I am sure.");
 	printString("[2] No I want to browse the other classes.");
-
 
 	inputSign();
 	cin >> classConfirm;
@@ -282,10 +284,10 @@ void asignDefaultRarityColor()
 			invItems[i].inventoryColor = 2;
 		}
 		//Check if item has not been assigned a rarity and not a custom color
-		else if (invItems[i].quality == "Commmon" && invItems[i].inventoryColor == defaultColor)
+		else if (invItems[i].quality == "Common" && invItems[i].inventoryColor == defaultColor)
 		{
-			//Set color to color 7
-			invItems[i].inventoryColor = 7;
+			//Set color to color 8
+			invItems[i].inventoryColor = 8;
 		}
 	}
 }
@@ -344,7 +346,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		setTextColor(color);
 		isRainbow = false;
 	}
-	
+
 	//For every letter in string do this
 	for (int i = 0; i < stringInput.length(); i++)
 	{
@@ -520,65 +522,6 @@ void screenResolution()
 		winHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 		winWide = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 	}
-
-	//For every row in console
-	for (int i = 1; i < winHeight; i++)
-	{
-		//If it's the first row print full row with #
-		if (i == 1)
-		{
-			cout << string(winWide, '#');
-		}
-		//If it's the last row print full row with #
-		else if (i == winHeight - 1)
-		{
-			cout << string(winWide, '#');
-			//Stop the loop
-			break;
-		}
-		//For every other row print in beginning and end
-		cout << "#" << string(winWide - 2, ' ') << "#";
-	}
-
-	//Define a variable to store the input
-	int screenResInput;
-
-	//Define a goto point
-failSaver:
-
-	cout << "Is the screen resolution above correct?\n[1] Yes\n[2] No" << endl;
-
-	cin >> screenResInput;
-
-	if (!cin)
-	{
-		cin.clear();
-		string ignore;
-		getline(cin, ignore);
-		goto failSaver;
-	}
-
-	//Take action by input
-	switch (screenResInput)
-	{
-		//Just continue here
-	case 1:
-		system("cls");
-		break;
-		//Set Screen res to a default one 
-	case 2:
-		system("cls");
-		winHeight = 60;
-		winWide = 100;
-		break;
-		//If the others didn't match go back to top and clear sceen
-	default:
-		cout << "Wrong input!" << endl;
-		//Pause and clear screen on the same line
-		pause();
-		system("cls");
-		goto failSaver;
-	}
 }
 
 //Draws the loading animation when called
@@ -590,68 +533,60 @@ void loadingAnimation(int durationSeconds)
 	for (int i = 0; i < durationSeconds; i++)
 	{
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << ">))'>";
+		cout << string(winWide + 1 - 15, ' ') << ">))'>";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << " >))'>";
+		cout << string(winWide + 1 - 15, ' ') << " >))'>";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << "  >))'>";
+		cout << string(winWide + 1 - 15, ' ') << "  >))'>";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << "   >))'>";
+		cout << string(winWide + 1 - 15, ' ') << "   >))'>";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << "    >))'>";
+		cout << string(winWide + 1 - 15, ' ') << "    >))'>";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << "   <'((<";
+		cout << string(winWide + 1 - 15, ' ') << "   <'((<";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << "  <'((<";
+		cout << string(winWide + 1 - 15, ' ') << "  <'((<";
 		Sleep(125);
 		system("cls");
-		for (int i = 0; i < winHeight + 1 - 4; i++)
+		for (int i = 0; i < winHeight - 6; i++)
 		{
 			cout << endl;
 		}
-		cout << string(winWide + 1 - 15, ' ') << "Loading..";
-		cout << string(winWide + 1 - 11, ' ') << " <'((<";
+		cout << string(winWide + 1 - 15, ' ') << " <'((<";
 		Sleep(125);
 	}
 	system("cls");
@@ -664,13 +599,17 @@ void loadingAnimation(int durationSeconds)
 void drawInventory()
 {
 	//Create a string with playername and 's inventory, as well as some others
-	string inventoryTitle = playerName + "'s inventory", input, damageString;
-	int additionForOddNames = 0, numDigits = 1, numDigitsXp = 1, numDigitsGold, quantityOrDamage, secondInput;
+	string inventoryTitle = playerName + "'s inventory", input, damageString, itemPrefix;
+	int additionForOddNames = 0, numDigits = 1, numDigitsXp = 1, numDigitsGold, quantityOrDamage, secondInput, levelReqColor;
 
 	//IF the inventory title (name) is odd compensate in positioning later on
 	if (inventoryTitle.length() % 2 == 1)
 	{
-		additionForOddNames = additionForOddNames + -1;
+		additionForOddNames = 1;
+	}
+	else
+	{
+		additionForOddNames = 0;
 	}
 
 	//Check the length of playerExperience and playerGold in character amount and not value 321 = 3 chars
@@ -694,15 +633,14 @@ top:
 
 	system("cls");
 	//Add some spaces
-	cout << endl << endl << endl << endl << endl << endl;
-	//Start drawing the inventory screen with spaces for each element to fit starting with drawing plaeyr name, level, xp and health as well as some ascii art
-	instantPrint(" _____________________________________________________*____________________________________________________");
-	instantPrint(" \\ |****************************************************************************************************| /");
-	printStringColor(7, " \\ |                     Level: " + to_string(playerLevel) + " " + to_string(playerExperience) + "/500" + string(14 - numDigitsXp - inventoryTitle.length() / 2, ' ') + "[" + inventoryTitle + "]" + string(4, ' ') + "HP: ", 4, string(playerHealth, '#'), 8, string(playerMaxHealth - playerHealth, '#'), 7, string(41 - playerMaxHealth + additionForOddNames - 1 - inventoryTitle.length() / 2, ' ') + "| /", true);
-	instantPrint(" /______________________________________________________________________________________________________\\");
-	instantPrint(" /                                                                                                        \\");
-	instantPrint(" |    Quality:        Name:              Quantity/Damage:     Type:         Description:                  |");
-	instantPrint(" I|______________________________________________________________________________________________________|I");
+	cout << endl << endl << endl << endl;
+	instantPrint(" ______________/_/(*)\\_\\______________ ");
+	instantPrint(" \\/---------------------------------\\/ ");
+	instantPrint("  |" + string(32 / 2 - inventoryTitle.length() / 2 - 1, ' ') + "[" + inventoryTitle + "]" + string(32 / 2 - inventoryTitle.length() / 2 - additionForOddNames, ' ') + "|  ");
+	instantPrint("  |---------------------------------|  ");
+	printStringColor(7, "  | Level: " + to_string(playerLevel) + string(17 - numDigitsGold, ' ') + "Gold: ", 6, to_string(playerGold), 7, " |  ", 7, "", true);
+	printStringColor(7, "  |  " + to_string(playerExperience) + "/500" + string(18 - playerMaxHealth - numDigitsXp, ' ') + "Health: ", 4, string(playerHealth, '#'), 8, string(playerMaxHealth - playerHealth, '#'), 7, " |  ", true);
+	instantPrint("  |---------------------------------|  ");
 
 	//For every item in the game
 	for (int i = 0; i < numberOfItems; i++)
@@ -737,18 +675,35 @@ top:
 				invSort++;
 			}
 
+			if (invItems[i].levelRequirement > playerLevel)
+			{
+				levelReqColor = 4;
+				itemPrefix = "(X)";
+			}
+			else
+			{
+				levelReqColor = 8;
+				itemPrefix = "";
+			}
+
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
 			//If no quality matched, make default color
+			if (invItems[i].weapon == false)
+				printStringColor(7, "  | " + itemPrefix + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].quality + " " + invItems[i].name, levelReqColor, string(23 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - invItems[i].quality.length() - to_string(invItems[i].levelRequirement).length() - itemPrefix.length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", true);
+			else
+				printStringColor(7, "  | " + itemPrefix, invItems[i].inventoryColor, invItems[i].quality + " " + invItems[i].name, levelReqColor, string(25 - invItems[i].name.length() - invItems[i].quality.length() - to_string(invItems[i].levelRequirement).length() - itemPrefix.length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", true);
 
-			printStringColor(7, " I|" + string(3, ' '), invItems[i].inventoryColor, invItems[i].quality, 7, string(16 - invItems[i].quality.length(), ' ') + invItems[i].name + string(19 - invItems[i].name.length(), ' ') + to_string(quantityOrDamage) + damageString + string(21 - numDigits, ' ') + invItems[i].type + string(14 - invItems[i].type.length(), ' ') + invItems[i].desc + string(29 - invItems[i].desc.length(), ' ') + "|I", 7, "", true);
+			printStringColor(7, "  | (" + invItems[i].type + ")", 7, string(29 - invItems[i].type.length(), ' '), 7, " |  ", 7, "", true);
+			instantPrint("  |---------------------------------|  ");
+			//printStringColor(7, "", 7, "", 7, "", 7, "", true);
 		}
 	}
 	//Set the firstInLoad to false to prevent items being added twice to array earlier in code
 	firstInvLoad = false;
-	//Continue the ascii art and print gold in the center, compensating for number of digits in gold amount
-	instantPrint(" |I|****************************************************************************************************|I|");
-	printStringColor(7, " | Gold: ", 6, to_string(playerGold), 7, string(95 - numDigitsGold, ' ') + "|", 7, "", true);
-	instantPrint(" |I|----------------------------------------------------------------------------------------------------|I|");
+
+	instantPrint("  |                                 |  ");
+	instantPrint("  |____________/_/(*)\\_\\____________|  ");
+	instantPrint("  \\/-------------------------------\\/  ");
 
 	printString("'Equip', 'Use', 'Delete' or 'Back'");
 
@@ -764,7 +719,7 @@ top:
 			//If the array slot is greater than 1
 			if (invSortPos[i] > 0)
 				//Print the array slot nubmer and the item name
-				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
+				printString("[" + to_string(i) + "] " + invItems[invSortPos[i]].name);
 		}
 		//Defines a goto point
 		inputSign();
@@ -785,11 +740,22 @@ top:
 			//If number is less than items in sorting array and also item is a weapon since this is the equip part else throw an error to the user
 			if (secondInput < invSort && invItems[invSortPos[secondInput]].weapon == true)
 			{
-				//Set equipedWeapon to the selected item
-				equipedWeapon = invSortPos[secondInput];
-				printString(invItems[invSortPos[secondInput]].name + " has been equiped!");
-				pause();
-				goto top;
+				if (playerLevel > invItems[invSortPos[secondInput]].levelRequirement)
+				{
+					//Set equipedWeapon to the selected item
+					equipedWeapon = invSortPos[secondInput];
+					printString(invItems[invSortPos[secondInput]].name + " has been equiped!");
+					pause();
+					goto top;
+				}
+				else
+				{
+					printString("You need to level up a few levels before you could use this.");
+					printString("Level requirement: " + to_string(invItems[invSortPos[secondInput]].levelRequirement));
+					printString("You are level: " + to_string(playerLevel) + " with " + to_string(playerExperience) + "/500 xp");
+					pause();
+					goto top;
+				}
 			}
 			else
 			{
@@ -809,7 +775,7 @@ top:
 			//If the array slot is greater than 1
 			if (invSortPos[i] > 0)
 				//Print the array slot nubmer and the item name
-				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
+				printString("[" + to_string(i) + "] " + invItems[invSortPos[i]].name);
 		}
 		inputSign();
 		cin >> secondInput;
@@ -854,7 +820,7 @@ top:
 			//If the array slot is greater than 1
 			if (invSortPos[i] > 0)
 				//Print the array slot nubmer and the item name
-				printString(to_string(i) + ". " + invItems[invSortPos[i]].name);
+				printString("[" + to_string(i) + "] " + invItems[invSortPos[i]].name);
 		}
 		inputSign();
 		cin >> secondInput;
@@ -882,7 +848,7 @@ top:
 
 			//Tell the user how much the user was healed for
 			printString("You have been healed for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " health points!");
-			
+
 			printString("Current HP " + to_string(playerHealth) + "/" + to_string(playerMaxHealth));
 		}
 		//If item is a comsumable, but user health is full. Tell the user
@@ -899,13 +865,13 @@ top:
 		pause();
 		goto top;
 	}
-	
+
 	//Used for leaving the inventory and does nothing
 	else if (input == "back" || input == "Back" || input == "BACK")
 	{
 
 	}
-	
+
 	//If input matched nothing, print error and return to top
 	else
 	{
@@ -939,7 +905,7 @@ void removeFromInvSortArray(int itemID)
 	{
 		//If it isn't the last slot in array set current slot to next slot
 		if (i != numberOfItems)
-		invSortPos[i] = invSortPos[i + 1];
+			invSortPos[i] = invSortPos[i + 1];
 		else
 		{
 
