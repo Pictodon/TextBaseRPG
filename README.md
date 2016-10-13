@@ -7,6 +7,8 @@
 
 >09-10/2016 16:43
 
+>09-13/2016 19:27
+
 #VIKTIG INFORMATION!
 
 Om ni vill göra en pause i spelet, använd INTE system("pause");
