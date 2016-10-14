@@ -167,9 +167,9 @@ differentClass:
 		printString("Just look at He-Man, he's the boss.");
 		break;
 	case 3:
-		printString("VIKTOR SKRIVER");
-		printString("VIKTOR SKRIVER");
-		printString("VIKTOR SKRIVER");
+		printString("Are you gonna pick a shaman? Really?");
+		printString("The shaman class gets nerfed every expansion, just so you know.");
+		printString("Very well, the shaman is a class that combiens the hunters range and the warriors strength.");
 		break;
 	default:
 		printString("That is not an option.");
