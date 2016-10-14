@@ -1,0 +1,31 @@
+bool talent[2];
+	int choice;
+	string textToPrint;
+
+	cin >> choice;
+
+	switch (choice) {
+	case 1:
+		talent[0] = true;
+		break;
+	case 2:
+		talent[1] = true;
+		break;
+	default:
+	}
+
+	cout << "[------------------]" << endl;
+	
+	for (int i = 0; i < 2; i++)
+	{
+		if (talent[0] == true)
+		{
+			textToPrint = "[Talent 1 [X] Talent 2[]]"; 
+				cout << textToPrint;
+		}
+		if (talent[1] == true)
+		{
+			textToPrint = "[Talent 1 [] Talent 2[X]]";
+			cout << textToPrint;
+		}
+	}
