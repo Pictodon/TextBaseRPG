@@ -4,6 +4,8 @@
 #include <string>
 #include <windows.h>
 #include <ctime>
+#include <conio.h>
+#include <ctype.h>
 
 //Define namespace
 using namespace std;
@@ -83,11 +85,9 @@ void main()
 	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
 
-	//nameGreeting();
+	nameGreeting();
 
-	//classMenu();
-
-	loadingAnimation(10);
+	classMenu();
 
 	//Random shiz
 	drawInventory();
@@ -157,7 +157,6 @@ differentClass:
 		printString("This class is especially good when you want to attack at a long range.");
 		printString("You have a really powerfull arrow that you can fire at your enemy. ");
 		printString("If you are easily scared by monsters then this is the class for you. ");
-
 		break;
 	case 2:
 		//not sure vad jag har skrivit xD
@@ -172,12 +171,12 @@ differentClass:
 		printString("VIKTOR SKRIVER");
 		printString("VIKTOR SKRIVER");
 		break;
-
-
 	default:
 		printString("That is not an option.");
 		pause();
-		goto failSaver;
+		system("cls");
+		cout << endl;
+		goto differentClass;
 	}
 	cout << endl;
 	//confirm the users choice
@@ -210,53 +209,10 @@ differentClass:
 }
 void choseFontSize()
 {
-	int fontInput = 18;
-
-top:
-
-	//Set font size
-	CONSOLE_FONT_INFOEX cfi;
-	cfi.cbSize = sizeof(cfi);
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;
-	cfi.dwFontSize.Y = fontInput;
-	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-
-	cout << "Font size: " + to_string(cfi.dwFontSize.Y) << endl;
-
-	cout << "Enter a number to change font size,\nand type the current font size to proceed" << endl;
-
-	cin >> fontInput;
-
-	//If input is not a number, go to top and clear cin
-	if (!cin)
-	{
+	do {
 		system("cls");
-		cin.clear();
-		string failSaver;
-		getline(cin, failSaver);
-		goto top;
-	}
-
-	//Just continue if input is same as current font otherwise update font
-	if (fontInput == cfi.dwFontSize.Y)
-	{
-		system("cls");
-	}
-	else if (fontInput > 14 && fontInput <= 26)
-	{
-		cfi.dwFontSize.Y = fontInput;
-		system("cls");
-		goto top;
-	}
-	else
-	{
-		cout << "No, just. No." << endl;
-		fontInput = 18;
-		system("pause");
-		system("cls");
-		goto top;
-	}
+		cout << "If you want to change the font size, do so now.\nPress 1 to proceed." << endl;
+	} while (_getch() != '1');
 }
 
 //Function to asign default color values based on item quality
@@ -330,7 +286,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 	//Add every stirng together and caculate string length to center content
 	int totalLength = stringInput.length() + stringInput2.length() + stringInput3.length() + stringInput4.length();
 	int spacing = winWide / 2 - totalLength / 2;
-	int rainbowColors[5]{ 4, 6, 2, 1, 5 };
+	int rainbowColors[6]{ 12, 14, 10, 11, 9, 13 };
 	int colorLoop = 0;
 	bool isRainbow = false;
 
@@ -355,7 +311,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		{
 			setTextColor(rainbowColors[colorLoop]);
 			colorLoop++;
-			if (colorLoop > 4)
+			if (colorLoop > 5)
 			{
 				colorLoop = 0;
 			}
@@ -385,7 +341,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		{
 			setTextColor(rainbowColors[colorLoop]);
 			colorLoop++;
-			if (colorLoop > 4)
+			if (colorLoop > 5)
 			{
 				colorLoop = 0;
 			}
@@ -415,7 +371,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		{
 			setTextColor(rainbowColors[colorLoop]);
 			colorLoop++;
-			if (colorLoop > 4)
+			if (colorLoop > 5)
 			{
 				colorLoop = 0;
 			}
@@ -445,7 +401,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		{
 			setTextColor(rainbowColors[colorLoop]);
 			colorLoop++;
-			if (colorLoop > 4)
+			if (colorLoop > 5)
 			{
 				colorLoop = 0;
 			}
@@ -599,8 +555,8 @@ void loadingAnimation(int durationSeconds)
 void drawInventory()
 {
 	//Create a string with playername and 's inventory, as well as some others
-	string inventoryTitle = playerName + "'s inventory", input, damageString, itemPrefix;
-	int additionForOddNames = 0, numDigits = 1, numDigitsXp = 1, numDigitsGold, quantityOrDamage, secondInput, levelReqColor;
+	string inventoryTitle = playerName + "'s inventory", input, damageString;
+	int additionForOddNames = 0, numDigits = 1, numDigitsXp = 1, numDigitsGold, numDigitsPlayerLevel, quantityOrDamage, secondInput, levelReqColor;
 
 	//IF the inventory title (name) is odd compensate in positioning later on
 	if (inventoryTitle.length() % 2 == 1)
@@ -627,19 +583,25 @@ void drawInventory()
 		numDigitsGold = 2;
 	else
 		numDigitsGold = 1;
+	if (playerLevel > 9)
+		numDigitsPlayerLevel = 2;
+	else
+		numDigitsPlayerLevel = 1;
 
 	//Defines a goto point
 top:
 
 	system("cls");
+
 	//Add some spaces
 	cout << endl << endl << endl << endl;
 	instantPrint(" ______________/_/(*)\\_\\______________ ");
 	instantPrint(" \\/---------------------------------\\/ ");
 	instantPrint("  |" + string(32 / 2 - inventoryTitle.length() / 2 - 1, ' ') + "[" + inventoryTitle + "]" + string(32 / 2 - inventoryTitle.length() / 2 - additionForOddNames, ' ') + "|  ");
 	instantPrint("  |---------------------------------|  ");
-	printStringColor(7, "  | Level: " + to_string(playerLevel) + string(17 - numDigitsGold, ' ') + "Gold: ", 6, to_string(playerGold), 7, " |  ", 7, "", true);
-	printStringColor(7, "  |  " + to_string(playerExperience) + "/500" + string(18 - playerMaxHealth - numDigitsXp, ' ') + "Health: ", 4, string(playerHealth, '#'), 8, string(playerMaxHealth - playerHealth, '#'), 7, " |  ", true);
+	printStringColor(7, "  | Level: " + to_string(playerLevel) + " " + to_string(playerExperience) + "/500" + string(13 - numDigitsGold - numDigitsXp - numDigitsPlayerLevel, ' ') + "Gold: ", 6, to_string(playerGold), 7, " |  ", 7, "", true);
+	printStringColor(7, "  |  " + string(26 - playerMaxHealth, ' ') + "HP: ", 4, string(playerHealth, '#'), 8, string(playerMaxHealth - playerHealth, '#'), 7, " |  ", true);
+	//printStringColor(7, "  |  " + string(26 - playerMaxHealth, ' ') + "HP: ", 8, string(playerMaxHealth - playerHealth, '#'), 4, string(playerHealth, '#'), 7, " |  ", true);
 	instantPrint("  |---------------------------------|  ");
 
 	//For every item in the game
@@ -678,24 +640,21 @@ top:
 			if (invItems[i].levelRequirement > playerLevel)
 			{
 				levelReqColor = 4;
-				itemPrefix = "(X)";
 			}
 			else
 			{
 				levelReqColor = 8;
-				itemPrefix = "";
 			}
 
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
 			//If no quality matched, make default color
 			if (invItems[i].weapon == false)
-				printStringColor(7, "  | " + itemPrefix + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].quality + " " + invItems[i].name, levelReqColor, string(23 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - invItems[i].quality.length() - to_string(invItems[i].levelRequirement).length() - itemPrefix.length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", true);
+				printStringColor(7, "  | " + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(24 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - to_string(invItems[i].levelRequirement).length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", true);
 			else
-				printStringColor(7, "  | " + itemPrefix, invItems[i].inventoryColor, invItems[i].quality + " " + invItems[i].name, levelReqColor, string(25 - invItems[i].name.length() - invItems[i].quality.length() - to_string(invItems[i].levelRequirement).length() - itemPrefix.length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", true);
+				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(26 - invItems[i].name.length() - to_string(invItems[i].levelRequirement).length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", true);
 
-			printStringColor(7, "  | (" + invItems[i].type + ")", 7, string(29 - invItems[i].type.length(), ' '), 7, " |  ", 7, "", true);
+			printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(28 - invItems[i].type.length() - invItems[i].quality.length(), ' ') + " |  ", 7, "", true);
 			instantPrint("  |---------------------------------|  ");
-			//printStringColor(7, "", 7, "", 7, "", 7, "", true);
 		}
 	}
 	//Set the firstInLoad to false to prevent items being added twice to array earlier in code
