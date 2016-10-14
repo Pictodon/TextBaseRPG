@@ -26,6 +26,7 @@ void grantItem(int itemID, int quantity);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, bool instant);
 void loadingAnimation(int durationSeconds);
 void asignDefaultRarityColor();
+void travelSystem()
 
 //Global vars
 //Vars used for loading
@@ -854,6 +855,31 @@ void grantItem(int itemID, int quantity)
 
 	//Tell the program how many sorted values there is in total
 	invSort++;
+}
+void travelSystem()
+{
+	int input;
+	instantPrint("|**travel****system**|");
+	instantPrint("|enter text here0....|");
+	instantPrint("|enter text here1....|");
+	instantPrint("|enter text here2....|");
+	instantPrint("|enter text here3....|");
+	instantPrint("**********************");
+
+	inputSign();
+	cin >> input;
+	switch (input)
+	{
+	case 1: 
+		printString("hello madfaka welcome");
+		break;
+	case 2:
+		printString("hello madfaka welcome");
+		break;
+	default:
+		printString("hello madfaka welcome");
+		break;
+	}
 }
 
 //Used when removing an inventory item
