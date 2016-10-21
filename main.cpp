@@ -29,7 +29,21 @@ void asignDefaultRarityColor();
 void battle(int enemyType);
 void death();
 void levelUpCheck();
+void printTalentUI(int firstTalent, int secondTalent, string talentNames[4]);
 void talents();
+string genRandomString(int stringSize);
+void classPundare();
+void classAlkis();
+void classGangster();
+void skanstull();
+void rinkeby();
+void falafelShop();
+void plattan();
+void shadyGuy();
+void cigoteket();
+void djKhaled();
+void classCheck();
+void NK();
 
 //Global vars
 //Vars used for loading
@@ -37,14 +51,14 @@ bool firstInvLoad = true;
 int winHeight = 0;
 int winWide = 0;
 //Inventory related vars
-int numberOfItems = 10;
+int numberOfItems = 11;
 int invSort = 1;
-int equipedWeapon;
+int equipedWeapon = 1;
 int invSortPos[11];
 int defaultColor = 7;
 //Player related vars
 string playerName = "";
-int playerClass;
+int playerClass = 1;
 int playerGold = 0;
 int playerLevel = 1;
 int playerExperience = 0;
@@ -91,15 +105,22 @@ void main()
 {
 	//Assign name and info for every item in the game
 	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
-	invItems[6].name = "dada"; invItems[6].quantity = 1; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100;
+	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
 	invItems[5].name = "asdsdadsad"; invItems[5].quantity = 1; invItems[5].quality = "Common"; invItems[5].buyPrice = 20;
 	invItems[7].name = "as31221dsdadsad"; invItems[7].quantity = 0; invItems[7].quality = "Legendary"; invItems[7].buyPrice = 10;
 	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
-
-	enemy[0].health = 10; enemy[0].name = "Skeletal"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 10; enemy[0].hasDrop = true; enemy[0].dropAmount = 2; enemy[0].potentialLoot = 2;
-	enemy[1].health = 16; enemy[1].name = "Skeletal King"; enemy[1].damage = 2; enemy[1].xpGain = 100, enemy[1].maxHealth = 16; enemy[1].drop = 9; enemy[1].hasDrop = true; enemy[1].dropAmount = 1; enemy[1].potentialLoot = 4;
-
+	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
+	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
+	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
+	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
+	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
+	//MOBS
+	enemy[0].health = 10; enemy[0].name = "Subwayguard"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 2; enemy[0].hasDrop = true; enemy[0].dropAmount = 1; enemy[0].potentialLoot = 2;
+	enemy[1].health = 11; enemy[1].name = "Ken Bone"; enemy[1].damage = 1; enemy[1].xpGain = 100, enemy[1].maxHealth = 11; enemy[1].drop = 2; enemy[1].hasDrop = true; enemy[1].dropAmount = 1; enemy[1].potentialLoot = 2;
+	enemy[2].health = 10; enemy[2].name = "Bartender"; enemy[2].damage = 1; enemy[2].xpGain = 100, enemy[2].maxHealth = 10; enemy[2].drop = 2; enemy[2].hasDrop = true; enemy[2].dropAmount = 1; enemy[2].potentialLoot = 2;
+	//ShopKeepers
 	shopKeeper[0].name = "Oskar"; shopKeeper[0].greeting = "Hello, newfag"; shopKeeper[0].items[0] = 4; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
+	shopKeeper[1].name = "NK"; shopKeeper[1].greeting = "Hello, welcome to expensiveShop.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2;
 
 	asignDefaultRarityColor();
 
@@ -147,6 +168,10 @@ void nameGreeting()
 	inputSign();
 	cin >> playerName;
 	system("cls");
+	if (playerName == "motherLoad")
+	{
+		grantItem(10, 1);
+	}
 
 	cout << endl;
 	printString("Was poppin', " + playerName + "?");
@@ -168,13 +193,13 @@ differentClass:
 	printString("What would you like to play?");
 
 	//Set text color to 2 and print
-	printStringColor(7, "[1] ", 2, "Hunter", 7, "", 7, "", false);
+	printStringColor(7, "[1] ", 2, "Pundare", 7, "", 7, "", false);
 
 	//Set text color to 8 and print
-	printStringColor(7, "[2] ", 8, "Warrior", 7, "", 7, "", false);
+	printStringColor(7, "[2] ", 8, "Alkis", 7, "", 7, "", false);
 
 	//Set text color to 9 and print
-	printStringColor(7, "[3] ", 9, "Shaman", 7, "", 7, "", false);
+	printStringColor(7, "[3] ", 9, "Gangster", 7, "", 7, "", false);
 
 	//Add the sign > where the input is supposed to go
 	inputSign();
@@ -190,6 +215,7 @@ differentClass:
 		printString("This class is especially good when you want to attack at a long range.");
 		printString("You have a really powerful arrow that you can fire at your enemy. ");
 		printString("If you are easily scared by monsters then this is the class for you. ");
+		
 		break;
 	case 2:
 		//not sure vad jag har skrivit xD
@@ -225,6 +251,8 @@ differentClass:
 	case 1:
 		printString("Then let's gooooo!");
 		pause();
+		system("cls");
+		classCheck();
 		break;
 	case 2:
 		printString("Okay then.");
@@ -843,7 +871,7 @@ top:
 	system("cls");
 	cout << endl;
 
-	instantPrint(shopKeeper[shopId].name + "'s shop");
+	instantPrint(shopKeeper[shopId].name);
 	instantPrint("\\\\--// -- -- -- -- -- -- -- -- -- -- -- -- \\\\--//  ");
 	instantPrint("     ||  Name:                Price:            ||      ");
 
@@ -853,7 +881,7 @@ top:
 		{
 			if (invItems[shopKeeper[shopId].items[n]].buyPrice > 99)
 				priceCharCount = 3;
-			if (invItems[shopKeeper[shopId].items[n]].buyPrice > 9)
+			else if (invItems[shopKeeper[shopId].items[n]].buyPrice > 9)
 				priceCharCount = 2;
 			else
 				priceCharCount = 1;
@@ -885,11 +913,39 @@ top:
 		{
 			if (shopKeeper[shopId].items[i] > 0)
 			{
-				printString("[" + to_string(numberBuy) + "]" + invItems[shopKeeper[shopId].items[i]].name);
+				printString("[" + to_string(numberBuy) + "] " + invItems[shopKeeper[shopId].items[i]].name);
 				numberBuy++;
 			}
-
 		}
+		inputSign();
+		cin >> secondInput;
+		//Cleares the cin if input isn't numreric
+		if (!cin)
+		{
+			cin.clear();
+			string ignore;
+			getline(cin, ignore);
+			goto top;
+		}
+
+		//If input is between 0 and numberOfItems
+		if (secondInput < numberOfItems && secondInput > 0)
+		{
+			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item
+			if (playerGold > invItems[shopKeeper[shopId].items[secondInput]].buyPrice)
+			{
+				playerGold = playerGold - invItems[shopKeeper[shopId].items[secondInput]].buyPrice;
+
+				grantItem(shopKeeper[shopId].items[secondInput], 1);
+
+				printString(invItems[shopKeeper[shopId].items[secondInput]].name + " has been bought successfully!");
+			}
+			else
+			{
+				printStringColor(7, "You don't have enough gold to buy this item! Price: ", 6, to_string(invItems[shopKeeper[shopId].items[secondInput]].buyPrice), 7, " your gold: ", 6, to_string(playerGold), false);
+			}
+		}
+
 		pause();
 		goto top;
 	}
@@ -1093,221 +1149,296 @@ void levelUpCheck()
 	}
 }
 
+void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
+{
+	instantPrint("-V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V-");
+	instantPrint("|                 Talents                 |");
+	instantPrint("|                                         |");
+	instantPrint("|    [1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[2] " + talentNames[1] + string(17 - talentNames[1].length(), ' ') + "|");
+	instantPrint("|    [3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[4] " + talentNames[3] + string(17 - talentNames[3].length(), ' ') + "|");
+	instantPrint("|                                         |");
+	instantPrint("-v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v-");
+}
+
 void talents()
 {
 
-	int talentOne;
-	int talentTwo;
-	int talentThree;
+	int talentOne = 0, talentTwo = 0, secondInput;
 
-talentTop1:
-	system("cls");
+	string input, talentNames[4], classOneTalents[4] = { "Vit", "makt", ",", "negerslakt" }, classTwoTalents[4] = { "dsada", "das", "dasdsa", "asd" }, classThreeTalents[4] = { "23d", "23d", "32d", "32d" };
 
-	instantPrint("_______________________________________________");
-	instantPrint("[---------------------------------------------]");
-	instantPrint("|       TalentOne1 - TalentOne2 - TalentOne3  |");
-	instantPrint("|                                             |");
-	instantPrint("|           []           []           []      |");
-	instantPrint("|                                             |");
-	instantPrint("[---------------------------------------------]");
-	printString("[1] Pick TalentOne1 [2] Pick TalentOne2 [3] Pick TalentOne3");
-	inputSign();
-	cin >> talentOne;
+top:
 
-	switch (talentOne) {
+	switch (playerClass)
+	{
 	case 1:
-		talentOne = 1;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("|       TalentOne1 - TalentOne2 - TalentOne3  |");
-		instantPrint("|                                             |");
-		instantPrint("|           [x]          []           []      |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
+		for (int i = 0; i < 4; i++)
+		{
+			talentNames[i] = classOneTalents[i];
+		}
 		break;
 	case 2:
-		talentOne = 2;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("|       TalentOne1 - TalentOne2 - TalentOne3  |");
-		instantPrint("|                                             |");
-		instantPrint("|           []           [x]          []      |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
+		for (int i = 0; i < 4; i++)
+		{
+			talentNames[i] = classTwoTalents[i];
+		}
 		break;
 	case 3:
-		talentOne = 3;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("|       TalentOne1 - TalentOne2 - TalentOne3  |");
-		instantPrint("|                                             |");
-		instantPrint("|           []           []           [x]     |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
+		for (int i = 0; i < 4; i++)
+		{
+			talentNames[i] = classThreeTalents[i];
+		}
 		break;
 	default:
-		printString("That's not an option");
-		pause();
-		goto talentTop1;
-		break;
+		classMenu();
+		goto top;
 	}
 
-talentTop2:
 	system("cls");
 
-	instantPrint("_______________________________________________");
-	instantPrint("[---------------------------------------------]");
-	instantPrint("|       TalentTwo1 - TalentTwo2 - TalentTwo3  |");
-	instantPrint("|                                             |");
-	instantPrint("|           []           []            []     |");
-	instantPrint("|                                             |");
-	instantPrint("|---------------------------------------------]");
-	printString("[1] Pick TalentTwo1 [2] Pick TalentTwo2 [3] Pick TalentTwo3");
+	printTalentUI(0, 0, talentNames);
+
+	printString("'select', 'info', 'back'");
 	inputSign();
-	cin >> talentTwo;
+	cin >> input;
 
-	switch (talentTwo) {
-	case 1:
-		talentTwo = 1;
+	if (input == "select" || input == "Select" || input == "SELECT")
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			printString("[" + to_string(i + 1) + "] " + talentNames[i]);
+		}
+		printString("Select one of the talents above to select:");
+
+		inputSign();
+		cin >> secondInput;
+		switch (secondInput)
+		{
+		case 1:
+			talentOne = 1;
+			printString(talentNames[0] + " has been selected successfully!");
+			pause();
+			goto top;
+		case 2:
+			talentTwo = 2;
+			printString(talentNames[1] + " has been selected successfully!");
+			pause();
+			goto top;
+		case 3:
+			talentTwo = 3;
+			printString(talentNames[2] + " has been selected successfully!");
+			pause();
+			goto top;
+		case 4:
+			talentTwo = 1;
+			printString(talentNames[3] + " has been selected successfully!");
+			pause();
+			goto top;
+		default:
+			printString("Invalid input!");
+			pause();
+			system("cls");
+			goto top;
+		}
+	}
+	else if (input == "info" || input == "Info" || input == "INFO")
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			printString("[" + to_string(i + 1) + "] " + talentNames[i]);
+		}
+		printString("Select one of the talents above to select:");
+
+		switch (secondInput)
+		{
+		case 1:
+			printString(talentNames[0] + " has been selected successfully!");
+			pause();
+			goto top;
+			break;
+		case 2:
+			printString(talentNames[1] + " has been selected successfully!");
+			pause();
+			goto top;
+			break;
+		case 3:
+			printString(talentNames[2] + " has been selected successfully!");
+			pause();
+			goto top;
+			break;
+		case 4:
+			printString(talentNames[4] + " has been selected successfully!");
+			pause();
+			goto top;
+			break;
+		default:
+			printString("Invalid input!");
+			pause();
+			system("cls");
+			goto top;
+		}
+	}
+	else if (input == "back" || input == "Back" || input == "BACK")
+	{
 		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("|     TalentTwo1 - TalentTwo2 - TalentTwo3    |");
-		instantPrint("|                                             |");
-		instantPrint("|           [x]          []            []     |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
+	}
+	else
+	{
+		printString("That is not a valid option!");
 		pause();
 		system("cls");
-		break;
-	case 2:
-		talentTwo = 2;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("|     TalentTwo1 - TalentTwo2 - TalentTwo3    |");
-		instantPrint("|                                             |");
-		instantPrint("|           []           [x]           []     |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
-		break;
-	case 3:
-		talentTwo = 3;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("|     TalentTwo1 - TalentTwo2 - TalentTwo3    |");
-		instantPrint("|                                             |");
-		instantPrint("|         []           []            [x]      |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
-		break;
-	default:
-		printString("That's not an option");
-		break;
-		goto talentTop2;
+		goto top;
+	}
+}
+
+string genRandomString(int stringSize)
+{
+	char availChars[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+	int stringLength = sizeof(availChars) - 1;
+
+	char currentChar = availChars[rand() % stringLength];
+
+	string currentString;
+
+	while (currentString.length() != 10)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (currentString[i] == currentChar)
+			{
+				currentChar = availChars[rand() % stringLength];
+			}
+			else
+			{
+				currentString += currentChar;
+				currentChar = availChars[rand() % stringLength];
+			}
+		}
 	}
 
-talentTop3:
-	system("cls");
-
-	instantPrint("_______________________________________________");
-	instantPrint("[---------------------------------------------]");
-	instantPrint("| TalentThree1 - TalentThree2 - TalentThree 3 |");
-	instantPrint("|                                             |");
-	instantPrint("|         []           []            []       |");
-	instantPrint("|                                             |");
-	instantPrint("|---------------------------------------------]");
-	printString("[1] Pick TalentThree1 [2] Pick TalentThree2 [3] Pick TalentThree3");
-	inputSign();
-	cin >> talentThree;
-
-	switch (talentThree) {
-	case 1:
-		talentThree = 1;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("| TalentThree1 - TalentThree2 - TalentThree 3 |");
-		instantPrint("|                                             |");
-		instantPrint("|           [x]          []           []      |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
-		break;
-	case 2:
-		talentThree = 2;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("| TalentThree1 - TalentThree2 - TalentThree 3 |");
-		instantPrint("|                                             |");
-		instantPrint("|           []           [x]          []      |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
-		break;
-	case 3:
-		talentThree = 3;
-		system("cls");
-		instantPrint("_______________________________________________");
-		instantPrint("[---------------------------------------------]");
-		instantPrint("| TalentThree1 - TalentThree2 - TalentThree 3 |");
-		instantPrint("|                                             |");
-		instantPrint("|           []           []           [x]     |");
-		instantPrint("|                                             |");
-		instantPrint("[---------------------------------------------]");
-		pause();
-		system("cls");
-		break;
-	default:
-		printString("That's not an option");
-		pause();
-		goto talentTop3;
-		break;
-	}
-	system("cls");
-	instantPrint("These are your talents:");
-	cout << endl;
-	if (talentOne == 1)
-		printString("talentOne1");
-	else if (talentOne == 2)
-		printString("talentOne2");
-	else if (talentOne == 3)
-		printString("talentOne3");
-	cout << endl;
-	if (talentTwo == 1)
-		printString("talentTwo1");
-	else if (talentTwo == 2)
-		printString("talentTwo2");
-	else if (talentTwo == 3)
-		printString("talentTwo3");
-	cout << endl;
-	if (talentThree == 1) {
-		printString("talentThree1");
-	}
-	else if (talentThree == 2) {
-		printString("talentThree2");
-	}
-	else if (talentThree == 3) {
-		printString("talentThree3");
-	}
-	cout << endl;
+	return currentString;
+}
+void classPundare()
+{
+	printString("You wake up in the subway and don't remember anything.");
+	printString("You think to yourself 'dang dawg that vape hit was radical'.");
+	printString("You look up and see a subwayguard charging at you.");
+	printString("He swings a baton at you and you duckish (dodge) the baton.");
 	pause();
 	system("cls");
+	printString("FIGHT!");
+	pause();
+	battle(0);
+	printString("Let's check out your inventory");
+	pause();
+	drawInventory();
+	system("cls");
+	printString("After the fight you decide to go to skanstull");
+	pause();
+	skanstull();
+}
+
+void classAlkis()
+{
+	printString("You wake up at Johnny's Pizzeria");
+	printString("You have a intense headache ");
+	printString("You order some adult potion ");
+	printString("The bartender won't give you the potion");
+	pause();
+	system("cls");
+	printString("FIGHT!");
+	pause();
+	battle(2);
+	printString("Let's check out your inventory");
+	pause();
+	drawInventory();
+	system("cls");
+	printString("After the fight you decide to go to skanstull");
+	pause();
+	skanstull();
+}
+
+void classGangster()
+{
+	printString("You decide to robbish (rob) an old lady on the subway.");
+	printString("WALLA!");
+	printString("It's not an old lady, it's Ken Bone.");
+	printString("He flirts with you.");
+	pause();
+	system("cls");
+	printString("FIGHT");
+	pause();
+	battle(1);
+	printString("Let's check out your inventory");
+	pause();
+	drawInventory();
+	system("cls");
+	printString("After the fight you decide to go to skanstull");
+	pause();
+	skanstull();
+}
+
+void classCheck()
+{
+	switch (playerClass)
+	{
+	case 1:
+		classPundare();
+		break;
+
+	case 2:
+		classAlkis();
+		break;
+
+	case 3:
+		classGangster();
+		break;
+
+	default:
+		void classMenu();
+		break;
+	}
+
+
+}
+void skanstull()
+{
+top:
+	system("cls");
+	int choice;
+	printString("Welcome to Skanstull(Your local train station)");
+	printString("Where would you like to go?");
+	printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC");
+	inputSign();
+	cin >> choice;
+	switch (choice)
+	{
+	case 1:
+		//NK shop
+		NK();
+		break;
+	case 2:
+		//Go to Rinkeby
+		break;
+	case 3:
+		//go to TC
+		break;
+	case 4:
+		if (invItems[2].quantity > 0)
+			printString("Travel to Cigoteket at Torsgatan 36?");
+		printString("Yes");
+		printString("No");
+		break;
+	default:
+		printString("Wrong input!");
+		pause();
+		goto top;
+		
+	}
+}
+void NK()
+{
+	shop(1);
+	skanstull();
 }
