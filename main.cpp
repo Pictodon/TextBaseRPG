@@ -872,6 +872,8 @@ top:
 		numDigitsGold = 1;
 
 	printStringColor(7, string(40 - numDigitsGold, ' ') + "Gold: ", 6, to_string(playerGold), 7, "", 7, "", true);
+	printString(shopKeeper[shopId].greeting);
+
 	printString("'Buy', 'Sell', or 'Back'");
 
 	inputSign();
