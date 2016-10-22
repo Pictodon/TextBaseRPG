@@ -52,7 +52,7 @@ Där andra "String" är vad som skrivs i konsollen av programmet
 
 >**instantPrint("");**
 
->**printStringColor(0-16, "", 0-16, "", 0-16, "", 0-16, "", false/true true is instant text);**
+>**printStringColor(0-16, "", 0-16, "", 0-16, "", 0-16, "", 0-16, "", false/true true is instant text);**
 
 >**setTextColor(0-16'16=rainbow text');**
 
