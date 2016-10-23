@@ -59,7 +59,7 @@ int invSortPos[11];
 int defaultColor = 7;
 //Player related vars
 string playerName = "";
-int playerClass = 1;
+int playerClass = 0;
 int playerGold = 0;
 int playerLevel = 1;
 int playerExperience = 0;
@@ -137,8 +137,6 @@ void main()
 
 	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
-
-	talents();
 
 	nameGreeting();
 
@@ -691,8 +689,8 @@ top:
 	instantPrint("  |____________/_/(*)\\_\\____________|  ");
 	instantPrint("  \\/-------------------------------\\/  ");
 
-	printString("'Equip', 'Use', 'Delete' or 'Back'");
-
+	printString("'Equip', 'Use', 'Delete',");
+	printString("'Talents' or 'Back'");
 	inputSign();
 	cin >> input;
 
@@ -751,6 +749,12 @@ top:
 			}
 		}
 
+	}
+	else if (input == "talents" || input == "Talents" || input == "TALENTS")
+	{
+		talents();
+		system("cls");
+		goto top;
 	}
 	//Used when removing an item from the inventory
 	else if (input == "delete" || input == "Delete" || input == "DELETE")
@@ -1042,6 +1046,13 @@ top:
 	{
 
 	}
+	else
+	{
+		printString("That is not a valid input!");
+		pause();
+		system("cls");
+		goto top;
+	}
 }
 
 //Used when removing an inventory item
@@ -1254,7 +1265,7 @@ top:
 
 	system("cls");
 
-	printTalentUI(0, 0, talentNames);
+	printTalentUI(talentOne, talentTwo, talentNames);
 
 	printString("'select', 'info', 'back'");
 	inputSign();
@@ -1381,7 +1392,7 @@ void classPundare()
 {
 	cout << endl;
 	printString("You wake up in the subway and don't remember anything.");
-	printString("You think to yourself 'dang dawg that vape hit was radical'.");
+	printString("You think to yourself 'dang dawg that vape hit was radical.");
 	printString("You look up and see a subwayguard charging at you.");
 	printString("He swings a baton at you and you duckish (dodge) the baton.");
 	pause();
