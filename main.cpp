@@ -18,6 +18,7 @@ void screenResolution();
 void setTextColor(int col);
 void nameGreeting();
 void choseFontSize();
+void greeting();
 void classMenu();
 void inputSign();
 void drawInventory();
@@ -160,6 +161,8 @@ void main()
 
 	screenResolution();
 
+	greeting();
+
 	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
 
@@ -296,6 +299,29 @@ void choseFontSize()
 		system("cls");
 		cout << "If you want to change the font size, do so now.\nPress 1 to proceed." << endl;
 	} while (_getch() != '1');
+}
+
+void greeting()
+{
+	instantPrint("   __  __    _                                       _        ");
+	instantPrint("  / /_/ /_  (_)____   ____ _____ _____ ___  ___     (_)____   ");
+	instantPrint(" / __/ __ \\/ / ___/  / __ `/ __ `/ __ `__ \\/ _ \\   / / ___/   ");
+	instantPrint("/ /_/ / / / (__  )  / /_/ / /_/ / / / / / /  __/  / (__  )    ");
+	instantPrint("\\__/_/ /_/_/____/   \\__, /\\__,_/_/ /_/ /_/\\___/  /_/____/     ");
+	instantPrint("                   /____/                                     ");
+
+	setTextColor(6);
+
+	instantPrint("         __    _ __   ");
+	instantPrint("   _____/ /_  (_) /_  ");
+	instantPrint("  / ___/ __ \\/ / __/  ");
+	instantPrint(" (__  ) / / / / /_    ");
+	instantPrint("/____/_/ /_/_/\\__/    ");
+	instantPrint("                                        ");
+	
+	setTextColor(7);
+	
+	pause();
 }
 
 //Function to asign default color values based on item quality
@@ -940,7 +966,7 @@ top:
 		if (secondInput < numberOfItems && secondInput > 0)
 		{
 			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item
-			if (secondInput < invSort && invItems[invSortPos[secondInput]].quantity > 0 && secondInput != equipedWeapon && invItems[invSortPos[secondInput]].questItem == false)
+			if (secondInput < invSort && invItems[invSortPos[secondInput]].quantity > 0 && invSortPos[secondInput] != equipedWeapon && invItems[invSortPos[secondInput]].questItem == false)
 			{
 				printString(invItems[invSortPos[secondInput]].name + " has been removed successfully!");
 
