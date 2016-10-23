@@ -138,6 +138,8 @@ void main()
 	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
 
+	drawInventory();
+
 	nameGreeting();
 
 	classMenu();
@@ -170,10 +172,6 @@ void nameGreeting()
 	inputSign();
 	cin >> playerName;
 	system("cls");
-	if (playerName == "motherLoad")
-	{
-		grantItem(10, 1);
-	}
 
 	cout << endl;
 	printString("Was poppin', " + playerName + "?");
@@ -581,7 +579,7 @@ void screenResolution()
 void drawInventory()
 {
 	//Create a string with playername and 's inventory, as well as some others
-	string inventoryTitle = playerName + "'s inventory", input, damageString;
+	string inventoryTitle = playerName + "'s inventory", input, damageString, levelReqText;
 	int additionForOddNames = 0, numDigits = 1, numDigitsXp = 1, numDigitsGold, numDigitsPlayerLevel, quantityOrDamage, secondInput, levelReqColor;
 
 	//IF the inventory title (name) is odd compensate in positioning later on
@@ -665,20 +663,23 @@ top:
 			if (invItems[i].levelRequirement > playerLevel)
 			{
 				levelReqColor = 4;
+				levelReqText = "Lvl. " + to_string(invItems[i].levelRequirement);
 			}
 			else
 			{
 				levelReqColor = 8;
+				levelReqText = "";
 			}
 
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
 			//If no quality matched, make default color
 			if (invItems[i].weapon == false)
-				printStringColor(7, "  | " + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(24 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - to_string(invItems[i].levelRequirement).length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", 7, "", true);
+				printStringColor(7, "  | " + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(29 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
 			else
-				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(26 - invItems[i].name.length() - to_string(invItems[i].levelRequirement).length(), ' ') + "Lvl. " + to_string(invItems[i].levelRequirement), 7, " |  ", 7, "", true);
+				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(31 - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
 
-			printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(28 - invItems[i].type.length() - invItems[i].quality.length(), ' ') + " |  ", 7, "", 7, "", true);
+			printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " |  ", true);
+			instantPrint("  | " + invItems[i].desc + string(31 - invItems[i].desc.length(), ' ') + " |  ");
 			instantPrint("  |---------------------------------|  ");
 		}
 	}
@@ -877,7 +878,7 @@ top:
 /// </summary>
 void grantItem(int itemID, int quantity)
 {
-	bool update = false;
+	bool update = true;
 
 	//Set item quantity to current quantity plus 1
 	invItems[itemID].quantity = invItems[itemID].quantity + quantity;
@@ -885,7 +886,7 @@ void grantItem(int itemID, int quantity)
 	for (int i = 0; i < numberOfItems; i++)
 	{
 		if (invSortPos[i] == itemID)
-			update = true;
+			update = false;
 	}
 	if (update)
 	{
@@ -932,7 +933,7 @@ top:
 				priceCharCount = 2;
 			else
 				priceCharCount = 1;
-			printStringColor(7, "  ||   ", invItems[shopKeeper[shopId].items[n]].inventoryColor, invItems[shopKeeper[shopId].items[n]].name + string(21 - invItems[shopKeeper[shopId].items[n]].name.length(), ' '), 6, to_string(invItems[shopKeeper[shopId].items[n]].buyPrice), 7, string(17 - priceCharCount, ' ') + "  ||    ", 7, "", true);
+			printStringColor(7, "  ||   ", invItems[shopKeeper[shopId].items[n]].inventoryColor, invItems[shopKeeper[shopId].items[n]].name + string(21 - invItems[shopKeeper[shopId].items[n]].name.length(), ' '), 6, to_string(invItems[shopKeeper[shopId].items[n]].buyPrice), 7, string(15 - priceCharCount, ' ') + "  ||    ", 7, "", true);
 		}
 	}
 	instantPrint("//--\\\\ -- -- -- -- -- -- -- -- -- -- -- -- //--\\\\  ");
@@ -1062,11 +1063,11 @@ void removeFromInvSortArray(int itemID)
 	for (int i = itemID; i < numberOfItems + 1; i++)
 	{
 		//If it isn't the last slot in array set current slot to next slot
-		if (i != numberOfItems)
+		if (i != numberOfItems - 1)
 			invSortPos[i] = invSortPos[i + 1];
 		else
 		{
-
+			invSortPos[numberOfItems - 1] = - 1;
 		}
 	}
 	//Tell the program there's one less sorted value
@@ -1450,7 +1451,7 @@ void classGangster()
 	cout << endl;
 	printString("FIGHT");
 	pause();
-	battle(1);
+	//battle(1);
 	system("cls");
 	cout << endl;
 	printString("Let's check out your inventory");
@@ -1490,6 +1491,7 @@ void skanstull()
 {
 	int choice;
 top:
+	grantItem(10, 1);
 	system("cls");
 	cout << endl;
 	printString("Welcome to Skanstull(Your local train station)");
@@ -1505,6 +1507,7 @@ top:
 		break;
 	case 2:
 		//Go to Rinkeby
+		drawInventory();
 		break;
 	case 3:
 		//go to TC
