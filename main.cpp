@@ -111,17 +111,19 @@ void main()
 	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
 	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
 	invItems[5].name = "asdsdadsad"; invItems[5].quantity = 1; invItems[5].quality = "Common"; invItems[5].buyPrice = 20;
-	invItems[7].name = "as31221dsdadsad"; invItems[7].quantity = 0; invItems[7].quality = "Legendary"; invItems[7].buyPrice = 10;
+	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Rare"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
 	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
 	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
 	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
 	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
 	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
+	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth; 
 	//MOBS
 	enemy[0].health = 10; enemy[0].name = "Subwayguard"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 2; enemy[0].hasDrop = true; enemy[0].dropAmount = 1; enemy[0].potentialLoot = 2;
 	enemy[1].health = 11; enemy[1].name = "Ken Bone"; enemy[1].damage = 1; enemy[1].xpGain = 100, enemy[1].maxHealth = 11; enemy[1].drop = 2; enemy[1].hasDrop = true; enemy[1].dropAmount = 1; enemy[1].potentialLoot = 2;
 	enemy[2].health = 10; enemy[2].name = "Bartender"; enemy[2].damage = 1; enemy[2].xpGain = 100, enemy[2].maxHealth = 10; enemy[2].drop = 2; enemy[2].hasDrop = true; enemy[2].dropAmount = 1; enemy[2].potentialLoot = 2;
+	enemy[3].health = 17; enemy[3].name = "Strange man"; enemy[3].damage = 2; enemy[3].xpGain = 300, enemy[3].maxHealth = 17; enemy[3].drop = 5; enemy[3].hasDrop = true; enemy[3].dropAmount = 2; enemy[3].potentialLoot = 7;
 	//ShopKeepers
 	shopKeeper[0].name = "Oskar"; shopKeeper[0].greeting = "Hello, newfag"; shopKeeper[0].items[0] = 4; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
 	shopKeeper[1].name = "NK"; shopKeeper[1].greeting = "Hello, welcome to expensiveShop.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
@@ -1534,4 +1536,55 @@ void NK()
 	printString("You decide to return to Skanstull.");
 	pause();
 	skanstull();
+}
+void rinkeby()
+{
+	int choice;
+	
+	system("cls");
+	cout << endl;
+	printString("Welcome to Rinkeby");
+	printString("As you walk out of the subway a strange man starts aproacing you. ");
+	printString("Hey my dude! (Strange man)");
+	printString("You have no idea who this man is but you play along just to not seem rude.");
+	printString("After a while the strange man offers you some good good (Candy)");
+	printString("Do you take the good good from the strange man?");
+	pause();
+top:
+	printString("[1] Take the good good from the man.");
+	printString("[2] Don't take the candy from the strange man.");
+	inputSign();
+	cin >> choice;
+	switch (choice)
+	{
+	case 1:
+		system("cls");
+		printString("Hey! what are you doing! That's my good good! (Strange man)");
+		pause();
+		system("cls");
+		printString("FIGHT!");
+		pause();
+		battle(7);
+		system("cls");
+		printString("After the fight you jump on the first subway back to Skanstull, because why would you stay in Rinkeby?");
+		pause();
+		skanstull();
+		break;
+	case 2:
+		system("cls");
+		printString("You can't refuse a gift from a kind man like me! (Strange man)");
+		pause();
+		printString("FIGHT!");
+		pause();
+		battle(7);
+		system("cls");
+		printString("After the fight you jump on the first subway back to Skanstull, because why would you stay in Rinkeby?");
+		pause();
+		skanstull();
+		break;
+	default: 
+		system("cls");
+		printString("Wrong input!");
+		goto top;
+	}
 }
