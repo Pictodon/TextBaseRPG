@@ -28,6 +28,7 @@ void shop(int shopID);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, int color5, string stringInput5, bool instant);
 void asignDefaultRarityColor();
 void battle(int enemyType);
+void abilities(int playerClass);
 void death();
 void levelUpCheck();
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4]);
@@ -45,18 +46,21 @@ void cigoteket();
 void djKhaled();
 void classCheck();
 void NK();
+void fightPrint();
 
 //Global vars
 //Vars used for loading
 bool firstInvLoad = true;
 int winHeight = 0;
 int winWide = 0;
+
 //Inventory related vars
-int numberOfItems = 11;
+int numberOfItems = 16;
 int invSort = 1;
 int equipedWeapon = 1;
-int invSortPos[11];
+int invSortPos[16];
 int defaultColor = 7;
+
 //Player related vars
 string playerName = "";
 int playerClass = 0;
@@ -65,6 +69,21 @@ int playerLevel = 1;
 int playerExperience = 0;
 int playerMaxHealth = 10;
 int playerHealth = playerMaxHealth;
+int attackPower;
+int healPower;
+string classOneTalents[4] = { "memes", "memeo", "sas", "saSAsa" };
+string classTwoTalents[4] = { "dsada", "das", "dasdsa", "asd" };
+string classThreeTalents[4] = { "23d", "312321321", "32d", "112" };
+int classOneTalentsDamage[4] = {10,10,10,10};
+int classOneTalentsRedDamage[4] = { 10,10,10,10 };
+int classTwoTalentsDamage[4] = { 10,10,10,10 };
+int classTwoTalentsRedDamage[4] = { 10,10,10,10 };
+int classThreeTalentsDamage[4] = { 10,10,10,10 };
+int classThreeTalentsRedDamage[4] = { 10,10,10,10 };
+int talentOne = 0;
+int talentTwo = 0;
+string talentUsed;
+
 
 //Create a structure of type array for every item
 struct inventoryItems {
@@ -81,8 +100,9 @@ struct inventoryItems {
 	int inventoryColor = defaultColor;
 	int levelRequirement = 0;
 	int buyPrice = 0;
-} invItems[11];
+} invItems[16];
 
+//Create a structure of type array for every enemy
 struct ememies {
 	int health = 10;
 	string name;
@@ -95,6 +115,7 @@ struct ememies {
 	int potentialLoot;
 } enemy[10];
 
+//Create a structure of type array for every shopkeeper
 struct shopKeepers {
 	string name;
 	string greeting;
@@ -104,29 +125,31 @@ struct shopKeepers {
 	int numberofCharsPerLine = 0;
 } shopKeeper[10];
 
-//Main
+//Start loadin from here
 void main()
 {
 	//Assign name and info for every item in the game
-	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
-	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
-	invItems[5].name = "asdsdadsad"; invItems[5].quantity = 1; invItems[5].quality = "Common"; invItems[5].buyPrice = 20;
-	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Rare"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
-	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
 	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
+	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
+	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
+	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth;
+	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
+	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Rare"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
 	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
 	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
 	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
-	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth; 
+	invItems[13].name = "Good"; invItems[13].quantity = 0; invItems[13].quality = "Rare"; invItems[13].buyPrice = 50; invItems[13].consumable = true; invItems[13].healthRegen = playerMaxHealth;
+
 	//MOBS
 	enemy[0].health = 10; enemy[0].name = "Subwayguard"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 2; enemy[0].hasDrop = true; enemy[0].dropAmount = 1; enemy[0].potentialLoot = 2;
 	enemy[1].health = 11; enemy[1].name = "Ken Bone"; enemy[1].damage = 1; enemy[1].xpGain = 100, enemy[1].maxHealth = 11; enemy[1].drop = 2; enemy[1].hasDrop = true; enemy[1].dropAmount = 1; enemy[1].potentialLoot = 2;
 	enemy[2].health = 10; enemy[2].name = "Bartender"; enemy[2].damage = 1; enemy[2].xpGain = 100, enemy[2].maxHealth = 10; enemy[2].drop = 2; enemy[2].hasDrop = true; enemy[2].dropAmount = 1; enemy[2].potentialLoot = 2;
 	enemy[3].health = 17; enemy[3].name = "Strange man"; enemy[3].damage = 2; enemy[3].xpGain = 300, enemy[3].maxHealth = 17; enemy[3].drop = 5; enemy[3].hasDrop = true; enemy[3].dropAmount = 2; enemy[3].potentialLoot = 7;
+
 	//ShopKeepers
 	shopKeeper[0].name = "Oskar"; shopKeeper[0].greeting = "Hello, newfag"; shopKeeper[0].items[0] = 4; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
-	shopKeeper[1].name = "NK"; shopKeeper[1].greeting = "Hello, welcome to expensiveShop.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
+	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
 
 	asignDefaultRarityColor();
 
@@ -140,24 +163,15 @@ void main()
 	//Tell the compiler what number to base rand(); of
 	srand(time(NULL));
 
-	drawInventory();
-
 	nameGreeting();
 
 	classMenu();
-
-	//Random shiz
-	drawInventory();
-
-	shop(0);
-
-	drawInventory();
 }
 
 void nameGreeting()
 {
-	//Call the function to print text
 	cout << endl;
+	//Call the function to print text
 	printString("Hello my friend, how are you?");
 
 	pause();
@@ -217,7 +231,7 @@ differentClass:
 		printString("This class is especially good when you want to attack at a long range.");
 		printString("You have a really powerful arrow that you can fire at your enemy. ");
 		printString("If you are easily scared by monsters then this is the class for you. ");
-
+		playerClass = 1;
 		break;
 	case 2:
 		//not sure vad jag har skrivit xD
@@ -226,11 +240,13 @@ differentClass:
 		printString("head first. The smartest class would be hunter, but nevermind. ");
 		printString("With the warrior class you can slash your baws ass sword at your enemies.");
 		printString("Just look at He-Man, he's the boss.");
+		playerClass = 2;
 		break;
 	case 3:
 		printString("VIKTOR SKRIVER");
 		printString("VIKTOR SKRIVER");
 		printString("VIKTOR SKRIVER");
+		playerClass = 3;
 		break;
 	default:
 		printString("That is not an option.");
@@ -252,7 +268,10 @@ differentClass:
 		//switchcase confirm choice
 	case 1:
 		printString("Then let's gooooo!");
+		printString("Let's check out your inventory");
 		pause();
+		drawInventory();
+		system("cls");
 		system("cls");
 		classCheck();
 		break;
@@ -336,6 +355,20 @@ void printString(string stringInput)
 		//Print character and sleep for 30ms
 		cout << stringInput[i];
 		Sleep(30);
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			for (int n = i + 1; n < stringInput.length(); n++)
+			{
+				cout << stringInput[n];
+			}
+			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				//Do nothing
+			}
+			break;
+		}
+
 	}
 
 	cout << endl;
@@ -367,10 +400,8 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		isRainbow = false;
 	}
 
-	//For every letter in string do this
 	for (int i = 0; i < stringInput.length(); i++)
 	{
-		//If isRainbow is true change color for each character
 		if (isRainbow)
 		{
 			setTextColor(rainbowColors[colorLoop]);
@@ -380,10 +411,34 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				colorLoop = 0;
 			}
 		}
+
 		cout << stringInput[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			for (int n = i + 1; n < stringInput.length(); n++)
+			{
+				if (isRainbow)
+				{
+					setTextColor(rainbowColors[colorLoop]);
+					colorLoop++;
+					if (colorLoop > 5)
+					{
+						colorLoop = 0;
+					}
+				}
+				cout << stringInput[n];
+			}
+			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				//Do nothing
+			}
+			break;
+		}
+
 	}
 
 	//Set color to color if int isn't 16 = rainbow
@@ -400,7 +455,6 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 	//For every letter in string do this
 	for (int i = 0; i < stringInput2.length(); i++)
 	{
-		//If isRainbow is true change color for each character
 		if (isRainbow)
 		{
 			setTextColor(rainbowColors[colorLoop]);
@@ -410,10 +464,34 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				colorLoop = 0;
 			}
 		}
+
 		cout << stringInput2[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			for (int n = i + 1; n < stringInput2.length(); n++)
+			{
+				if (isRainbow)
+				{
+					setTextColor(rainbowColors[colorLoop]);
+					colorLoop++;
+					if (colorLoop > 5)
+					{
+						colorLoop = 0;
+					}
+				}
+				cout << stringInput2[n];
+			}
+			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				//Do nothing
+			}
+			break;
+		}
+
 	}
 
 	//Set color to color if int isn't 16 = rainbow
@@ -427,10 +505,9 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		isRainbow = false;
 	}
 
-	//Set color to color if int isn't 16 = rainbow
+	//For every letter in string do this
 	for (int i = 0; i < stringInput3.length(); i++)
 	{
-		//If isRainbow is true change color for each character
 		if (isRainbow)
 		{
 			setTextColor(rainbowColors[colorLoop]);
@@ -440,10 +517,34 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				colorLoop = 0;
 			}
 		}
+
 		cout << stringInput3[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			for (int n = i + 1; n < stringInput3.length(); n++)
+			{
+				if (isRainbow)
+				{
+					setTextColor(rainbowColors[colorLoop]);
+					colorLoop++;
+					if (colorLoop > 5)
+					{
+						colorLoop = 0;
+					}
+				}
+				cout << stringInput3[n];
+			}
+			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				//Do nothing
+			}
+			break;
+		}
+
 	}
 
 	//Set color to color
@@ -460,7 +561,6 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 	//For every letter in string do this
 	for (int i = 0; i < stringInput4.length(); i++)
 	{
-		//If isRainbow is true change color for each character
 		if (isRainbow)
 		{
 			setTextColor(rainbowColors[colorLoop]);
@@ -470,10 +570,34 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				colorLoop = 0;
 			}
 		}
+
 		cout << stringInput4[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			for (int n = i + 1; n < stringInput4.length(); n++)
+			{
+				if (isRainbow)
+				{
+					setTextColor(rainbowColors[colorLoop]);
+					colorLoop++;
+					if (colorLoop > 5)
+					{
+						colorLoop = 0;
+					}
+				}
+				cout << stringInput4[n];
+			}
+			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				//Do nothing
+			}
+			break;
+		}
+
 	}
 
 	//Set color to color
@@ -490,7 +614,6 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 	//For every letter in string do this
 	for (int i = 0; i < stringInput5.length(); i++)
 	{
-		//If isRainbow is true change color for each character
 		if (isRainbow)
 		{
 			setTextColor(rainbowColors[colorLoop]);
@@ -500,10 +623,34 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				colorLoop = 0;
 			}
 		}
+
 		cout << stringInput5[i];
 		//Add a delay between each character if wanted
 		if (instant == false)
 			Sleep(30);
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			for (int n = i + 1; n < stringInput5.length(); n++)
+			{
+				if (isRainbow)
+				{
+					setTextColor(rainbowColors[colorLoop]);
+					colorLoop++;
+					if (colorLoop > 5)
+					{
+						colorLoop = 0;
+					}
+				}
+				cout << stringInput5[n];
+			}
+			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				//Do nothing
+			}
+			break;
+		}
+
 	}
 
 	setTextColor(7);
@@ -676,11 +823,19 @@ top:
 			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
 			//If no quality matched, make default color
 			if (invItems[i].weapon == false)
+			{
 				printStringColor(7, "  | " + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(29 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
+				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(28 - invItems[i].type.length() - invItems[i].quality.length(), ' '), 7, "", 7, " |  ", true);
+			}
 			else
+			{
 				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(31 - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
+				if (equipedWeapon == i)
+					printStringColor(7, " -> | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " | <- ", true);
+				else
+					printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " |  ", true);
+			}
 
-			printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " |  ", true);
 			instantPrint("  | " + invItems[i].desc + string(31 - invItems[i].desc.length(), ' ') + " |  ");
 			instantPrint("  |---------------------------------|  ");
 		}
@@ -862,7 +1017,12 @@ top:
 	//Used for leaving the inventory and does nothing
 	else if (input == "back" || input == "Back" || input == "BACK")
 	{
-
+		if (talentOne == 0 || talentTwo == 0)
+		{
+			printString("Please select your talents before proceeding!");
+			pause();
+			drawInventory();
+		}
 	}
 
 	//If input matched nothing, print error and return to top
@@ -923,7 +1083,7 @@ top:
 
 	instantPrint(shopKeeper[shopId].name);
 	instantPrint("\\\\--// -- -- -- -- -- -- -- -- -- -- -- -- \\\\--//  ");
-	instantPrint("     ||  Name:                Price:            ||      ");
+	instantPrint("     ||   Name:                Price:           ||      ");
 
 	for (int n = 0; n <= 4; n++)
 	{
@@ -988,7 +1148,7 @@ top:
 
 				grantItem(shopKeeper[shopId].items[secondInput], 1);
 
-				printString(invItems[shopKeeper[shopId].items[secondInput]].name + " has been bought successfully!");
+				printStringColor(7, invItems[shopKeeper[shopId].items[secondInput]].name + " has been bought successfully for ", 6, to_string(invItems[shopKeeper[shopId].items[secondInput]].buyPrice), 7, " gold!", 7, "", 7, "", false);
 			}
 			else
 			{
@@ -1007,7 +1167,7 @@ top:
 			//If the array slot is greater than 1
 			if (invSortPos[i] > 0)
 				//Print the array slot nubmer and the item name
-				printString("[" + to_string(i) + "] " + invItems[invSortPos[i]].name);
+				printStringColor(7, "[" + to_string(i) + "] " + invItems[invSortPos[i]].name + " sell price: ", 6, to_string(invItems[invSortPos[i]].buyPrice / 2), 7, "", 7, "", 7, "", false);
 		}
 		inputSign();
 		cin >> secondInput;
@@ -1026,7 +1186,7 @@ top:
 			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item
 			if (secondInput < invSort && invItems[invSortPos[secondInput]].quantity > 0 && secondInput != equipedWeapon && invItems[invSortPos[secondInput]].questItem == false)
 			{
-				printString(invItems[invSortPos[secondInput]].name + " has been sold successfully!");
+				printStringColor(7, invItems[invSortPos[secondInput]].name + " has been sold successfully for ", 6, to_string(invItems[invSortPos[secondInput]].buyPrice / 2), 7, " gold!", 7, "", 7, "", false);
 
 				//Reducing quantity by one
 				invItems[invSortPos[secondInput]].quantity = invItems[invSortPos[secondInput]].quantity - 1;
@@ -1069,7 +1229,7 @@ void removeFromInvSortArray(int itemID)
 			invSortPos[i] = invSortPos[i + 1];
 		else
 		{
-			invSortPos[numberOfItems - 1] = - 1;
+			invSortPos[numberOfItems - 1] = -1;
 		}
 	}
 	//Tell the program there's one less sorted value
@@ -1079,7 +1239,7 @@ void removeFromInvSortArray(int itemID)
 void battle(int enemyType)
 {
 	string attack;
-	int attackPower, enemyAttackPower;
+	int enemyAttackPower;
 	bool ran = false, enemyCrit = false;
 	enemy[enemyType].health = enemy[enemyType].maxHealth;
 	while (enemy[enemyType].health > 0 && playerHealth > 0)
@@ -1093,8 +1253,9 @@ void battle(int enemyType)
 		printStringColor(7, "#--------------------------------#", 7, string(10, ' '), 7, "#--------------------------------#", 7, "", 7, "", true);
 		//"# -" << playerName << "-" << string(29 - playerName.length(), ' ') << "#"
 
-		printString("Your turn!"); 
-		instantPrint("Use 'attack', 'run', 'block' to decide your next move.");
+		printString("Your turn!");
+		instantPrint("Use 'attack', 'run', 'abilities' to decide your next move.");
+		instantPrint("Misspelling will be punished!");
 		inputSign();
 		cin >> attack;
 
@@ -1118,10 +1279,49 @@ void battle(int enemyType)
 				printStringColor(7, enemy[enemyType].name + " now has ", 4, to_string(enemy[enemyType].health), 7, " healthpoints left!", 7, "", 7, "", false);
 			}
 		}
+		else if (attack == "abilities" || attack == "Abilities" || attack == "ABILITIES")
+		{
+			abilities(playerClass);
+
+			if (rand() % 10 + 1 >= 6)
+			{
+				attackPower = attackPower + attackPower / 2;
+				healPower = healPower + healPower / 2;
+
+				if (attackPower > 0)
+				{
+					printStringColor(4, "[Critical Hit!] ", 7, "You hit " + enemy[enemyType].name + " with " + talentUsed + " for ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", false);
+				}
+				if (healPower > 0)
+				{
+					printStringColor(4, "[Critical Hit!] ", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " of healthpoints!", 7, "", false);
+				}
+			}
+			else
+			{
+				if (attackPower > 0)
+				{
+					printStringColor(7, "", 7, "You hit " + enemy[enemyType].name + " with " + talentUsed + " for ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", false);
+				}
+				if (healPower > 0)
+				{
+					printStringColor(7, "", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " of healthpoints!", 7, "", false);
+				}
+			}
+
+			enemy[enemyType].health -= attackPower;
+			playerHealth += healPower;
+
+			if (playerHealth > playerMaxHealth)
+				playerHealth = playerMaxHealth;
+
+			attackPower = 0;
+			healPower = 0;
+		}
 		else if (attack == "run" || attack == "Run" || attack == "RUN")
 		{
 			int flee = rand() % 10 + 1;
-			if (flee > 5)
+			if (flee >= 5)
 			{
 				ran = true;
 				enemy[enemyType].health = 0;
@@ -1141,7 +1341,7 @@ void battle(int enemyType)
 		{
 			enemyAttackPower = enemy[enemyType].damage + enemy[enemyType].damage / 2;
 			if (ran == false && enemy[enemyType].health > 0)
-			enemyCrit = true;
+				enemyCrit = true;
 		}
 		else
 		{
@@ -1175,10 +1375,10 @@ void battle(int enemyType)
 					int dropChance = rand() % 10 + 1;
 					if (dropChance > 6)
 					{
-						invItems[enemy[enemyType].potentialLoot].quantity++;
+						grantItem(enemy[enemyType].potentialLoot, 1);
 						printString("Rare drop! You got a " + invItems[enemy[enemyType].potentialLoot].name);
 					}
-					invItems[enemy[enemyType].drop].quantity = invItems[enemy[enemyType].drop].quantity + enemy[enemyType].dropAmount;
+					grantItem(enemy[enemyType].drop, enemy[enemyType].dropAmount);
 					printString("You have been rewarded with " + to_string(enemy[enemyType].dropAmount) + " " + invItems[enemy[enemyType].drop].name);
 				}
 
@@ -1198,6 +1398,75 @@ void battle(int enemyType)
 	}
 }
 
+void abilities(int playerClass)
+{
+	int input;
+
+	if (playerClass == 1)
+	{
+		printString("[1] " + classOneTalents[talentOne - 1] + " [2] " + classOneTalents[2 + talentTwo - 1]);
+	}
+	else if (playerClass == 2)
+	{
+		printString("[1] " + classTwoTalents[talentOne - 1] + " [2] " + classTwoTalents[2 + talentTwo - 1]);
+	}
+	else if (playerClass == 3)
+	{
+		printString("[1] " + classThreeTalents[talentOne - 1] + " [2] " + classThreeTalents[2 + talentTwo - 1]);
+	}
+	else
+	{
+		cout << "error" << endl;
+		pause();
+	}
+
+	inputSign();
+	cin >> input;
+
+	switch (input)
+	{
+	case 1:
+		if (playerClass == 1)
+		{
+			attackPower = classOneTalentsDamage[talentOne - 1];
+			healPower = classOneTalentsRedDamage[talentOne - 1];
+			talentUsed = classOneTalents[talentOne - 1];
+		}
+		else if (playerClass == 2)
+		{
+			attackPower = classTwoTalentsDamage[talentOne - 1];
+			healPower = classTwoTalentsRedDamage[talentOne - 1];
+			talentUsed = classTwoTalents[talentOne - 1];
+		}
+		else if (playerClass == 3)
+		{
+			attackPower = classThreeTalentsDamage[talentOne - 1];
+			healPower = classThreeTalentsRedDamage[talentOne - 1];
+			talentUsed = classThreeTalents[talentOne - 1];
+		}
+	case 2:
+		if (playerClass == 1)
+		{
+			attackPower = classOneTalentsDamage[2 + talentTwo - 1];
+			healPower = classOneTalentsRedDamage[2 + talentTwo - 1];
+			talentUsed = classOneTalents[2 + talentTwo - 1];
+		}
+		else if (playerClass == 2)
+		{
+			attackPower = classTwoTalentsDamage[2 + talentTwo - 1];
+			healPower = classTwoTalentsRedDamage[2 + talentTwo - 1];
+			talentUsed = classTwoTalents[2 + talentTwo - 1];
+		}
+		else if (playerClass == 3)
+		{
+			attackPower = classThreeTalentsDamage[2 + talentTwo - 1];
+			healPower = classThreeTalentsRedDamage[2 + talentTwo - 1];
+			talentUsed = classThreeTalents[2 + talentTwo - 1];
+		}
+	}
+}
+
+
 void death()
 {
 	playerHealth = playerMaxHealth / 2;
@@ -1205,6 +1474,7 @@ void death()
 	printString("You have died :(");
 	printString("Press any key to respawn.");
 	pause();
+	skanstull();
 }
 
 void levelUpCheck()
@@ -1223,21 +1493,31 @@ void levelUpCheck()
 
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 {
+	cout << endl;
 	instantPrint("-V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V-");
 	instantPrint("|                 Talents                 |");
 	instantPrint("|                                         |");
-	instantPrint("|    [1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[2] " + talentNames[1] + string(17 - talentNames[1].length(), ' ') + "|");
-	instantPrint("|    [3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[4] " + talentNames[3] + string(17 - talentNames[3].length(), ' ') + "|");
+	if (firstTalent == 1)
+	instantPrint("| [X][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
+	else if (firstTalent == 2)
+		instantPrint("| [ ][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[X][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
+	else
+		instantPrint("| [ ][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
+
+	if(secondTalent == 1)
+		instantPrint("| [X][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
+	else if (secondTalent == 2)
+		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[X][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
+	else
+		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
 	instantPrint("|                                         |");
 	instantPrint("-v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v-");
 }
 
 void talents()
 {
-
-	int talentOne = 0, talentTwo = 0, secondInput;
-
-	string input, talentNames[4], classOneTalents[4] = { "Vit", "makt", ",", "negerslakt" }, classTwoTalents[4] = { "dsada", "das", "dasdsa", "asd" }, classThreeTalents[4] = { "23d", "23d", "32d", "32d" };
+	string input, talentNames[4];
+	int secondInput;
 
 top:
 
@@ -1270,7 +1550,7 @@ top:
 
 	printTalentUI(talentOne, talentTwo, talentNames);
 
-	printString("'select', 'info', 'back'");
+	printString("'Select', 'Info', 'Back'");
 	inputSign();
 	cin >> input;
 
@@ -1278,32 +1558,34 @@ top:
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			printString("[" + to_string(i + 1) + "] " + talentNames[i]);
+			instantPrint("[" + to_string(i + 1) + "] " + talentNames[i]);
 		}
-		printString("Select one of the talents above to select:");
+		instantPrint("You may only select one talent per row!");
+		instantPrint("Select one of the talents above to select:");
 
 		inputSign();
 		cin >> secondInput;
+
 		switch (secondInput)
 		{
 		case 1:
 			talentOne = 1;
-			printString(talentNames[0] + " has been selected successfully!");
+			instantPrint(talentNames[0] + " has been selected successfully!");
 			pause();
 			goto top;
 		case 2:
-			talentTwo = 2;
-			printString(talentNames[1] + " has been selected successfully!");
+			talentOne = 2;
+			instantPrint(talentNames[1] + " has been selected successfully!");
 			pause();
 			goto top;
 		case 3:
-			talentTwo = 3;
-			printString(talentNames[2] + " has been selected successfully!");
+			talentTwo = 1;
+			instantPrint(talentNames[2] + " has been selected successfully!");
 			pause();
 			goto top;
 		case 4:
-			talentTwo = 1;
-			printString(talentNames[3] + " has been selected successfully!");
+			talentTwo = 2;
+			instantPrint(talentNames[3] + " has been selected successfully!");
 			pause();
 			goto top;
 		default:
@@ -1401,17 +1683,12 @@ void classPundare()
 	pause();
 	system("cls");
 	cout << endl;
-	printString("FIGHT!");
+	fightPrint();
 	pause();
 	battle(0);
 	system("cls");
 	cout << endl;
-	printString("Let's check out your inventory");
-	pause();
-	drawInventory();
-	system("cls");
-	cout << endl;
-	printString("After the fight you decide to go to skanstull");
+	printString("After the fight you decide to go to Skanstull");
 	pause();
 	skanstull();
 }
@@ -1420,23 +1697,18 @@ void classAlkis()
 {
 	cout << endl;
 	printString("You wake up at Johnny's Pizzeria");
-	printString("You have a intense headache ");
+	printString("You have an intense headache ");
 	printString("You order some adult potion ");
 	printString("The bartender won't give you the potion");
 	pause();
 	system("cls");
 	cout << endl;
-	printString("FIGHT!");
+	fightPrint();
 	pause();
 	battle(2);
 	system("cls");
 	cout << endl;
-	printString("Let's check out your inventory");
-	pause();
-	drawInventory();
-	system("cls");
-	cout << endl;
-	printString("After the fight you decide to go to skanstull");
+	printString("After the fight you decide to go to Skanstull");
 	pause();
 	skanstull();
 }
@@ -1451,23 +1723,23 @@ void classGangster()
 	pause();
 	system("cls");
 	cout << endl;
-	printString("FIGHT");
+	fightPrint();
 	pause();
-	//battle(1);
+	battle(1);
 	system("cls");
 	cout << endl;
-	printString("Let's check out your inventory");
-	pause();
-	drawInventory();
-	system("cls");
-	cout << endl;
-	printString("After the fight you decide to go to skanstull");
+	printString("After the fight you decide to go to Skanstull");
 	pause();
 	skanstull();
 }
 
 void classCheck()
 {
+	if (playerName == "motherLoad")
+	{
+		grantItem(10, 1);
+	}
+
 	switch (playerClass)
 	{
 	case 1:
@@ -1486,15 +1758,20 @@ void classCheck()
 		void classMenu();
 		break;
 	}
-
-
 }
 void skanstull()
 {
 	int choice;
 top:
-	grantItem(10, 1);
+
 	system("cls");
+
+	cout << endl;
+	instantPrint("    OO O o o o...      ______________________ _________________ ");
+	instantPrint("   O     ____          |                    | |               | ");
+	instantPrint("  ][_n_i_| (   ooo___  |     Skanstull      | |               | ");
+	instantPrint(" (__________|_[______]_|____________________|_|_______________| ");
+	instantPrint("   0--0--0      0  0      0       0     0        0        0     ");
 	cout << endl;
 	printString("Welcome to Skanstull(Your local train station)");
 	printString("Where would you like to go?");
@@ -1509,15 +1786,17 @@ top:
 		break;
 	case 2:
 		//Go to Rinkeby
-		drawInventory();
+		rinkeby();
 		break;
 	case 3:
 		//go to TC
+		drawInventory();
+		goto top;
 		break;
 	case 4:
 		if (invItems[2].quantity > 0)
 			cout << endl;
-			printString("Travel to Cigoteket at Torsgatan 36?");
+		printString("Travel to Cigoteket at Torsgatan 36?");
 		printString("Yes");
 		printString("No");
 		break;
@@ -1540,16 +1819,15 @@ void NK()
 void rinkeby()
 {
 	int choice;
-	
+
 	system("cls");
 	cout << endl;
-	printString("Welcome to Rinkeby");
-	printString("As you walk out of the subway a strange man starts aproacing you. ");
-	printString("Hey my dude! (Strange man)");
-	printString("You have no idea who this man is but you play along just to not seem rude.");
+	printString("Welcome to Rinkeby!");
+	printString("As you walk out of the subway a strange man starts approaching you. ");
+	printString("(Strange man) Hey my dude!");
+	printString("You have no idea who this man is but you play along to not appear rude.");
 	printString("After a while the strange man offers you some good good (Candy)");
 	printString("Do you take the good good from the strange man?");
-	pause();
 top:
 	printString("[1] Take the good good from the man.");
 	printString("[2] Don't take the candy from the strange man.");
@@ -1559,32 +1837,54 @@ top:
 	{
 	case 1:
 		system("cls");
-		printString("Hey! what are you doing! That's my good good! (Strange man)");
+		cout << endl;
+		printString("(Strange man) Hey! what are you doing! That's my good good!");
 		pause();
 		system("cls");
-		printString("FIGHT!");
+		cout << endl;
+		fightPrint();
 		pause();
-		battle(7);
+		battle(3);
 		system("cls");
-		printString("After the fight you jump on the first subway back to Skanstull, because why would you stay in Rinkeby?");
+		cout << endl;
+		printString("After the fight you jump on the first subway back to Skanstull,");
+		printString("because why would you stay in Rinkeby?");
 		pause();
 		skanstull();
 		break;
 	case 2:
 		system("cls");
-		printString("You can't refuse a gift from a kind man like me! (Strange man)");
+		cout << endl;
+		printString("(Strange man) You can't refuse a gift from a kind man like me!");
 		pause();
-		printString("FIGHT!");
-		pause();
-		battle(7);
 		system("cls");
-		printString("After the fight you jump on the first subway back to Skanstull, because why would you stay in Rinkeby?");
+		cout << endl;
+		fightPrint();
+		pause();
+		battle(3);
+		system("cls");
+		cout << endl;
+		printString("After the fight you jump on the first subway back to Skanstull,");
+		printString("because why would you stay in Rinkeby?");
 		pause();
 		skanstull();
 		break;
-	default: 
-		system("cls");
+	default:
 		printString("Wrong input!");
+		pause();
+		system("cls");
 		goto top;
 	}
+}
+
+void fightPrint()
+{
+
+	printStringColor(7, "*|", 4, "    _______       __    __ ", 7, "|*", 7, "", 7, "", true);
+	printStringColor(7, "*|", 4, "   / ____(_)___ _/ /_  / /_", 7, "|*", 7, "", 7, "", true);
+	printStringColor(7, "*|", 4, "  / /_  / / __ `/ __ \\/ __/", 7, "|*", 7, "", 7, "", true);
+	printStringColor(7, "*|", 4, " / __/ / / /_/ / / / / /_  ", 7, "|*", 7, "", 7, "", true);
+	printStringColor(7, "*|", 4, "/_/   /_/\\__, /_/ /_/\\__/  ", 7, "|*", 7, "", 7, "", true);
+	printStringColor(7, "*|", 4, "        /____/             ", 7, "|*", 7, "", 7, "", true);
+	instantPrint("*******************************");
 }
