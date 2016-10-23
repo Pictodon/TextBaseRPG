@@ -1210,7 +1210,7 @@ top:
 		if (secondInput < numberOfItems && secondInput > 0)
 		{
 			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item
-			if (secondInput < invSort && invItems[invSortPos[secondInput]].quantity > 0 && secondInput != equipedWeapon && invItems[invSortPos[secondInput]].questItem == false)
+			if (secondInput < invSort && invItems[invSortPos[secondInput]].quantity > 0 && invSortPos[secondInput] != equipedWeapon && invItems[invSortPos[secondInput]].questItem == false)
 			{
 				printStringColor(7, invItems[invSortPos[secondInput]].name + " has been sold successfully for ", 6, to_string(invItems[invSortPos[secondInput]].buyPrice / 2), 7, " gold!", 7, "", 7, "", false);
 
