@@ -74,15 +74,15 @@ int playerMaxHealth = 10;
 int playerHealth = playerMaxHealth;
 int attackPower;
 int healPower;
-string classOneTalents[4] = { "memes", "memeo", "sas", "saSAsa" };
-string classTwoTalents[4] = { "dsada", "das", "dasdsa", "asd" };
-string classThreeTalents[4] = { "23d", "312321321", "32d", "112" };
-int classOneTalentsDamage[4] = { 10,10,10,10 };
-int classOneTalentsRedDamage[4] = { 10,10,10,10 };
-int classTwoTalentsDamage[4] = { 10,10,10,10 };
-int classTwoTalentsRedDamage[4] = { 10,10,10,10 };
-int classThreeTalentsDamage[4] = { 10,10,10,10 };
-int classThreeTalentsRedDamage[4] = { 10,10,10,10 };
+string classOneTalents[4] = { "Goodiebag", "Kurva", "Sverige", "Satan" };
+string classTwoTalents[4] = { "Dance Around", "Beer throw", "Shot", "Fall" };
+string classThreeTalents[4] = { "Rob", "Hit", "Walla", "Shoot" };
+int classOneTalentsDamage[4] = { 0,3,3,5 };
+int classOneTalentsRedDamage[4] = { 3,0,0,-2 };
+int classTwoTalentsDamage[4] = { 2,3,0,3 };
+int classTwoTalentsRedDamage[4] = { 1,0,3,-3 };
+int classThreeTalentsDamage[4] = { 1,1,0,2 };
+int classThreeTalentsRedDamage[4] = { 0,0,4,-3 };
 int talentOne = 0;
 int talentTwo = 0;
 string talentUsed;
@@ -134,11 +134,11 @@ void main()
 	//Assign name and info for every item in the game
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
 	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
-	invItems[3].name = "Katana"; invItems[3].quantity = 1; invItems[3].quality = "Rare"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
+	invItems[3].name = "Rotten burger"; invItems[3].quantity = 1; invItems[3].quality = "Common"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
 	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
 	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth;
 	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
-	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Rare"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
+	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
 	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
 	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
 	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
@@ -151,7 +151,7 @@ void main()
 	enemy[3].health = 17; enemy[3].name = "Strange man"; enemy[3].damage = 2; enemy[3].xpGain = 300, enemy[3].maxHealth = 17; enemy[3].drop = 5; enemy[3].hasDrop = true; enemy[3].dropAmount = 2; enemy[3].potentialLoot = 7;
 
 	//ShopKeepers
-	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food"; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
+	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
 	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
 
 	asignDefaultRarityColor();
@@ -1545,8 +1545,8 @@ void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 
 void talents()
 {
-	string input, talentNames[4];
-	int secondInput;
+	string input, talentNames[4], talentDesc[12] = { "Consume a goodiebag, healing you.", "Swear at your foes, dealing damage.", "Deal damage, for the motherland!", "Fett me damage.", "Dance around your foes.", "Exactly what the name says.", "Drink some more.", "Fall on the grund.", "Rob an old lady.", "Deals INSANE damage to enemy.", "Call your 'brothers'.", "Deals massive amount of damage." };
+	int secondInput, classNum;
 
 top:
 
@@ -1557,18 +1557,21 @@ top:
 		{
 			talentNames[i] = classOneTalents[i];
 		}
+		classNum = 0;
 		break;
 	case 2:
 		for (int i = 0; i < 4; i++)
 		{
 			talentNames[i] = classTwoTalents[i];
 		}
+		classNum = 4;
 		break;
 	case 3:
 		for (int i = 0; i < 4; i++)
 		{
 			talentNames[i] = classThreeTalents[i];
 		}
+		classNum = 8;
 		break;
 	default:
 		classMenu();
@@ -1594,7 +1597,7 @@ top:
 
 		inputSign();
 		cin >> secondInput;
-		
+
 		if (!cin)
 		{
 			cin.clear();
@@ -1638,27 +1641,28 @@ top:
 		{
 			printString("[" + to_string(i + 1) + "] " + talentNames[i]);
 		}
-		printString("Select one of the talents above to select:");
-
+		printString("Select one of the talents above to read info about:");
+		inputSign();
+		cin >> secondInput;
 		switch (secondInput)
 		{
 		case 1:
-			printString(talentNames[0] + " has been selected successfully!");
+			printString(talentNames[0] + ": " + talentDesc[classNum + 0]);
 			pause();
 			goto top;
 			break;
 		case 2:
-			printString(talentNames[1] + " has been selected successfully!");
+			printString(talentNames[1] + ": " + talentDesc[classNum + 1]);
 			pause();
 			goto top;
 			break;
 		case 3:
-			printString(talentNames[2] + " has been selected successfully!");
+			printString(talentNames[2] + ": " + talentDesc[classNum + 2]);
 			pause();
 			goto top;
 			break;
 		case 4:
-			printString(talentNames[4] + " has been selected successfully!");
+			printString(talentNames[3] + ": " + talentDesc[classNum + 3]);
 			pause();
 			goto top;
 			break;
@@ -1815,8 +1819,8 @@ top:
 	printString("Welcome to Skanstull(Your local train station)");
 beenToRinkeby:
 	printString("Where would you like to go?");
-	
-	if (invItems[9].quantity > 0) 
+
+	if (invItems[9].quantity > 0)
 		printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC [4] Go to Cigoteket at Torsgatan 36 [9] Open Inventory");
 	else
 		printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC [9] Open Inventory");
@@ -1836,9 +1840,9 @@ beenToRinkeby:
 			printString("Why would you go back to there? Pick another place to go to.");
 			goto beenToRinkeby;
 		}
-		else 
+		else
 			rinkeby();
-		
+
 		break;
 	case 3:
 		//go to TC
@@ -1940,7 +1944,7 @@ void TC()
 {
 	int choice;
 	system("cls");
-	
+
 	cout << endl;
 	instantPrint("    OO O o o o...      ______________________ _________________ ");
 	instantPrint("   O     ____          |                    | |               | ");
@@ -1955,7 +1959,7 @@ void TC()
 	printString("You also see your favourite foodplace Burger King. ");
 wrongInput:
 	printString("What would you like to do?");
-	if (invItems[9].quantity > 0 )
+	if (invItems[9].quantity > 0)
 		printString("[1] Go back to Skanstull [2] Go get some burgers ");
 	else
 		printString("[1] Go back to Skanstull [2] Go get some burgers [3] Talk to the shady guy");
@@ -1987,38 +1991,38 @@ wrongInput:
 		printString("[1] Yes. [2] No.");
 		inputSign();
 		cin >> secondChoice;
-			switch (secondChoice)
-			{
+		switch (secondChoice)
+		{
 
-			case 1:
-				if (playerGold >= 5)
-				{
-					playerGold -= 5;
-					grantItem(9, 1);
-					printString("Thank you my man");
-				}
-				else
-					printString("It looks like you do not have enough gold.");
-				printString("Ohh well, you can have it anyway.");
+		case 1:
+			if (playerGold >= 5)
+			{
+				playerGold -= 5;
 				grantItem(9, 1);
-				printString("You got item " + invItems[9].name);
-				pause();
-				goto wrongInput;
-					break;
-			case 2:
-				printString("'JUST TAKE THE GOD DAMN INFO!'");
-				grantItem(9, 1);
-				printString("You got item " + invItems[9].name);
-				printString("You run back to TC subway and get on the next train back to Skanstull.");
-				skanstull();
-				break;
-			default:
-				break;
+				printString("Thank you my man");
 			}
-	
+			else
+				printString("It looks like you do not have enough gold.");
+			printString("Ohh well, you can have it anyway.");
+			grantItem(9, 1);
+			printString("You got item " + invItems[9].name);
+			pause();
+			goto wrongInput;
+			break;
+		case 2:
+			printString("'JUST TAKE THE GOD DAMN INFO!'");
+			grantItem(9, 1);
+			printString("You got item " + invItems[9].name);
+			printString("You run back to TC subway and get on the next train back to Skanstull.");
+			skanstull();
+			break;
+		default:
+			break;
+		}
+
 		break;
-	
-	
+
+
 	default:
 		printString("That is not an option!");
 		goto wrongInput;
