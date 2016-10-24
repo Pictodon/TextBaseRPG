@@ -152,6 +152,7 @@ void main()
 
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
+	shopKeeper[0].ascii = { " _____                     _____ _         ", "| __  |_ _ ___ ___ ___ ___|  |  |_|___ ___ ", "| __ -| | |  _| . | -_|  _|    -| |   | . |", "|_____|___|_| |_  |___|_| |__|__|_|_|_|_  |", 	"              |___|                   |___|" }; shopKeeper[0].numberofCharsPerLine = 43; shopKeeper[0].numberOfAsciiLines = 5;
 	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
 
 	asignDefaultRarityColor();
@@ -295,35 +296,56 @@ differentClass:
 	system("cls");
 }
 
+//Function to let the program know when the user is done selecting font size
 void choseFontSize()
 {
+	//Until the user has pressed one print press one to proceed.
 	do {
 		system("cls");
 		cout << "If you want to change the font size, do so now.\nPress 1 to proceed." << endl;
 	} while (_getch() != '1');
 }
 
+//Function to print the greeting text
 void greeting()
 {
-	instantPrint("   __  __    _                                       _        ");
-	instantPrint("  / /_/ /_  (_)____   ____ _____ _____ ___  ___     (_)____   ");
-	instantPrint(" / __/ __ \\/ / ___/  / __ `/ __ `/ __ `__ \\/ _ \\   / / ___/   ");
-	instantPrint("/ /_/ / / / (__  )  / /_/ / /_/ / / / / / /  __/  / (__  )    ");
-	instantPrint("\\__/_/ /_/_/____/   \\__, /\\__,_/_/ /_/ /_/\\___/  /_/____/     ");
-	instantPrint("                   /____/                                     ");
+	instantPrint(" _    _      _                            _                                   ");
+	instantPrint("| |  | |    | |                          | |                                  ");
+	instantPrint("| |  | | ___| | ___ ___  _ __ ___   ___  | |_ ___                             ");
+	instantPrint("| |/\\| |/ _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ | __/ _ \\                            ");
+	instantPrint("\\  /\\  /  __/ | (_| (_) | | | | | |  __/ | || (_) |                           ");
+	instantPrint(" \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/                            ");
+	cout << endl << endl;
+	instantPrint(" _   _                    _                   _    ___  _             _      ");
+	instantPrint("| | | |                  | |                 | |  / _ \\| |           | |     ");
+	instantPrint("| | | | __ _ _ __   ___  | |     ___  _ __ __| | / /_\\ \\ | ____ _ ___| |__   ");
+	instantPrint("| | | |/ _` | '_ \\ / _ \\ | |    / _ \\| '__/ _` | |  _  | |/ / _` / __| '_ \\  ");
+	instantPrint("\\ \\_/ / (_| | |_) |  __/ | |___| (_) | | | (_| | | | | |   < (_| \\__ \\ | | | ");
+	instantPrint(" \\___/ \\__,_| .__/ \\___| \\_____/\\___/|_|  \\__,_| \\_| |_/_|\\_\\__,_|___/_| |_| ");
+	instantPrint("            | |                                                              ");
+	instantPrint("            |_|                                                              ");
 
-	setTextColor(6);
+	setTextColor(15);
 
-	instantPrint("         __    _ __   ");
-	instantPrint("   _____/ /_  (_) /_  ");
-	instantPrint("  / ___/ __ \\/ / __/  ");
-	instantPrint(" (__  ) / / / / /_    ");
-	instantPrint("/____/_/ /_/_/\\__/    ");
-	instantPrint("                                        ");
+	instantPrint("                _                                      ");
+	instantPrint("              (`  ).                   _               ");
+	instantPrint("             (     ).              .:(`  )`.           ");
+	instantPrint("            _(       '`.          :(   .    )          ");
+	instantPrint("        .=(`(      .   )     .--  `.  (    ) )         ");
+	instantPrint("  ''--  ((    (..__.:'-'   .+(   )   ` _`  ) )         ");
+	instantPrint("`(       `(       ) )       (   .  )     (   )  ._     ");
+	instantPrint("((    )      ` __.:'   )     (   (   ))     `-'.-(`  ) ");
+	instantPrint("`(    )  ( )       --'       `- __.'         :(      ))");
+	instantPrint("` ¨'_..-'  (_.'          .')                    `(   ) ");
+	instantPrint("                  (_  )                     ` __.:'    ");
+	instantPrint("                                                       ");
+	instantPrint("--..,___.--,--'`,---..-.--+--.,,-,,..._.--..-._.-__--..");
 
 	setTextColor(7);
 
 	pause();
+
+	system("cls");
 }
 
 //Function to asign default color values based on item quality
@@ -417,7 +439,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	cout << string(spacing, ' ');
 
-	//Set color to color if int isn't 16 = rainbow
+	//Set text color to color if int isn't 16 = rainbow
 	if (color == 16)
 	{
 		isRainbow = true;
@@ -445,10 +467,13 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		if (instant == false)
 			Sleep(30);
 
+		//Check if shift is pressed
 		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
+			//For every character that has not been printed yet, print them
 			for (int n = i + 1; n < stringInput.length(); n++)
 			{
+				//Check if color is rainbow and if so, change color for each char.
 				if (isRainbow)
 				{
 					setTextColor(rainbowColors[colorLoop]);
@@ -458,8 +483,10 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 						colorLoop = 0;
 					}
 				}
+				//Print the remaining chars.
 				cout << stringInput[n];
 			}
+			//While shift is pressed pause code, so that it doesn't skip everything
 			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
@@ -469,7 +496,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set color to color if int isn't 16 = rainbow
+	//Set text color to color if int isn't 16 = rainbow
 	if (color2 == 16)
 	{
 		isRainbow = true;
@@ -522,7 +549,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set color to color if int isn't 16 = rainbow
+	//Set text color to color if int isn't 16 = rainbow
 	if (color3 == 16)
 	{
 		isRainbow = true;
@@ -547,7 +574,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		}
 
 		cout << stringInput3[i];
-		//Add a delay between each character if wanted
+		//Add a delay between each character if instant is false
 		if (instant == false)
 			Sleep(30);
 
@@ -575,7 +602,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set color to color
+	//Set text color to color if int isn't 16 = rainbow
 	if (color4 == 16)
 	{
 		isRainbow = true;
@@ -681,6 +708,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
+	//Set text color back to default
 	setTextColor(7);
 
 	//Add a new line
@@ -693,9 +721,13 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 /// </summary>
 void instantPrint(string stringInput)
 {
+	//Get center of screen depending on string length
 	int spacing = winWide / 2 - stringInput.length() / 2;
+
+	//Print the spaces
 	cout << string(spacing, ' ');
 
+	//Print the string in the center
 	cout << stringInput;
 
 	cout << endl;
@@ -794,8 +826,10 @@ top:
 
 	system("cls");
 
-	//Add some spaces
+	//Add some rows
 	cout << endl << endl << endl << endl;
+
+	//Print the ui, including player name, hp etc.
 	instantPrint(" ______________/_/(*)\\_\\______________ ");
 	instantPrint(" \\/---------------------------------\\/ ");
 	instantPrint("  |" + string(32 / 2 - inventoryTitle.length() / 2 - 1, ' ') + "[" + inventoryTitle + "]" + string(32 / 2 - inventoryTitle.length() / 2 - additionForOddNames, ' ') + "|  ");
@@ -848,8 +882,7 @@ top:
 				levelReqText = "";
 			}
 
-			//Check item quality and set color to the right quality color with the printStringColor(7, "", 7, "", 7, "", 7, "", false); function
-			//If no quality matched, make default color
+			//Check if item is not weapon and if so, don't print the string damage and also keep the quantity stat on the inventory slot else do the oposite
 			if (invItems[i].weapon == false)
 			{
 				printStringColor(7, "  | " + to_string(invItems[i].quantity) + "x ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(29 - to_string(invItems[i].quantity).length() - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
@@ -858,12 +891,15 @@ top:
 			else
 			{
 				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(31 - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
+				
+				//If weapon is equiped add -> next to the slot on each side <-
 				if (equipedWeapon == i)
 					printStringColor(7, " -> | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " | <- ", true);
 				else
 					printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " |  ", true);
 			}
 
+			//Print the description for every item
 			instantPrint("  | " + invItems[i].desc + string(31 - invItems[i].desc.length(), ' ') + " |  ");
 			instantPrint("  |---------------------------------|  ");
 		}
@@ -871,12 +907,14 @@ top:
 	//Set the firstInLoad to false to prevent items being added twice to array earlier in code
 	firstInvLoad = false;
 
+	//Print the rest of the UI
 	instantPrint("  |                                 |  ");
 	instantPrint("  |____________/_/(*)\\_\\____________|  ");
 	instantPrint("  \\/-------------------------------\\/  ");
 
 	printString("'Equip', 'Use', 'Delete',");
 	printString("'Talents' or 'Back'");
+
 	inputSign();
 	cin >> input;
 
@@ -920,6 +958,7 @@ top:
 				}
 				else
 				{
+					//Give the user some info about required level and current etc
 					printString("You need to level up a few levels before you can use this.");
 					printStringColor(7, "Level requirement: ", 4, to_string(invItems[invSortPos[secondInput]].levelRequirement), 7, "", 7, "", 7, "", false);
 					printString("You are level: " + to_string(playerLevel) + " with " + to_string(playerExperience) + "/500 xp");
@@ -936,6 +975,7 @@ top:
 		}
 
 	}
+	//If input is talent, go to the talents function in order to select talents
 	else if (input == "talents" || input == "Talents" || input == "TALENTS")
 	{
 		talents();
@@ -953,8 +993,10 @@ top:
 				//Print the array slot nubmer and the item name
 				printString("[" + to_string(i) + "] " + invItems[invSortPos[i]].name);
 		}
+
 		inputSign();
 		cin >> secondInput;
+
 		//Cleares the cin if input isn't numreric
 		if (!cin)
 		{
@@ -1023,7 +1065,10 @@ top:
 				playerHealth = playerMaxHealth;
 
 			//Tell the user how much the user was healed for
-			printString("You have been healed for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " health points!");
+			if (invItems[invSortPos[secondInput]].healthRegen > 0)
+				printString("You have been healed for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " healthpoints!");
+			else if (invItems[invSortPos[secondInput]].healthRegen < 0)
+				printString("You have been damaged for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " healthpoints!");
 
 			printString("Current HP " + to_string(playerHealth) + "/" + to_string(playerMaxHealth));
 		}
@@ -1090,44 +1135,56 @@ void grantItem(int itemID, int quantity)
 
 void shop(int shopId)
 {
+	//Define variable types
 	int priceCharCount, numDigitsGold, secondInput;
-
 	string input, temp;
 
+	//Define goto point
 top:
 
 	system("cls");
 	cout << endl;
 
+	//For every line in ascii art vector
 	for (int i = 0; i < shopKeeper[shopId].numberOfAsciiLines; i++)
 	{
+		//Set temp to nothing in beginning of row
 		temp = "";
+		//For every character in row
 		for (int n = 0; n < shopKeeper[shopId].numberofCharsPerLine; n++)
 		{
+			//Add that character to temp
 			temp += shopKeeper[shopId].ascii.at(i).at(n);
 		}
+		//Print temp
 		instantPrint(temp);
 	}
 
+	//Print shop name and some UI
 	instantPrint(shopKeeper[shopId].name);
 	instantPrint("\\\\--// -- -- -- -- -- -- -- -- -- -- -- -- \\\\--//  ");
 	instantPrint("     ||   Name:                Price:           ||      ");
 
+	//For every slot of item the vendor might have
 	for (int n = 0; n <= 4; n++)
 	{
+		//If there's an item id stored in array print it
 		if (shopKeeper[shopId].items[n] > 0)
 		{
+			//Get buy price length
 			if (invItems[shopKeeper[shopId].items[n]].buyPrice > 99)
 				priceCharCount = 3;
 			else if (invItems[shopKeeper[shopId].items[n]].buyPrice > 9)
 				priceCharCount = 2;
 			else
 				priceCharCount = 1;
+			//Print item that is sold with price
 			printStringColor(7, "  ||   ", invItems[shopKeeper[shopId].items[n]].inventoryColor, invItems[shopKeeper[shopId].items[n]].name + string(21 - invItems[shopKeeper[shopId].items[n]].name.length(), ' '), 6, to_string(invItems[shopKeeper[shopId].items[n]].buyPrice), 7, string(15 - priceCharCount, ' ') + "  ||    ", 7, "", true);
 		}
 	}
 	instantPrint("//--\\\\ -- -- -- -- -- -- -- -- -- -- -- -- //--\\\\  ");
 
+	//Get number of digits from gold
 	if (playerGold > 999)
 		numDigitsGold = 4;
 	else if (playerGold > 99)
@@ -1137,7 +1194,10 @@ top:
 	else
 		numDigitsGold = 1;
 
+	//Print current player gold
 	printStringColor(7, string(40 - numDigitsGold, ' ') + "Gold: ", 6, to_string(playerGold), 7, "", 7, "", 7, "", true);
+
+	//Print vendor greeting under the UI
 	printString(shopKeeper[shopId].greeting);
 
 	printString("'Buy', 'Sell', or 'Back'");
@@ -1145,17 +1205,22 @@ top:
 	inputSign();
 	cin >> input;
 
+	//If input is buy
 	if (input == "buy" || input == "Buy" || input == "BUY")
 	{
-		for (int i = 0; i < 5; i++)
+		//´For every item the vendor might sell
+		for (int i = 0; i < 4; i++)
 		{
+			//If there's sn item id stored in array slot print the current i value and the name relating to item id
 			if (shopKeeper[shopId].items[i] > 0)
 			{
 				printString("[" + to_string(i + 1) + "] " + invItems[shopKeeper[shopId].items[i]].name);
 			}
 		}
+
 		inputSign();
 		cin >> secondInput;
+
 		//Cleares the cin if input isn't numreric
 		if (!cin)
 		{
@@ -1169,13 +1234,16 @@ top:
 		if (secondInput < numberOfItems && secondInput > 0)
 		{
 			secondInput--;
-			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item
+			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item else tell the user he can't buy the item
 			if (playerGold > invItems[shopKeeper[shopId].items[secondInput]].buyPrice)
 			{
-				playerGold = playerGold - invItems[shopKeeper[shopId].items[secondInput]].buyPrice;
+				//Set playerGold to playerGold - the buy price
+				playerGold -= invItems[shopKeeper[shopId].items[secondInput]].buyPrice;
 
+				//Give the item to the player using a function to also update the arrays used
 				grantItem(shopKeeper[shopId].items[secondInput], 1);
 
+				//Tell the user what he paid and what he got
 				printStringColor(7, invItems[shopKeeper[shopId].items[secondInput]].name + " has been bought successfully for ", 6, to_string(invItems[shopKeeper[shopId].items[secondInput]].buyPrice), 7, " gold!", 7, "", 7, "", false);
 			}
 			else
@@ -1187,9 +1255,10 @@ top:
 		pause();
 		goto top;
 	}
+	//If input is sell
 	else if (input == "sell" || input == "Sell" || input == "SELL")
 	{
-		//For every item
+		//For every item in inventory
 		for (int i = 1; i <= invSort; i++)
 		{
 			//If the array slot is greater than 1
@@ -1217,10 +1286,10 @@ top:
 				printStringColor(7, invItems[invSortPos[secondInput]].name + " has been sold successfully for ", 6, to_string(invItems[invSortPos[secondInput]].buyPrice / 2), 7, " gold!", 7, "", 7, "", false);
 
 				//Reducing quantity by one
-				invItems[invSortPos[secondInput]].quantity = invItems[invSortPos[secondInput]].quantity - 1;
+				invItems[invSortPos[secondInput]].quantity -= - 1;
 
 				//Sets player gold to current gold + plus the price of item / 2
-				playerGold = playerGold + invItems[invSortPos[secondInput]].buyPrice / 2;
+				playerGold += invItems[invSortPos[secondInput]].buyPrice / 2;
 
 				//Call the function to update the array
 				removeFromInvSortArray(secondInput);
@@ -1233,6 +1302,7 @@ top:
 		pause();
 		goto top;
 	}
+	//If input is back, just continue until the end of the function
 	else if (input == "back" || input == "Back" || input == "BACK")
 	{
 
@@ -1266,20 +1336,25 @@ void removeFromInvSortArray(int itemID)
 
 void battle(int enemyType)
 {
+	//Define variable types
 	string attack;
 	int enemyAttackPower;
 	bool ran = false, enemyCrit = false;
+
+	//Set enemy health to their max in case the enemy was previously battled
 	enemy[enemyType].health = enemy[enemyType].maxHealth;
+
+	//While both the player and enemy are alive
 	while (enemy[enemyType].health > 0 && playerHealth > 0)
 	{
 		system("cls");
 		cout << endl;
 
+		//Draws the UI where health is displayed as well as names
 		printStringColor(7, "#--------------------------------#", 7, string(10, ' '), 7, "#--------------------------------#", 7, "", 7, "", true);
 		printStringColor(7, "# -" + playerName + "-" + string(29 - playerName.length(), ' ') + "#", 7, string(10, ' '), 7, "# -" + enemy[enemyType].name + "-" + string(29 - enemy[enemyType].name.length(), ' ') + "#", 7, "", 7, "", true);
 		printStringColor(7, "# ", 4, string(playerHealth, '#'), 7, string(playerMaxHealth - playerHealth, 'O') + string(31 - playerMaxHealth, ' ') + "#" + string(10, ' ') + "# ", 4, string(enemy[enemyType].health, '#'), 7, string(enemy[enemyType].maxHealth - enemy[enemyType].health, 'O') + string(21 - enemy[enemyType].maxHealth + 10, ' ') + "#", true);
 		printStringColor(7, "#--------------------------------#", 7, string(10, ' '), 7, "#--------------------------------#", 7, "", 7, "", true);
-		//"# -" << playerName << "-" << string(29 - playerName.length(), ' ') << "#"
 
 		printString("Your turn!");
 		instantPrint("Use 'attack', 'run', 'abilities' to decide your next move.");
@@ -1287,125 +1362,198 @@ void battle(int enemyType)
 		inputSign();
 		cin >> attack;
 
+		//If input is attack
 		if (attack == "attack" || attack == "Attack" || attack == "ATTACK")
 		{
+			//Wait for 0.5 seconds
 			Sleep(500);
+
+			//Generate a crit value
 			attackPower = rand() % 10 + 1;
+
+			//If crit value is even and greater or equal to 6 then increase the damage
 			if (attackPower % 2 == 0 && attackPower >= 6)
 			{
+				//Set attackPower to equiped weapon damage + equiped weapon damage / 2 eg. 2 + 1 = 3
 				attackPower = invItems[equipedWeapon].damage + invItems[equipedWeapon].damage / 2;
 				printStringColor(4, "[Critical Hit!] ", 7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", false);
 			}
+			//Or otherwise just do regular damage
 			else
 			{
+				//Set attackPower to regular weapon damage
 				attackPower = invItems[equipedWeapon].damage;
 				printStringColor(7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", 7, "", false);
 			}
+
+			//Remove the damage from the enemys health pool
 			enemy[enemyType].health = enemy[enemyType].health - attackPower;
+
+			//If enemy still has healthpoints left, print it's healthpoints
 			if (enemy[enemyType].health > 0)
 			{
 				printStringColor(7, enemy[enemyType].name + " now has ", 4, to_string(enemy[enemyType].health), 7, " healthpoints left!", 7, "", 7, "", false);
 			}
 		}
+
+		//If input is abilities
 		else if (attack == "abilities" || attack == "Abilities" || attack == "ABILITIES")
 		{
+			//Call the function to select a ability based of talents
 			abilities(playerClass);
 
+			//Generate random value and check if greater or equal to 6
 			if (rand() % 10 + 1 >= 6)
 			{
-				attackPower = attackPower + attackPower / 2;
-				healPower = healPower + healPower / 2;
+				//Increase damage and healthPower by itself / 2
+				attackPower += attackPower / 2;
+				healPower += healPower / 2;
 
+				//If ability has attackPower prints
 				if (attackPower > 0)
 				{
-					printStringColor(4, "[Critical Hit!] ", 7, "You hit " + enemy[enemyType].name + " with " + talentUsed + " for ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", false);
+					printStringColor(4, "[Critical Hit!] ", 7, "You hit " + enemy[enemyType].name + " with " + talentUsed + " for ", 4, to_string(attackPower), 7, " healthpoints!", 7, "", false);
 				}
+				//If ability has healPower print
 				if (healPower > 0)
 				{
 					printStringColor(4, "[Critical Hit!] ", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " of healthpoints!", 7, "", false);
 				}
+				//If ability has a healPower that's negative print that the player was damaged
+				else if (healPower < 0)
+				{
+					printStringColor(4, "[Critical Hit!] ", 7, "You damage yourself for " + talentUsed + " for ", 4, to_string(healPower), 7, " healthpoints!", 7, "", false);
+				}
 			}
+
+			//If not a crit do this
 			else
 			{
+				//Print if ability has attackPower
 				if (attackPower > 0)
 				{
-					printStringColor(7, "", 7, "You hit " + enemy[enemyType].name + " with " + talentUsed + " for ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", false);
+					printStringColor(7, "", 7, "You hit " + enemy[enemyType].name + " with " + talentUsed + " for ", 4, to_string(attackPower), 7, " healthpoints!", 7, "", false);
 				}
+				//Print if ability has healPower
 				if (healPower > 0)
 				{
 					printStringColor(7, "", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " of healthpoints!", 7, "", false);
 				}
+				//Print if ability has negative healPower
+				else if (healPower < 0)
+				{
+					printStringColor(7, "", 7, "You damage yourself for " + talentUsed + " for ", 4, to_string(healPower), 7, " healthpoints!", 7, "", false);
+				}
 			}
 
+			//Set enemy health to enemty health - attackPower
 			enemy[enemyType].health -= attackPower;
+
+			//Set player healthpoints to player healthpoints + healpower
 			playerHealth += healPower;
 
+			//If health went above max health, set to max health
 			if (playerHealth > playerMaxHealth)
 				playerHealth = playerMaxHealth;
 
+			//Reset attackPower and healPower values to 0
 			attackPower = 0;
 			healPower = 0;
 		}
+
+		//If input is run
 		else if (attack == "run" || attack == "Run" || attack == "RUN")
 		{
+			//Set variable type and value of random
 			int flee = rand() % 10 + 1;
+
+			//If random is greater or equal to 5
 			if (flee >= 5)
 			{
+				//Set bool ran to true to prevent XP gain later
 				ran = true;
+				//Set enemy health to 0
 				enemy[enemyType].health = 0;
+				//Break the while loop
 				break;
 			}
+			//Print that the user didn't manage to run if random is less than 5
 			else
 			{
 				printString("You did not manage to run!");
 			}
 		}
 
+		//Wait for 0.5 seconds
 		Sleep(500);
 
+		//Generate crit chance for enemy
 		enemyAttackPower = rand() % 10 + 1;
 
+		//If enemyAttackPower is even and equa<l or greater than 8
 		if (enemyAttackPower % 2 == 0 && enemyAttackPower >= 8)
 		{
-			enemyAttackPower = enemy[enemyType].damage + enemy[enemyType].damage / 2;
+			//Set damage to damage + damage / 2
+			enemyAttackPower += enemy[enemyType].damage / 2;
+
+			//If the user didn't manage to flee and also enemy has more than 0 health
 			if (ran == false && enemy[enemyType].health > 0)
+				//Set bool enemy crit to true
 				enemyCrit = true;
 		}
 		else
 		{
+			//Otherwise set damage to default enemy damage
 			enemyAttackPower = enemy[enemyType].damage;
+			//And bool enemy crit to false
 			enemyCrit = false;
 		}
 
+		//If enemy isn't dead
 		if (enemy[enemyType].health > 0)
 		{
-			playerHealth = playerHealth - enemyAttackPower;
+			//Set player health to player health - enemy damage
+			playerHealth -= enemyAttackPower;
+			//If it was a crit, print it otherwise just print damage
 			if (enemyCrit)
 			{
-				printStringColor(4, "[Critical Hit!] ", 7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " of healthpoints!", 7, "", false);
+				//Print damage done if playerhealth is greater than 0
+				if (playerHealth > 0)
+					printStringColor(4, "[Critical Hit!] ", 7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " of healthpoints!", 7, "", false);
 			}
 			else
 			{
 				printStringColor(7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " of healthpoints!", 7, "", 7, "", false);
 			}
 
-			printStringColor(7, "You now have ", 4, to_string(playerHealth), 7, " healthpoints!", 7, "", 7, "", false);
+			//Print player health if player health is greater than 0
+			if (playerHealth > 0)
+				printStringColor(7, "You now have ", 4, to_string(playerHealth), 7, " healthpoints!", 7, "", 7, "", false);
 		}
 		else
 		{
+			//If player didn't manage to run and enemy is dead
 			if (ran == false)
 			{
-				playerExperience = playerExperience + enemy[enemyType].xpGain;
+				//Set player xp to player xp + enemy xp reward and tell teh user
+				playerExperience += enemy[enemyType].xpGain;
 				printStringColor(7, enemy[enemyType].name + " successfully ", 4, "killed", 7, "! Which has granted you " + to_string(enemy[enemyType].xpGain) + " experience points!", 7, "", 7, "", false);
 
+				//If enemy has drop specified
 				if (enemy[enemyType].hasDrop)
 				{
+					//Generate random drop chance
 					int dropChance = rand() % 10 + 1;
+
+					//If dropchance is greater than 6
 					if (dropChance > 6)
 					{
+						//Reward with 1 of potential loot and tell the user it was rare
 						grantItem(enemy[enemyType].potentialLoot, 1);
 						printString("Rare drop! You got a " + invItems[enemy[enemyType].potentialLoot].name);
 					}
+
+					//Give player the drop of the enemy times the drop amount and tell the user
 					grantItem(enemy[enemyType].drop, enemy[enemyType].dropAmount);
 					printString("You have been rewarded with " + to_string(enemy[enemyType].dropAmount) + " " + invItems[enemy[enemyType].drop].name);
 				}
@@ -1414,11 +1562,13 @@ void battle(int enemyType)
 			}
 			else
 			{
+				//If you successfully ran print this
 				printString("You have successfully ran away");
 				pause();
 			}
 		}
 
+		//If player health is less or equal 0 goto death function.
 		if (playerHealth <= 0)
 			death();
 
@@ -1500,8 +1650,47 @@ void death()
 {
 	playerHealth = playerMaxHealth / 2;
 	system("cls");
+
+	instantPrint("                                           .\"\"--.._            ");
+	instantPrint("                                           []      `'--.._       ");
+	instantPrint("                                           ||__           `'-,   ");
+	instantPrint("                                         `)||_ ```'--..       \\  ");
+	instantPrint("                     _                    /|//}        ``--._  | ");
+	instantPrint("                  .'` `'.                /////}              `\\/ ");
+	instantPrint("                 /  .\"\"\".\\              //{///                ");
+	instantPrint("                /  /_  _`\\\\            // `||                    ");
+	instantPrint("                | |(_)(_)||          _//   ||                    ");
+	instantPrint("                | |  /\\  )|        _///\\   ||                   ");
+	instantPrint("                | |L====J |       / |/ |   ||                    ");
+	instantPrint("               /  /'-..-' /    .'`  \\  |   ||                    ");
+	instantPrint("              /   |  :: | |_.-`      |  \\  ||                    ");
+	instantPrint("             /|   `\\-::.| |          \\   | ||                    ");
+	instantPrint("           /` `|   /    | |          |   / ||                    ");
+	instantPrint("         |`    \\   |    / /          \\  |  ||                    ");
+	instantPrint("        |       `\\_|    |/      ,.__. \\ |  ||                    ");
+	instantPrint("        /                     /`    `\\ ||  ||                    ");
+	instantPrint("       |           .         /        \\||  ||                    ");
+	instantPrint("       |                     |         |/  ||                    ");
+	instantPrint("       /         /           |         (   ||                    ");
+	instantPrint("      /          .           /          )  ||                    ");
+	instantPrint("     |            \\          |             ||                    ");
+	instantPrint("    /             |          /             ||                    ");
+	instantPrint("   |\\            /          |              ||                    ");
+	instantPrint("   \\ `-._       |           /              ||                    ");
+	instantPrint("    \\ ,//`\\    /`           |              ||                    ");
+	instantPrint("     ///\\  \\  |             \\              ||                    ");
+	instantPrint("    |||| ) |__/             |              ||                    ");
+	instantPrint("    |||| `.(                |              ||                    ");
+	instantPrint("    `\\\\` /`                 /              ||                    ");
+	instantPrint("       /`                   /              ||                    ");
+	instantPrint("      /                     |              ||                    ");
+	instantPrint("     |                      \\              ||                    ");
+	instantPrint("    /                        |             ||                    ");
+	instantPrint("  /`                          \\            ||                    ");
+	instantPrint("/`                            |            ||                    ");
+	instantPrint("`-.___,-.      .-.        ___,'            ||                    ");
+
 	printString("You have died :(");
-	printString("Press any key to respawn.");
 	pause();
 	skanstull();
 }
@@ -1516,7 +1705,7 @@ void levelUpCheck()
 		printString("Maximum HP has been increased from " + to_string(playerMaxHealth));
 		playerMaxHealth = playerMaxHealth + 2;
 		cout << " to " << playerMaxHealth << endl;
-		printString(" to " + to_string(playerMaxHealth));
+		printString("to " + to_string(playerMaxHealth));
 	}
 }
 
@@ -1526,12 +1715,15 @@ void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 	instantPrint("-V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V-");
 	instantPrint("|                 Talents                 |");
 	instantPrint("|                                         |");
+	instantPrint("|-----------------------------------------|");
 	if (firstTalent == 1)
 		instantPrint("| [X][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
 	else if (firstTalent == 2)
 		instantPrint("| [ ][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[X][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
 	else
 		instantPrint("| [ ][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
+
+	instantPrint("|-----------------------------------------|");
 
 	if (secondTalent == 1)
 		instantPrint("| [X][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
@@ -2010,7 +2202,7 @@ wrongInput:
 			goto wrongInput;
 			break;
 		case 2:
-			printString("'JUST TAKE THE GOD DAMN INFO!'");
+			printString("'JUST TAKE THE GODDAMN INFO!'");
 			grantItem(9, 1);
 			printString("You got item " + invItems[9].name);
 			printString("You run back to TC subway and get on the next train back to Skanstull.");
