@@ -48,6 +48,8 @@ void djKhaled();
 void classCheck();
 void NK();
 void fightPrint();
+void TC();
+void burgerKing();
 
 //Global vars
 //Vars used for loading
@@ -75,7 +77,7 @@ int healPower;
 string classOneTalents[4] = { "memes", "memeo", "sas", "saSAsa" };
 string classTwoTalents[4] = { "dsada", "das", "dasdsa", "asd" };
 string classThreeTalents[4] = { "23d", "312321321", "32d", "112" };
-int classOneTalentsDamage[4] = {10,10,10,10};
+int classOneTalentsDamage[4] = { 10,10,10,10 };
 int classOneTalentsRedDamage[4] = { 10,10,10,10 };
 int classTwoTalentsDamage[4] = { 10,10,10,10 };
 int classTwoTalentsRedDamage[4] = { 10,10,10,10 };
@@ -149,7 +151,7 @@ void main()
 	enemy[3].health = 17; enemy[3].name = "Strange man"; enemy[3].damage = 2; enemy[3].xpGain = 300, enemy[3].maxHealth = 17; enemy[3].drop = 5; enemy[3].hasDrop = true; enemy[3].dropAmount = 2; enemy[3].potentialLoot = 7;
 
 	//ShopKeepers
-	shopKeeper[0].name = "Oskar"; shopKeeper[0].greeting = "Hello, newfag"; shopKeeper[0].items[0] = 4; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
+	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food"; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
 	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
 
 	asignDefaultRarityColor();
@@ -318,9 +320,9 @@ void greeting()
 	instantPrint(" (__  ) / / / / /_    ");
 	instantPrint("/____/_/ /_/_/\\__/    ");
 	instantPrint("                                        ");
-	
+
 	setTextColor(7);
-	
+
 	pause();
 }
 
@@ -382,13 +384,13 @@ void printString(string stringInput)
 		cout << stringInput[i];
 		Sleep(30);
 
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
 			for (int n = i + 1; n < stringInput.length(); n++)
 			{
 				cout << stringInput[n];
 			}
-			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
 			}
@@ -443,7 +445,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		if (instant == false)
 			Sleep(30);
 
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
 			for (int n = i + 1; n < stringInput.length(); n++)
 			{
@@ -458,7 +460,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				}
 				cout << stringInput[n];
 			}
-			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
 			}
@@ -496,7 +498,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		if (instant == false)
 			Sleep(30);
 
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
 			for (int n = i + 1; n < stringInput2.length(); n++)
 			{
@@ -511,7 +513,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				}
 				cout << stringInput2[n];
 			}
-			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
 			}
@@ -549,7 +551,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		if (instant == false)
 			Sleep(30);
 
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
 			for (int n = i + 1; n < stringInput3.length(); n++)
 			{
@@ -564,7 +566,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				}
 				cout << stringInput3[n];
 			}
-			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
 			}
@@ -602,7 +604,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		if (instant == false)
 			Sleep(30);
 
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
 			for (int n = i + 1; n < stringInput4.length(); n++)
 			{
@@ -617,7 +619,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				}
 				cout << stringInput4[n];
 			}
-			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
 			}
@@ -655,7 +657,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 		if (instant == false)
 			Sleep(30);
 
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
 			for (int n = i + 1; n < stringInput5.length(); n++)
 			{
@@ -670,7 +672,7 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 				}
 				cout << stringInput5[n];
 			}
-			while (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 			{
 				//Do nothing
 			}
@@ -1470,6 +1472,7 @@ void abilities(int playerClass)
 			healPower = classThreeTalentsRedDamage[talentOne - 1];
 			talentUsed = classThreeTalents[talentOne - 1];
 		}
+		break;
 	case 2:
 		if (playerClass == 1)
 		{
@@ -1524,13 +1527,13 @@ void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 	instantPrint("|                 Talents                 |");
 	instantPrint("|                                         |");
 	if (firstTalent == 1)
-	instantPrint("| [X][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
+		instantPrint("| [X][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
 	else if (firstTalent == 2)
 		instantPrint("| [ ][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[X][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
 	else
 		instantPrint("| [ ][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
 
-	if(secondTalent == 1)
+	if (secondTalent == 1)
 		instantPrint("| [X][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
 	else if (secondTalent == 2)
 		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[X][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
@@ -1591,6 +1594,14 @@ top:
 
 		inputSign();
 		cin >> secondInput;
+		
+		if (!cin)
+		{
+			cin.clear();
+			string remove;
+			getline(cin, remove);
+			talents();
+		}
 
 		switch (secondInput)
 		{
@@ -1798,10 +1809,18 @@ top:
 	instantPrint("  ][_n_i_| (   ooo___  |     Skanstull      | |               | ");
 	instantPrint(" (__________|_[______]_|____________________|_|_______________| ");
 	instantPrint("   0--0--0      0  0      0       0     0        0        0     ");
+	pause();
+	system("cls");
 	cout << endl;
 	printString("Welcome to Skanstull(Your local train station)");
+beenToRinkeby:
 	printString("Where would you like to go?");
-	printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC");
+	
+	if (invItems[9].quantity > 0) 
+		printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC [4] Go to Cigoteket at Torsgatan 36 [9] Open Inventory");
+	else
+		printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC [9] Open Inventory");
+
 	inputSign();
 	cin >> choice;
 	switch (choice)
@@ -1812,19 +1831,33 @@ top:
 		break;
 	case 2:
 		//Go to Rinkeby
-		rinkeby();
+		if (invItems[2].quantity > 0)
+		{
+			printString("Why would you go back to there? Pick another place to go to.");
+			goto beenToRinkeby;
+		}
+		else 
+			rinkeby();
+		
 		break;
 	case 3:
 		//go to TC
-		drawInventory();
+		TC();
 		goto top;
 		break;
 	case 4:
-		if (invItems[2].quantity > 0)
-			cout << endl;
-		printString("Travel to Cigoteket at Torsgatan 36?");
-		printString("Yes");
-		printString("No");
+		if (invItems[9].quantity > 0)
+			cigoteket();
+		else
+		{
+			printString("Wrong input!");
+			pause();
+			goto top;
+		}
+		break;
+	case 9:
+		drawInventory();
+		goto top;
 		break;
 	default:
 		printString("Wrong input!");
@@ -1832,6 +1865,7 @@ top:
 		goto top;
 
 	}
+
 }
 void NK()
 {
@@ -1902,7 +1936,105 @@ top:
 		goto top;
 	}
 }
+void TC()
+{
+	int choice;
+	system("cls");
+	
+	cout << endl;
+	instantPrint("    OO O o o o...      ______________________ _________________ ");
+	instantPrint("   O     ____          |                    | |               | ");
+	instantPrint("  ][_n_i_| (   ooo___  |         TC         | |               | ");
+	instantPrint(" (__________|_[______]_|____________________|_|_______________| ");
+	instantPrint("   0--0--0      0  0      0       0     0        0        0     ");
+	pause();
+	system("cls");
+	cout << endl;
+	printString("Welcome to TC!");
+	printString("When you get up out of the subway you see a shady guys that looks interesting,");
+	printString("You also see your favourite foodplace Burger King. ");
+wrongInput:
+	printString("What would you like to do?");
+	if (invItems[9].quantity > 0 )
+		printString("[1] Go back to Skanstull [2] Go get some burgers ");
+	else
+		printString("[1] Go back to Skanstull [2] Go get some burgers [3] Talk to the shady guy");
+	inputSign();
+	cin >> choice;
+	switch (choice)
+	{
+	case 1:
+		skanstull();
+		break;
+	case 2:
+		burgerKing();
+		break;
+	case 3:
+		if (invItems[9].quantity > 0)
+		{
+			printString("Invalid choice!");
+			pause();
+			TC();
+		}
+		int secondChoice;
+		system("cls");
+		cout << endl;
+		printString("As you walk up to the shady guy he looks at you with a scary smile and asks ");
+		printString("'Do you want to know where Akash the vapelord is at?'");
+		printString("I have some spicy info that you might like.");
+		printString("'It will only cost you 5 gold'");
+		printString("Do you buy the 'Spicy info' from the shady guy? ");
+		printString("[1] Yes. [2] No.");
+		inputSign();
+		cin >> secondChoice;
+			switch (secondChoice)
+			{
 
+			case 1:
+				if (playerGold >= 5)
+				{
+					playerGold -= 5;
+					grantItem(9, 1);
+					printString("Thank you my man");
+				}
+				else
+					printString("It looks like you do not have enough gold.");
+				printString("Ohh well, you can have it anyway.");
+				grantItem(9, 1);
+				printString("You got item " + invItems[9].name);
+				pause();
+				goto wrongInput;
+					break;
+			case 2:
+				printString("'JUST TAKE THE GOD DAMN INFO!'");
+				grantItem(9, 1);
+				printString("You got item " + invItems[9].name);
+				printString("You run back to TC subway and get on the next train back to Skanstull.");
+				skanstull();
+				break;
+			default:
+				break;
+			}
+	
+		break;
+	
+	
+	default:
+		printString("That is not an option!");
+		goto wrongInput;
+		break;
+	}
+}
+
+void burgerKing()
+{
+	shop(0);
+	system("cls");
+	cout << endl;
+	printString("After that amazing food you decide to go back to TC");
+	TC();
+
+}
 void fightPrint()
 {
 
@@ -1913,4 +2045,8 @@ void fightPrint()
 	printStringColor(7, "*|", 4, "/_/   /_/\\__, /_/ /_/\\__/  ", 7, "|*", 7, "", 7, "", true);
 	printStringColor(7, "*|", 4, "        /____/             ", 7, "|*", 7, "", 7, "", true);
 	instantPrint("*******************************");
+}
+void cigoteket()
+{
+
 }
