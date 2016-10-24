@@ -134,13 +134,13 @@ void main()
 	//Assign name and info for every item in the game
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
 	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
-	invItems[3].name = "Rotten burger"; invItems[3].quantity = 1; invItems[3].quality = "Common"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
+	invItems[3].name = "Rotten burger"; invItems[3].quantity = 0; invItems[3].quality = "Common"; invItems[3].consumable = true; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 10; invItems[3].healthRegen = 0; invItems[3].desc = "Really shouldn't eat this";
 	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
-	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth;
+	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth; invItems[5].desc = "That good good";
 	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
-	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
-	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
-	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
+	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3; invItems[7].desc = "It is a knife";
+	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true; invItems[8].desc = "I GOT THE KEYS"; 
+	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true; invItems[9].desc = "Where can he be?";
 	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
 	invItems[13].name = "Good"; invItems[13].quantity = 0; invItems[13].quality = "Rare"; invItems[13].buyPrice = 50; invItems[13].consumable = true; invItems[13].healthRegen = playerMaxHealth;
 
@@ -149,7 +149,9 @@ void main()
 	enemy[1].health = 11; enemy[1].name = "Ken Bone"; enemy[1].damage = 1; enemy[1].xpGain = 100, enemy[1].maxHealth = 11; enemy[1].drop = 2; enemy[1].hasDrop = true; enemy[1].dropAmount = 1; enemy[1].potentialLoot = 2;
 	enemy[2].health = 10; enemy[2].name = "Bartender"; enemy[2].damage = 1; enemy[2].xpGain = 100, enemy[2].maxHealth = 10; enemy[2].drop = 2; enemy[2].hasDrop = true; enemy[2].dropAmount = 1; enemy[2].potentialLoot = 2;
 	enemy[3].health = 17; enemy[3].name = "Strange man"; enemy[3].damage = 2; enemy[3].xpGain = 300, enemy[3].maxHealth = 17; enemy[3].drop = 5; enemy[3].hasDrop = true; enemy[3].dropAmount = 2; enemy[3].potentialLoot = 7;
-
+	enemy[4].health = 40; enemy[4].name = "DAS VAPELORD"; enemy[4].damage = 3; enemy[3].xpGain = 2000, enemy[3].maxHealth = 40; enemy[4].drop = 8; enemy[3].hasDrop = true; enemy[3].dropAmount = 4; enemy[3].potentialLoot = 2;
+	
+	
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
 	shopKeeper[0].ascii = { " _____                     _____ _         ", "| __  |_ _ ___ ___ ___ ___|  |  |_|___ ___ ", "| __ -| | |  _| . | -_|  _|    -| |   | . |", "|_____|___|_| |_  |___|_| |__|__|_|_|_|_  |", 	"              |___|                   |___|" }; shopKeeper[0].numberofCharsPerLine = 43; shopKeeper[0].numberOfAsciiLines = 5;
@@ -2027,7 +2029,7 @@ beenToRinkeby:
 		break;
 	case 2:
 		//Go to Rinkeby
-		if (invItems[2].quantity > 0)
+		if (invItems[5].quantity > 0)
 		{
 			printString("Why would you go back to there? Pick another place to go to.");
 			goto beenToRinkeby;
@@ -2244,5 +2246,27 @@ void fightPrint()
 }
 void cigoteket()
 {
-
+	printString("When you stand outside the Cigotek you see Akash inside ripping the fattest vape.");
+	printString("suddenly he notices you!");
+	printString("'HEY! WHAT ARE YOU DOING HERE!'");
+	printString("'You shouldn't be here, this is my secret hideout.'");
+	printString("'You wont get away with this easily'");
+	pause();
+	fightPrint();
+	battle(4);
+	system("cls");
+	cout << endl;
+	printString("After the fight you decide to check out what the key Akash dropped leads to.");
+	printString("As you touch the key you hear in a distance:");
+	printString("I got the key, the keys, the keys.");
+	printString("I got the key, the keys, the keys.");
+	printString("Suddenly, a fat man jumps out of the bushes.");
+	printString("He starts talking in a language that sounds like english but not exactly.");
+	printString("As you get a closer look at the man you see that its,");
+	printString("DJ KHAAALEEEED!");
+	printString("Dj Khaled runs towards you and yells 'GIVE ME MY KEY!'.");
+	pause();
+	fightPrint();
+	pause();
+	battle(5);
 }
