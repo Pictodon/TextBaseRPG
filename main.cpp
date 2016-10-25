@@ -233,27 +233,28 @@ differentClass:
 
 	switch (playerClass)
 	{
-		//class choice switchcase
+			//class choice switchcase
 	case 1:
-		printString("Oh so you're a hunter type. ");
-		printString("This class is especially good when you want to attack at a long range.");
-		printString("You have a really powerful arrow that you can fire at your enemy. ");
-		printString("If you are easily scared by monsters then this is the class for you. ");
+		printString("The pundare will have a different fighting technique");
+		printString("The pundare wil use his willpower and augumented reality to win fights");
+		printString("Plus you will also be abled to be one with nature");
+		printString("(or just really high)");
 		playerClass = 1;
 		break;
 	case 2:
 		//not sure vad jag har skrivit xD
 		printString("If you have less than 10 braincells then this is the class for you. ");
 		printString("I mean who would choose a class that just runs in to battle with their");
-		printString("head first. The smartest class would be hunter, but nevermind. ");
-		printString("With the warrior class you can slash your baws ass sword at your enemies.");
-		printString("Just look at He-Man, he's the boss.");
+		printString("head first. The smartest class would be gangster, but nevermind. ");
+		printString("With the alkis class you can throw your baws ass drunken fists at your enemies.");
+		printString("Just look at Kenta, he is a really cool alkis.");
 		playerClass = 2;
 		break;
 	case 3:
-		printString("VIKTOR SKRIVER");
-		printString("VIKTOR SKRIVER");
-		printString("VIKTOR SKRIVER");
+		printString("Oh so you're a gangster ");
+		printString("This class is especially good when you want to attack at a long range with your 9mm.");
+		printString("You have really powerful bullets that you can fire at your enemy. ");
+		printString("If you are a real orten thug then this is the class for you. ");
 		playerClass = 3;
 		break;
 	default:
