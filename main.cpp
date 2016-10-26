@@ -805,6 +805,9 @@ void pause()
 }
 
 //Function to determine console line width and number of line height
+/// <summary>Function to determine console line width and number of line height
+/// <para>Usage: screenResolution();</para>
+/// </summary>
 void screenResolution()
 {
 	//Throw an error if you can't retrieve screen res.
@@ -832,7 +835,7 @@ void drawInventory()
 	string inventoryTitle = playerName + "'s inventory", input, damageString, levelReqText;
 	int additionForOddNames = 0, quantityOrDamage, secondInput, levelReqColor, numDigits = 1;
 
-	//IF the inventory title (name) is odd compensate in positioning later on
+	//If the inventory title (name) is odd compensate in positioning later on
 	if (inventoryTitle.length() % 2 == 1)
 	{
 		additionForOddNames = 1;
