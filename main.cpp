@@ -11,8 +11,8 @@
 //Define namespace
 using namespace std;
 
-#pragma region Function Definitions
 //Define functions
+#pragma region Function Definitions
 void printString(string stringInput);
 void pause();
 void screenResolution();
@@ -30,7 +30,7 @@ void shop(int shopID);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, int color5, string stringInput5, bool instant);
 void asignDefaultRarityColor();
 void battle(int enemyType);
-void abilities(int playerClass);
+void abilities(int playerClassInput);
 void death();
 void levelUpCheck();
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4]);
@@ -55,8 +55,8 @@ void victoryScreen();
 void akashAscii();
 #pragma endregion
 
-#pragma region Global vars
 //Global vars Vars / used for loading
+#pragma region Global vars
 bool firstInvLoad = true;
 int winHeight = 0;
 int winWide = 0;
@@ -142,8 +142,8 @@ void main()
 	//Assign name and info for every item in the game
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
 	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
-	invItems[3].name = "Rotten burger"; invItems[3].quantity = 1; invItems[3].quality = "Common"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
-	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
+	invItems[3].name = "Rotten burger"; invItems[3].quantity = 0; invItems[3].quality = "Common"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
+	invItems[4].name = "Shrooms"; invItems[4].quantity = 0; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 2; invItems[4].buyPrice = 16; invItems[4].inventoryColor = 16;
 	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth;
 	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
 	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
@@ -185,7 +185,10 @@ void main()
 	classMenu();
 }
 
-//Function to greet the player
+//Function to greet the player and get player name
+/// <summary>Used to greet the player and get player name
+/// <para>Usage: nameGreeting();</para>
+/// </summary>
 void nameGreeting()
 {
 	cout << endl;
@@ -213,7 +216,10 @@ void nameGreeting()
 	pause();
 }
 
-//Function for the class selectiopn
+//Used to select palyer class
+/// <summary>Used to select palyer class
+/// <para>Usage: classMenu();</para>
+/// </summary>
 void classMenu()
 {
 	int classConfirm;
@@ -323,6 +329,9 @@ differentClass:
 }
 
 //Function to let the program know when the user is done selecting font size
+/// <summary>Function to let the program know when the user is done selecting font size
+/// <para>Usage: choseFontSize();</para>
+/// </summary>
 void choseFontSize()
 {
 	//Until the user has pressed one print press one to proceed.
@@ -332,7 +341,10 @@ void choseFontSize()
 	} while (_getch() != '1');
 }
 
-//Function to print the greeting text
+//Function to print the greeting ascii
+/// <summary>Function to print the greeting ascii
+/// <para>Usage: greeting();</para>
+/// </summary>
 void greeting()
 {
 	instantPrint(" _    _      _                            _                                   ");
@@ -375,6 +387,9 @@ void greeting()
 }
 
 //Function to asign default color values based on item quality
+/// <summary>Function to asign default color values based on item quality
+/// <para>Usage: asignDefaultRarityColor();</para>
+/// </summary>
 void asignDefaultRarityColor()
 {
 	// For every item in te game
@@ -1279,13 +1294,15 @@ top:
 				printStringColor(7, invItems[invSortPos[secondInput]].name + " has been sold successfully for ", 6, to_string(invItems[invSortPos[secondInput]].buyPrice / 2), 7, " gold!", 7, "", 7, "", false);
 
 				//Reducing quantity by one
-				invItems[invSortPos[secondInput]].quantity -= - 1;
+				invItems[invSortPos[secondInput]].quantity -= 1;
 
 				//Sets player gold to current gold + plus the price of item / 2
 				playerGold += invItems[invSortPos[secondInput]].buyPrice / 2;
 
-				//Call the function to update the array
-				removeFromInvSortArray(secondInput);
+				//If last item was sold, do remove from array
+				if (invItems[invSortPos[secondInput]].quantity == 0)
+					//Call the function to update the array
+					removeFromInvSortArray(secondInput);
 			}
 			else
 			{
@@ -1494,7 +1511,7 @@ void battle(int enemyType)
 		if (enemyAttackPower % 2 == 0 && enemyAttackPower >= 8)
 		{
 			//Set damage to damage + damage / 2
-			enemyAttackPower += enemy[enemyType].damage / 2;
+			enemyAttackPower = enemy[enemyType].damage + enemy[enemyType].damage / 2;
 
 			//If the user didn't manage to flee and also enemy has more than 0 health
 			if (ran == false && enemy[enemyType].health > 0)
@@ -1583,19 +1600,21 @@ void battle(int enemyType)
 /// <summary>Used for the selectection and to print player abilities
 /// <para>Usage: abilities(e.g 1 depending on playerClass);</para>
 /// </summary>
-void abilities(int playerClass)
+void abilities(int playerClassInput)
 {
+	//Define variable types
 	int input;
 
-	if (playerClass == 1)
+	//Check player class and print the right names
+	if (playerClassInput == 1)
 	{
 		printString("[1] " + classOneTalents[talentOne - 1] + " [2] " + classOneTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClass == 2)
+	else if (playerClassInput == 2)
 	{
 		printString("[1] " + classTwoTalents[talentOne - 1] + " [2] " + classTwoTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClass == 3)
+	else if (playerClassInput == 3)
 	{
 		printString("[1] " + classThreeTalents[talentOne - 1] + " [2] " + classThreeTalents[2 + talentTwo - 1]);
 	}
@@ -1608,22 +1627,24 @@ void abilities(int playerClass)
 	inputSign();
 	cin >> input;
 
+	//Get user input
 	switch (input)
 	{
 	case 1:
-		if (playerClass == 1)
+		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot one was selected and repeat for every class
+		if (playerClassInput == 1)
 		{
 			attackPower = classOneTalentsDamage[talentOne - 1];
 			healPower = classOneTalentsRedDamage[talentOne - 1];
 			talentUsed = classOneTalents[talentOne - 1];
 		}
-		else if (playerClass == 2)
+		else if (playerClassInput == 2)
 		{
 			attackPower = classTwoTalentsDamage[talentOne - 1];
 			healPower = classTwoTalentsRedDamage[talentOne - 1];
 			talentUsed = classTwoTalents[talentOne - 1];
 		}
-		else if (playerClass == 3)
+		else if (playerClassInput == 3)
 		{
 			attackPower = classThreeTalentsDamage[talentOne - 1];
 			healPower = classThreeTalentsRedDamage[talentOne - 1];
@@ -1631,19 +1652,20 @@ void abilities(int playerClass)
 		}
 		break;
 	case 2:
-		if (playerClass == 1)
+		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot two was selected and repeat for every class
+		if (playerClassInput == 1)
 		{
 			attackPower = classOneTalentsDamage[2 + talentTwo - 1];
 			healPower = classOneTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classOneTalents[2 + talentTwo - 1];
 		}
-		else if (playerClass == 2)
+		else if (playerClassInput == 2)
 		{
 			attackPower = classTwoTalentsDamage[2 + talentTwo - 1];
 			healPower = classTwoTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classTwoTalents[2 + talentTwo - 1];
 		}
-		else if (playerClass == 3)
+		else if (playerClassInput == 3)
 		{
 			attackPower = classThreeTalentsDamage[2 + talentTwo - 1];
 			healPower = classThreeTalentsRedDamage[2 + talentTwo - 1];
@@ -1658,9 +1680,12 @@ void abilities(int playerClass)
 /// </summary>
 void death()
 {
+	//Set player health to max health divided by 2
 	playerHealth = playerMaxHealth / 2;
+
 	system("cls");
 
+	//Print reaper ascii
 	instantPrint("                                           .\"\"--.._            ");
 	instantPrint("                                           []      `'--.._       ");
 	instantPrint("                                           ||__           `'-,   ");
@@ -1701,7 +1726,10 @@ void death()
 	instantPrint("`-.___,-.      .-.        ___,'            ||                    ");
 
 	printString("You have died :(");
+
 	pause();
+
+	//Goto Skanstull
 	skanstull();
 }
 
@@ -1711,14 +1739,21 @@ void death()
 /// </summary>
 void levelUpCheck()
 {
+	//While player has over 500 xp, if player has over 500 xp
 	while (playerExperience >= 500)
 	{
-		playerExperience = playerExperience - 500;
+		//REduce player XP by 500
+		playerExperience -= 500;
+
+		//Add one player level
 		playerLevel++;
+
 		printString("Congratulations, you have reached level " + to_string(playerLevel) + "!");
 		printString("Maximum HP has been increased from " + to_string(playerMaxHealth));
-		playerMaxHealth = playerMaxHealth + 2;
-		cout << " to " << playerMaxHealth << endl;
+
+		//Increase max health by 2
+		playerMaxHealth += 2;
+
 		printString("to " + to_string(playerMaxHealth));
 	}
 }
@@ -1730,10 +1765,13 @@ void levelUpCheck()
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 {
 	cout << endl;
+
 	instantPrint("-V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V-");
 	instantPrint("|                 Talents                 |");
 	instantPrint("|                                         |");
 	instantPrint("|-----------------------------------------|");
+
+	//If first talent is the first talent row is selected. Print X in front of first talent, repeat for second talent or if none is selected. Print no X
 	if (firstTalent == 1)
 		instantPrint("| [X][1] " + talentNames[0] + string(12 - talentNames[0].length(), ' ') + "[ ][2] " + talentNames[1] + string(14 - talentNames[1].length(), ' ') + "|");
 	else if (firstTalent == 2)
@@ -1743,12 +1781,14 @@ void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 
 	instantPrint("|-----------------------------------------|");
 
+	//If first talent is the second talent row is selected. Print X in front of first talent, repeat for second talent or if none is selected. Print no X
 	if (secondTalent == 1)
 		instantPrint("| [X][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
 	else if (secondTalent == 2)
 		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[X][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
 	else
 		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
+
 	instantPrint("-v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v-");
 }
 
@@ -1758,18 +1798,24 @@ void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 /// </summary>
 void talents()
 {
+	//Define variable types and asign values
 	string input, talentNames[4], talentDesc[12] = { "Consume a goodiebag, healing you.", "Swear at your foes, dealing damage.", "Deal damage, for the motherland!", "Fett me damage.", "Dance around your foes.", "Exactly what the name says.", "Drink some more.", "Fall on the grund.", "Rob an old lady.", "Deals INSANE damage to enemy.", "Call your 'brothers'.", "Deals massive amount of damage." };
 	int secondInput, classNum;
 
+//Define goto point
 top:
 
+	//Get player class
 	switch (playerClass)
 	{
 	case 1:
+		//For the number of talents in the game
 		for (int i = 0; i < 4; i++)
 		{
+			//Set talent name slot i to classOneTalents[i] or in other words the name and do so for every class
 			talentNames[i] = classOneTalents[i];
 		}
+		//Set classNum to 0 in this case to compensate for other classes when getting talent description later
 		classNum = 0;
 		break;
 	case 2:
@@ -1914,20 +1960,22 @@ top:
 /// </summary>
 string genRandomString(int stringSize)
 {
+	//Define variable types
 	char availChars[] = "0123456789abcdefghijklmnopqrstuvwxyz";
-
 	int stringLength = sizeof(availChars) - 1;
-
 	char currentChar = availChars[rand() % stringLength];
-
 	string currentString;
 
+	//While string isn't 10 chars long
 	while (currentString.length() != 10)
 	{
+		//Create a for loop for every character in string
 		for (int i = 0; i < 10; i++)
 		{
+			//If character exists in string, generate new otherwise add to string and then generate a new one for next repeat
 			if (currentString[i] == currentChar)
 			{
+				//Generates a new char
 				currentChar = availChars[rand() % stringLength];
 			}
 			else
@@ -1941,73 +1989,137 @@ string genRandomString(int stringSize)
 	return currentString;
 }
 
+//Class intro for the Pundare class
+/// <summary>Function class intro for the Pundare class
+/// <para>Usage: classPundare();</para>
+/// </summary>
 void classPundare()
 {
 	cout << endl;
+
 	printString("You wake up in the subway and don't remember anything.");
 	printString("You think to yourself 'dang dawg that vape hit was radical.");
 	printString("You look up and see a subwayguard charging at you.");
 	printString("He swings a baton at you and you duckish (dodge) the baton.");
+
 	pause();
+
 	system("cls");
+
 	cout << endl;
+
+	//Print fight ascii art
 	fightPrint();
+
 	pause();
+
+	//Call function battle with enemy id 0
 	battle(0);
+
 	system("cls");
+
 	cout << endl;
+
 	printString("After the fight you decide to go to Skanstull");
+
 	pause();
+
+	//Go to Skanstull
 	skanstull();
 }
 
+//Class intro for the Alkis class
+/// <summary>Function class intro for the Alkis class
+/// <para>Usage: classAlkis();</para>
+/// </summary>
 void classAlkis()
 {
 	cout << endl;
+
 	printString("You wake up at Johnny's Pizzeria");
 	printString("You have an intense headache ");
 	printString("You order some adult potion ");
 	printString("The bartender won't give you the potion");
+
 	pause();
+
 	system("cls");
+
 	cout << endl;
+
+	//Print fight ascii art
 	fightPrint();
+
 	pause();
+
+	//Call function battle with enemy id 2
 	battle(2);
+
 	system("cls");
+
 	cout << endl;
+
 	printString("After the fight you decide to go to Skanstull");
+
 	pause();
+
+	//Go to Skanstull
 	skanstull();
 }
 
+//Class intro for the Gangster class
+/// <summary>Function class intro for the Gangster class
+/// <para>Usage: classGangster();</para>
+/// </summary>
 void classGangster()
 {
 	cout << endl;
+
 	printString("You decide to robbish (rob) an old lady on the subway.");
 	printString("WALLA!");
 	printString("It's not an old lady, it's Ken Bone.");
 	printString("He flirts with you.");
+
 	pause();
+
 	system("cls");
+
 	cout << endl;
+
+	//Print fight ascii art
 	fightPrint();
+
 	pause();
+
+	//Call function battle with enemy id 1
 	battle(1);
+
 	system("cls");
+
 	cout << endl;
+
 	printString("After the fight you decide to go to Skanstull");
+
 	pause();
+
+	//Go to Skanstull
 	skanstull();
 }
 
+//Function to check playerclass
+/// <summary>Function to check playerclass
+/// <para>Usage: classCheck();</para>
+/// </summary>
 void classCheck()
 {
+	//If player name is motherLoad give cheat item
 	if (playerName == "motherLoad")
 	{
+		//Call function to give player an item of item id 10 and quantity 1
 		grantItem(10, 1);
 	}
 
+	//Check the global var playerClass and goto right story quest
 	switch (playerClass)
 	{
 	case 1:
@@ -2023,31 +2135,43 @@ void classCheck()
 		break;
 
 	default:
-		void classMenu();
-		break;
+		classMenu();
 	}
 }
 
+//Function to simulate location Skanstull
+/// <summary>Function to simulate location Skanstull
+/// <para>Usage: skanstull();</para>
+/// </summary>
 void skanstull()
 {
+	//Define variable types
 	int choice;
+
+//Define goto point
 top:
 
 	system("cls");
 
 	cout << endl;
+
 	instantPrint("    OO O o o o...      ______________________ _________________ ");
 	instantPrint("   O     ____          |                    | |               | ");
 	instantPrint("  ][_n_i_| (   ooo___  |     Skanstull      | |               | ");
 	instantPrint(" (__________|_[______]_|____________________|_|_______________| ");
 	instantPrint("   0--0--0      0  0      0       0     0        0        0     ");
+
 	pause();
+
 	system("cls");
+
 	cout << endl;
+
 	printString("Welcome to Skanstull(Your local train station)");
-beenToRinkeby:
+
 	printString("Where would you like to go?");
 
+	//Check if player has item with item id 9 and print option 4 if player does
 	if (invItems[9].quantity > 0)
 		printString("[1] Go to NK(shop) [2] Go to Rinkeby [3] Go to TC [4] Go to Cigoteket at Torsgatan 36 [9] Open Inventory");
 	else
@@ -2055,39 +2179,39 @@ beenToRinkeby:
 
 	inputSign();
 	cin >> choice;
+
 	switch (choice)
 	{
 	case 1:
-		//NK shop
+		//Call NK function
 		NK();
 		break;
 	case 2:
 		//Go to Rinkeby
-		if (invItems[2].quantity > 0)
-		{
-			printString("Why would you go back to there? Pick another place to go to.");
-			goto beenToRinkeby;
-		}
-		else
-			rinkeby();
-
+		rinkeby();
 		break;
 	case 3:
-		//go to TC
+		//Go to TC
 		TC();
+
+		//If reached end of TC function return to top of this function
 		goto top;
 		break;
 	case 4:
+		//If player has item with item id 9 allow player to go to Cigoteket otherwise just print as wrong input
 		if (invItems[9].quantity > 0)
 			cigoteket();
 		else
 		{
 			printString("Wrong input!");
 			pause();
+
+			//Goto goto point
 			goto top;
 		}
 		break;
 	case 9:
+		//Draw the inventory and return to top of this function when end of inventory is reached
 		drawInventory();
 		goto top;
 		break;
@@ -2100,55 +2224,126 @@ beenToRinkeby:
 
 }
 
+//Function to simulate location NK
+/// <summary>Function to simulate location NK
+/// <para>Usage: NK();</para>
+/// </summary>
 void NK()
 {
+	//Call the function for the shop with shop id 1
 	shop(1);
+
 	system("cls");
+
 	cout << endl;
+
 	printString("You decide to return to Skanstull.");
+
 	pause();
+	//Return to Skanstull
 	skanstull();
 }
 
+//Function to simulate location Rinkeby
+/// <summary>Function to simulate location Rinkeby
+/// <para>Usage: rinkeby();</para>
+/// </summary>
 void rinkeby()
 {
+	//Define variable types
 	int choice;
 
+	//If player has previously beat the boss in Rinkeby, don't battle it again.
 	if (beenToRinkeby == true)
 	{
-		int input, random = rand() % 3 + 1;
+		//Define variable types
+		int input, random = rand() % 3 + 1, inputChoice;
 
 		cout << endl;
-		instantPrint("You are now in Rinkeby!");
+
+		printString("You are now in Rinkeby!");
+
+		printString("[1] Take a walk [2] Return to Skanstull");
+
+		inputSign();
+		cin >> inputChoice;
+
+		//Get user input
+		switch (inputChoice)
+		{
+		case 1:
+			//Do nothing
+			break;
+		case 2:
+			system("cls");
+
+			//Return to Skanstull
+			skanstull();
+
+			break;
+		default:
+			printString("Invalid input!");
+
+			pause();
+
+			//Reload function
+			rinkeby();
+		}
+
 		cout << endl;
+
+		//Generate a random value in variable definitions and kill enemy acording to generated number
 		if (random == 1)
 		{
 			printString("You walk by the store and see a random stranger.");
 			printString("The stranger calls you there.");
+
 			pause();
+
+			//Call function to print fight ascii
 			fightPrint();
+
+			//Battle enemy with id 4
 			battle(4);
+
+			//Return to Rinkeby after fight
 			rinkeby();
 		}
+		//If random = 2
 		else if (random == 2)
 		{
 			printString("You drive past the local library blasting loud music through some speakers.");
 			printString("The security guard walks up to you.");
 			printString("The guard ruined your new shoes.");
+
 			pause();
+
+			//Call function to print fight ascii
 			fightPrint();
+
+			//Battle enemy with id 5
 			battle(5);
+
+			//Return to Rinkeby after fight
 			rinkeby();
 		}
+		//If random = 2
 		else if (random == 3)
 		{
 			printString("You see a langare selling alkohol to your son.");
 			printString("(You) Son, what are you doing in Rinkeby?");
 			printString("*awkward silence*");
 			printString("It wasn't your son..");
+
 			pause();
+
+			//Call function to print fight ascii
 			fightPrint();
+
+			//Battle enemy with id 6
 			battle(6);
+
+			//Return to Rinkeby after fight
 			rinkeby();
 		}
 		
@@ -2160,55 +2355,101 @@ void rinkeby()
 	}
 
 	system("cls");
+
 	cout << endl;
+
 	printString("Welcome to Rinkeby!");
 	printString("As you walk out of the subway a strange man starts approaching you. ");
 	printString("(Strange man) Hey my dude!");
 	printString("You have no idea who this man is but you play along to not appear rude.");
 	printString("After a while the strange man offers you some good good (Candy)");
 	printString("Do you take the good good from the strange man?");
+
+//Define a goto point
 top:
+
 	printString("[1] Take the good good from the man.");
 	printString("[2] Don't take the candy from the strange man.");
+
 	inputSign();
 	cin >> choice;
+
+	//Get user input
 	switch (choice)
 	{
 	case 1:
 		system("cls");
+
 		cout << endl;
+
 		printString("(Strange man) Hey! what are you doing! That's my good good!");
+
 		pause();
+
 		system("cls");
+
 		cout << endl;
+
+		//Print fight ascii
 		fightPrint();
+
 		pause();
+
+		//Battle enemy with id 3
 		battle(3);
+
 		system("cls");
+
 		cout << endl;
+
 		printString("After the fight you jump on the first subway back to Skanstull,");
 		printString("because why would you stay in Rinkeby?");
+
 		pause();
+
+		//Set bool to true, so you won't fight enemy twice
 		beenToRinkeby = true;
+
+		//Return to Skanstull
 		skanstull();
+
 		break;
 	case 2:
 		system("cls");
+
 		cout << endl;
+
 		printString("(Strange man) You can't refuse a gift from a kind man like me!");
+
 		pause();
+
 		system("cls");
+
 		cout << endl;
+
+		//Print fight ascii art
 		fightPrint();
+
 		pause();
+
+		//Battle enemy with id 3
 		battle(3);
+
 		system("cls");
+
 		cout << endl;
+
 		printString("After the fight you jump on the first subway back to Skanstull,");
 		printString("because why would you stay in Rinkeby?");
+
 		pause();
+
+		//Set bool to true, so you won't fight enemy twice
 		beenToRinkeby = true;
+
+		//REturn to Skanstull
 		skanstull();
+
 		break;
 	default:
 		printString("Wrong input!");
@@ -2218,61 +2459,88 @@ top:
 	}
 }
 
+//Function to simulate location TC
+/// <summary>Function to simulate location TC
+/// <para>Usage: TC();</para>
+/// </summary>
 void TC()
 {
+	//Define variable types
 	int choice;
 	system("cls");
 
 	cout << endl;
+
 	instantPrint("    OO O o o o...      ______________________ _________________ ");
 	instantPrint("   O     ____          |                    | |               | ");
 	instantPrint("  ][_n_i_| (   ooo___  |         TC         | |               | ");
 	instantPrint(" (__________|_[______]_|____________________|_|_______________| ");
 	instantPrint("   0--0--0      0  0      0       0     0        0        0     ");
+
 	pause();
+
 	system("cls");
+
 	cout << endl;
+
 	printString("Welcome to TC!");
 	printString("When you get up out of the subway you see a shady guys that looks interesting,");
 	printString("You also see your favourite foodplace Burger King. ");
+
+//Define goto point
 wrongInput:
 	printString("What would you like to do?");
+
+	//If player has the item with item id 0 then don't print talk to the shady guy
 	if (invItems[9].quantity > 0)
 		printString("[1] Go back to Skanstull [2] Go get some burgers ");
 	else
 		printString("[1] Go back to Skanstull [2] Go get some burgers [3] Talk to the shady guy");
+
 	inputSign();
 	cin >> choice;
+
+	//Gets the user input and does something acordingly
 	switch (choice)
 	{
 	case 1:
+		//Call the function to return to Skanstull
 		skanstull();
 		break;
 	case 2:
+		//Call the function to go to Burger King
 		burgerKing();
 		break;
 	case 3:
+		//If player already has item, tell them their choice was invalid and return to TC
 		if (invItems[9].quantity > 0)
 		{
 			printString("Invalid choice!");
 			pause();
 			TC();
 		}
+		//Define variable types
 		int secondChoice;
+
 		system("cls");
+
 		cout << endl;
+
 		printString("As you walk up to the shady guy he looks at you with a scary smile and asks ");
 		printString("'Do you want to know where Akash the vapelord is at?'");
 		printString("I have some spicy info that you might like.");
 		printString("'It will only cost you 5 gold'");
 		printString("Do you buy the 'Spicy info' from the shady guy? ");
 		printString("[1] Yes. [2] No.");
+
 		inputSign();
 		cin >> secondChoice;
+
 		switch (secondChoice)
 		{
 
 		case 1:
+			//If player decides to buy item, take gold if player has enough. Otherwise give anyways.
 			if (playerGold >= 5)
 			{
 				playerGold -= 5;
@@ -2280,27 +2548,34 @@ wrongInput:
 				printString("Thank you my man");
 			}
 			else
+			{
 				printString("It looks like you do not have enough gold.");
-			printString("Ohh well, you can have it anyway.");
+				printString("Ohh well, you can have it anyway.");
+			}
+
+			//Call the function to give the player an item
 			grantItem(9, 1);
+
+			//Tell the player what they got with item name
 			printString("You got item " + invItems[9].name);
 			pause();
+
+			//Goto wrongInput
 			goto wrongInput;
 			break;
 		case 2:
 			printString("'JUST TAKE THE GODDAMN INFO!'");
+
 			grantItem(9, 1);
+
 			printString("You got item " + invItems[9].name);
 			printString("You run back to TC subway and get on the next train back to Skanstull.");
 			skanstull();
 			break;
 		default:
-			break;
-		}
-
+		//Break previous switch case
 		break;
-
-
+		}
 	default:
 		printString("That is not an option!");
 		goto wrongInput;
@@ -2308,16 +2583,26 @@ wrongInput:
 	}
 }
 
+//Function to simulate location Burger King
+/// <summary>Function to simulate location Burger King
+/// <para>Usage: burgerKing();</para>
+/// </summary>
 void burgerKing()
 {
+	//Call the function to open the shop with shop id 0
 	shop(0);
 	system("cls");
 	cout << endl;
 	printString("After that amazing food you decide to go back to TC");
+	
+	//Call the function to go back to TC
 	TC();
-
 }
 
+//Function to print fight ascii art
+/// <summary>Function to print fight ascii art
+/// <para>Usage: fightPrint();</para>
+/// </summary>
 void fightPrint()
 {
 
@@ -2330,11 +2615,19 @@ void fightPrint()
 	instantPrint("*******************************");
 }
 
+//Function to simulate location Cigoteket
+/// <summary>Function to simulate location Cigoteket
+/// <para>Usage: cigoteket();</para>
+/// </summary>
 void cigoteket()
 {
 
 }
 
+//Function to draw the victory screen
+/// <summary>Function to draw the victory screen
+/// <para>Usage: victoryScreen();</para>
+/// </summary>
 void victoryScreen()
 {
 	cout << endl;
@@ -2342,11 +2635,22 @@ void victoryScreen()
 	printString("We would like to thank Akash for participating in our game.");
 	printString("Enjoy");
 
+	//Call the function to print the ascii of Akash
 	akashAscii();
+
+	pause();
+
+	//Exit the program
+	exit(0);
 }
 
+//Function to print an ascii image of akash
+/// <summary>Function to print an ascii image of akash
+/// <para>Usage: akashAscii();</para>
+/// </summary>
 void akashAscii()
 {
+	//Print the ascii art of Akash generated using a tool also made by us
 	setTextColor(8); Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@";
 	cout << endl; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@";
 	cout << endl; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@";
@@ -2429,7 +2733,4 @@ void akashAscii()
 	cout << endl; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(15); Sleep(5); cout << "$"; setTextColor(7); Sleep(5); cout << "|"; setTextColor(7); Sleep(5); cout << "%"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(15); Sleep(5); cout << "$"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(7); Sleep(5); cout << "|"; Sleep(5); cout << "|"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@";
 	cout << endl; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(15); Sleep(5); cout << "$"; setTextColor(7); Sleep(5); cout << "|"; setTextColor(15); Sleep(5); cout << "$"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(15); Sleep(5); cout << "$"; setTextColor(15); Sleep(5); cout << "&"; Sleep(5); cout << "&"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(7); Sleep(5); cout << "%"; setTextColor(7); Sleep(5); cout << "|"; setTextColor(15); Sleep(5); cout << "&"; setTextColor(0); Sleep(5); cout << "#"; Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; setTextColor(0); Sleep(5); cout << "#"; setTextColor(8); Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@"; Sleep(5); cout << "@";
 	cout << endl;
-	pause();
-
-	exit(0);
 }
