@@ -11,6 +11,7 @@
 //Define namespace
 using namespace std;
 
+#pragma region Function Definitions
 //Define functions
 void printString(string stringInput);
 void pause();
@@ -50,9 +51,10 @@ void NK();
 void fightPrint();
 void TC();
 void burgerKing();
+#pragma endregion
 
-//Global vars
-//Vars used for loading
+#pragma region Global vars
+//Global vars Vars / used for loading
 bool firstInvLoad = true;
 int winHeight = 0;
 int winWide = 0;
@@ -74,6 +76,7 @@ int playerMaxHealth = 10;
 int playerHealth = playerMaxHealth;
 int attackPower;
 int healPower;
+bool beenToRinkeby;
 string classOneTalents[4] = { "Goodiebag", "Kurva", "Sverige", "Satan" };
 string classTwoTalents[4] = { "Dance Around", "Beer throw", "Shot", "Fall" };
 string classThreeTalents[4] = { "Rob", "Hit", "Walla", "Shoot" };
@@ -86,8 +89,9 @@ int classThreeTalentsRedDamage[4] = { 0,0,4,-3 };
 int talentOne = 0;
 int talentTwo = 0;
 string talentUsed;
+#pragma endregion
 
-
+#pragma region Structures for invItems, enemies and shopKeepers
 //Create a structure of type array for every item
 struct inventoryItems {
 	string quality = "Common";
@@ -116,6 +120,7 @@ struct ememies {
 	int drop;
 	int dropAmount;
 	int potentialLoot;
+	int goldDrop = 0;
 } enemy[10];
 
 //Create a structure of type array for every shopkeeper
@@ -127,6 +132,7 @@ struct shopKeepers {
 	int numberOfAsciiLines = 0;
 	int numberofCharsPerLine = 0;
 } shopKeeper[10];
+#pragma endregion
 
 //Start loadin from here
 void main()
@@ -134,24 +140,25 @@ void main()
 	//Assign name and info for every item in the game
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
 	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
-	invItems[3].name = "Rotten burger"; invItems[3].quantity = 0; invItems[3].quality = "Common"; invItems[3].consumable = true; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 10; invItems[3].healthRegen = 0; invItems[3].desc = "Really shouldn't eat this";
+	invItems[3].name = "Rotten burger"; invItems[3].quantity = 1; invItems[3].quality = "Common"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
 	invItems[4].name = "Bottle"; invItems[4].quantity = 1; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 3; invItems[4].buyPrice = 13;
-	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth; invItems[5].desc = "That good good";
+	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth;
 	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
-	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3; invItems[7].desc = "It is a knife";
-	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true; invItems[8].desc = "I GOT THE KEYS"; 
-	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true; invItems[9].desc = "Where can he be?";
+	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
+	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
+	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
 	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
-	invItems[13].name = "Good"; invItems[13].quantity = 0; invItems[13].quality = "Rare"; invItems[13].buyPrice = 50; invItems[13].consumable = true; invItems[13].healthRegen = playerMaxHealth;
+	invItems[13].name = "Good"; invItems[13].quantity = 0; invItems[13].quality = "Rare"; invItems[13].buyPrice = 20; invItems[13].consumable = true; invItems[13].healthRegen = playerMaxHealth;
 
 	//MOBS
 	enemy[0].health = 10; enemy[0].name = "Subwayguard"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 2; enemy[0].hasDrop = true; enemy[0].dropAmount = 1; enemy[0].potentialLoot = 2;
 	enemy[1].health = 11; enemy[1].name = "Ken Bone"; enemy[1].damage = 1; enemy[1].xpGain = 100, enemy[1].maxHealth = 11; enemy[1].drop = 2; enemy[1].hasDrop = true; enemy[1].dropAmount = 1; enemy[1].potentialLoot = 2;
 	enemy[2].health = 10; enemy[2].name = "Bartender"; enemy[2].damage = 1; enemy[2].xpGain = 100, enemy[2].maxHealth = 10; enemy[2].drop = 2; enemy[2].hasDrop = true; enemy[2].dropAmount = 1; enemy[2].potentialLoot = 2;
 	enemy[3].health = 17; enemy[3].name = "Strange man"; enemy[3].damage = 2; enemy[3].xpGain = 300, enemy[3].maxHealth = 17; enemy[3].drop = 5; enemy[3].hasDrop = true; enemy[3].dropAmount = 2; enemy[3].potentialLoot = 7;
-	enemy[4].health = 40; enemy[4].name = "DAS VAPELORD"; enemy[4].damage = 3; enemy[3].xpGain = 2000, enemy[3].maxHealth = 40; enemy[4].drop = 8; enemy[3].hasDrop = true; enemy[3].dropAmount = 4; enemy[3].potentialLoot = 2;
-	
-	
+	enemy[4].health = 6; enemy[4].name = "Stranger"; enemy[4].damage = 2; enemy[4].xpGain = 100, enemy[4].maxHealth = 10; enemy[4].drop = 5; enemy[4].hasDrop = true; enemy[4].dropAmount = 2; enemy[4].potentialLoot = 13; enemy[4].goldDrop = 10;
+	enemy[5].health = 6; enemy[5].name = "Security Guard"; enemy[5].damage = 2; enemy[5].xpGain = 100, enemy[5].maxHealth = 10; enemy[5].drop = 5; enemy[5].hasDrop = true; enemy[5].dropAmount = 2; enemy[5].potentialLoot = 13; enemy[5].goldDrop = 10;
+	enemy[6].health = 6; enemy[6].name = "Langare"; enemy[6].damage = 2; enemy[6].xpGain = 100, enemy[6].maxHealth = 10; enemy[6].drop = 5; enemy[6].hasDrop = true; enemy[6].dropAmount = 2; enemy[6].potentialLoot = 13; enemy[6].goldDrop = 10;
+
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
 	shopKeeper[0].ascii = { " _____                     _____ _         ", "| __  |_ _ ___ ___ ___ ___|  |  |_|___ ___ ", "| __ -| | |  _| . | -_|  _|    -| |   | . |", "|_____|___|_| |_  |___|_| |__|__|_|_|_|_  |", 	"              |___|                   |___|" }; shopKeeper[0].numberofCharsPerLine = 43; shopKeeper[0].numberOfAsciiLines = 5;
@@ -176,6 +183,7 @@ void main()
 	classMenu();
 }
 
+//Function to greet the player
 void nameGreeting()
 {
 	cout << endl;
@@ -203,6 +211,7 @@ void nameGreeting()
 	pause();
 }
 
+//Function for the class selectiopn
 void classMenu()
 {
 	int classConfirm;
@@ -227,34 +236,41 @@ differentClass:
 
 	//Add the sign > where the input is supposed to go
 	inputSign();
-
 	cin >> playerClass;
+
+	if (!cin)
+	{
+		cin.clear();
+		string ignore;
+		getline(cin, ignore);
+		goto failSaver;
+	}
+
 	cout << endl;
 
 	switch (playerClass)
 	{
-			//class choice switchcase
+		//class choice switchcase
 	case 1:
-		printString("The pundare will have a different fighting technique");
-		printString("The pundare wil use his willpower and augumented reality to win fights");
-		printString("Plus you will also be abled to be one with nature");
-		printString("(or just really high)");
+		printString("Oh so you're a hunter type. ");
+		printString("This class is especially good when you want to attack at a long range.");
+		printString("You have a really powerful arrow that you can fire at your enemy. ");
+		printString("If you are easily scared by monsters then this is the class for you. ");
 		playerClass = 1;
 		break;
 	case 2:
 		//not sure vad jag har skrivit xD
 		printString("If you have less than 10 braincells then this is the class for you. ");
 		printString("I mean who would choose a class that just runs in to battle with their");
-		printString("head first. The smartest class would be gangster, but nevermind. ");
-		printString("With the alkis class you can throw your baws ass drunken fists at your enemies.");
-		printString("Just look at Kenta, he is a really cool alkis.");
+		printString("head first. The smartest class would be hunter, but nevermind. ");
+		printString("With the warrior class you can slash your baws ass sword at your enemies.");
+		printString("Just look at He-Man, he's the boss.");
 		playerClass = 2;
 		break;
 	case 3:
-		printString("Oh so you're a gangster ");
-		printString("This class is especially good when you want to attack at a long range with your 9mm.");
-		printString("You have really powerful bullets that you can fire at your enemy. ");
-		printString("If you are a real orten thug then this is the class for you. ");
+		printString("VIKTOR SKRIVER");
+		printString("VIKTOR SKRIVER");
+		printString("VIKTOR SKRIVER");
 		playerClass = 3;
 		break;
 	default:
@@ -265,6 +281,7 @@ differentClass:
 		goto differentClass;
 	}
 	cout << endl;
+
 	//confirm the users choice
 	printString("Are you sure you want to play this class? ");
 	printString("[1] Yes I am sure.");
@@ -272,6 +289,7 @@ differentClass:
 
 	inputSign();
 	cin >> classConfirm;
+
 	switch (classConfirm)
 	{
 		//switchcase confirm choice
@@ -293,6 +311,9 @@ differentClass:
 	default:
 		printString("That is not an option.");
 		pause();
+		cin.clear();
+		string ignore;
+		getline(cin, ignore);
 		goto failSaver;
 
 	}
@@ -1136,6 +1157,10 @@ void grantItem(int itemID, int quantity)
 	}
 }
 
+//Function to print the shop with selected vendor ID
+/// <summary>Used to print the shop to the player
+/// <para>Usage: shop(id);</para>
+/// </summary>
 void shop(int shopId)
 {
 	//Define variable types
@@ -1320,6 +1345,9 @@ top:
 }
 
 //Used when removing an inventory item
+/// <summary>Used to remove an item from the players inventory
+/// <para>Usage: removeFromInvSortArray(e.g 9);</para>
+/// </summary>
 void removeFromInvSortArray(int itemID)
 {
 	//For every spot in array that is larger than the removed one
@@ -1337,6 +1365,10 @@ void removeFromInvSortArray(int itemID)
 	invSort--;
 }
 
+//Used to battle an enemy with the enemy ID provided
+/// <summary>Used to battle an enemy with the Enemy ID provided
+/// <para>Usage: battle(e.g 2);</para>
+/// </summary>
 void battle(int enemyType)
 {
 	//Define variable types
@@ -1542,6 +1574,9 @@ void battle(int enemyType)
 				playerExperience += enemy[enemyType].xpGain;
 				printStringColor(7, enemy[enemyType].name + " successfully ", 4, "killed", 7, "! Which has granted you " + to_string(enemy[enemyType].xpGain) + " experience points!", 7, "", 7, "", false);
 
+				if (enemy[enemyType].goldDrop > 0)
+					playerGold += enemy[enemyType].goldDrop;
+
 				//If enemy has drop specified
 				if (enemy[enemyType].hasDrop)
 				{
@@ -1579,6 +1614,10 @@ void battle(int enemyType)
 	}
 }
 
+//Used for the selectection and to print player abilities
+/// <summary>Used for the selectection and to print player abilities
+/// <para>Usage: abilities(e.g 1 depending on playerClass);</para>
+/// </summary>
 void abilities(int playerClass)
 {
 	int input;
@@ -1648,7 +1687,10 @@ void abilities(int playerClass)
 	}
 }
 
-
+//Used to print the death sceen
+/// <summary>Used to print the death sceen
+/// <para>Usage: death();</para>
+/// </summary>
 void death()
 {
 	playerHealth = playerMaxHealth / 2;
@@ -1698,6 +1740,10 @@ void death()
 	skanstull();
 }
 
+//Used to check if player has leveled up
+/// <summary>Used to check if player has leveled up
+/// <para>Usage: levelUpCheck();</para>
+/// </summary>
 void levelUpCheck()
 {
 	while (playerExperience >= 500)
@@ -1712,6 +1758,10 @@ void levelUpCheck()
 	}
 }
 
+//Used for printing the ascii for the talent menu
+/// <summary>Used for printing the ascii for the talent menu
+/// <para>Usage: printTalentUI(firstTalent, secondTalent, talentNames[4]);</para>
+/// </summary>
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 {
 	cout << endl;
@@ -1734,10 +1784,13 @@ void printTalentUI(int firstTalent, int secondTalent, string talentNames[4])
 		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[X][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
 	else
 		instantPrint("| [ ][3] " + talentNames[2] + string(12 - talentNames[2].length(), ' ') + "[ ][4] " + talentNames[3] + string(14 - talentNames[3].length(), ' ') + "|");
-	instantPrint("|                                         |");
 	instantPrint("-v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v^v-");
 }
 
+//Used for printing the talents menu
+/// <summary>Used for printing the talents menu
+/// <para>Usage: talents();</para>
+/// </summary>
 void talents()
 {
 	string input, talentNames[4], talentDesc[12] = { "Consume a goodiebag, healing you.", "Swear at your foes, dealing damage.", "Deal damage, for the motherland!", "Fett me damage.", "Dance around your foes.", "Exactly what the name says.", "Drink some more.", "Fall on the grund.", "Rob an old lady.", "Deals INSANE damage to enemy.", "Call your 'brothers'.", "Deals massive amount of damage." };
@@ -1798,7 +1851,7 @@ top:
 			cin.clear();
 			string remove;
 			getline(cin, remove);
-			talents();
+			goto top;
 		}
 
 		switch (secondInput)
@@ -1839,6 +1892,15 @@ top:
 		printString("Select one of the talents above to read info about:");
 		inputSign();
 		cin >> secondInput;
+
+		if (!cin)
+		{
+			cin.clear();
+			string remove;
+			getline(cin, remove);
+			goto top;
+		}
+
 		switch (secondInput)
 		{
 		case 1:
@@ -1881,6 +1943,10 @@ top:
 	}
 }
 
+//Used to generate a random text string including numbers
+/// <summary>Used to generate a random text string including numbers
+/// <para>Usage: genRandomString(stringSize);</para>
+/// </summary>
 string genRandomString(int stringSize)
 {
 	char availChars[] = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -1909,6 +1975,7 @@ string genRandomString(int stringSize)
 
 	return currentString;
 }
+
 void classPundare()
 {
 	cout << endl;
@@ -1995,6 +2062,7 @@ void classCheck()
 		break;
 	}
 }
+
 void skanstull()
 {
 	int choice;
@@ -2030,7 +2098,7 @@ beenToRinkeby:
 		break;
 	case 2:
 		//Go to Rinkeby
-		if (invItems[5].quantity > 0)
+		if (invItems[2].quantity > 0)
 		{
 			printString("Why would you go back to there? Pick another place to go to.");
 			goto beenToRinkeby;
@@ -2066,6 +2134,7 @@ beenToRinkeby:
 	}
 
 }
+
 void NK()
 {
 	shop(1);
@@ -2075,9 +2144,61 @@ void NK()
 	pause();
 	skanstull();
 }
+
 void rinkeby()
 {
 	int choice;
+
+	if (beenToRinkeby == true)
+	{
+		int input, random = rand() % 3 + 1;
+
+		cout << endl;
+		instantPrint("You are now in Rinkeby!");
+		cout << endl;
+		if (random == 1)
+		{
+			printString("You walk by the store and see a random stranger.");
+			printString("The stranger calls you there.");
+			pause();
+			fightPrint();
+			battle(4);
+			rinkeby();
+		}
+		else if (random == 2)
+		{
+			printString("You drive past the local library blasting loud music through some speakers.");
+			printString("The security guard walks up to you.");
+			printString("The guard ruined your new shoes.");
+			pause();
+			fightPrint();
+			battle(5);
+			rinkeby();
+		}
+		else if (random == 3)
+		{
+			printString("You see a langare selling alkohol to your son.");
+			printString("(You) Son, what are you doing in Rinkeby?");
+			printString("*awkward silence*");
+			printString("It wasn't your son..");
+			pause();
+			fightPrint();
+			battle(6);
+			rinkeby();
+		}
+		
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+		case 2:
+		case 9:
+			defualt:
+		}
+
+		skanstull();
+	}
 
 	system("cls");
 	cout << endl;
@@ -2109,6 +2230,7 @@ top:
 		printString("After the fight you jump on the first subway back to Skanstull,");
 		printString("because why would you stay in Rinkeby?");
 		pause();
+		beenToRinkeby = true;
 		skanstull();
 		break;
 	case 2:
@@ -2126,6 +2248,7 @@ top:
 		printString("After the fight you jump on the first subway back to Skanstull,");
 		printString("because why would you stay in Rinkeby?");
 		pause();
+		beenToRinkeby = true;
 		skanstull();
 		break;
 	default:
@@ -2135,6 +2258,7 @@ top:
 		goto top;
 	}
 }
+
 void TC()
 {
 	int choice;
@@ -2234,6 +2358,7 @@ void burgerKing()
 	TC();
 
 }
+
 void fightPrint()
 {
 
@@ -2245,29 +2370,8 @@ void fightPrint()
 	printStringColor(7, "*|", 4, "        /____/             ", 7, "|*", 7, "", 7, "", true);
 	instantPrint("*******************************");
 }
+
 void cigoteket()
 {
-	printString("When you stand outside the Cigotek you see Akash inside ripping the fattest vape.");
-	printString("suddenly he notices you!");
-	printString("'HEY! WHAT ARE YOU DOING HERE!'");
-	printString("'You shouldn't be here, this is my secret hideout.'");
-	printString("'You wont get away with this easily'");
-	pause();
-	fightPrint();
-	battle(4);
-	system("cls");
-	cout << endl;
-	printString("After the fight you decide to check out what the key Akash dropped leads to.");
-	printString("As you touch the key you hear in a distance:");
-	printString("I got the key, the keys, the keys.");
-	printString("I got the key, the keys, the keys.");
-	printString("Suddenly, a fat man jumps out of the bushes.");
-	printString("He starts talking in a language that sounds like english but not exactly.");
-	printString("As you get a closer look at the man you see that its,");
-	printString("DJ KHAAALEEEED!");
-	printString("Dj Khaled runs towards you and yells 'GIVE ME MY KEY!'.");
-	pause();
-	fightPrint();
-	pause();
-	battle(5);
+
 }
