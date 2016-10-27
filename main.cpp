@@ -2269,7 +2269,8 @@ void rinkeby()
 	//Define variable types
 	int choice;
 
-top:
+//Define a goto point
+backTop:
 
 	//If player has previously beat the boss in Rinkeby, don't battle it again.
 	if (beenToRinkeby == true)
@@ -2305,7 +2306,7 @@ top:
 			//Draw the inventory and return to top of this function when end of inventory is reached
 			drawInventory();
 
-			goto top;
+			goto backTop;
 
 			break;
 		default:
