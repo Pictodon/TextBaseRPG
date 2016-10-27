@@ -30,7 +30,7 @@ void shop(int shopID);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, int color5, string stringInput5, bool instant);
 void asignDefaultRarityColor();
 void battle(int enemyType);
-void abilities();
+void abilities(int playerClassInput);
 void death();
 void levelUpCheck();
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4]);
@@ -162,7 +162,7 @@ void main()
 	enemy[6].health = 6; enemy[6].name = "Langare"; enemy[6].damage = 2; enemy[6].xpGain = 100, enemy[6].maxHealth = 10; enemy[6].drop = 5; enemy[6].hasDrop = true; enemy[6].dropAmount = 2; enemy[6].potentialLoot = 13; enemy[6].goldDrop = 10;
 
 	//ShopKeepers
-	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
+	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 3; shopKeeper[0].items[1] = 3;
 	shopKeeper[0].ascii = { " _____                     _____ _         ", "| __  |_ _ ___ ___ ___ ___|  |  |_|___ ___ ", "| __ -| | |  _| . | -_|  _|    -| |   | . |", "|_____|___|_| |_  |___|_| |__|__|_|_|_|_  |", "              |___|                   |___|" }; shopKeeper[0].numberofCharsPerLine = 43; shopKeeper[0].numberOfAsciiLines = 5;
 	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.", "-m+......-ohmho+:--hd--:+shmh+-....../m-", "-m:    :yho-`      hh      `:ods-    :m-", "-m:  :hmm.         hh         `:hh-  :m-", "-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-", "-mmy`  ds/m:       hh     `/yh+.   `hmm-", "-md.   ds sd.      hh   -sds-       -mm-", "-mo    ds `hy`     hh.+hy/`          ym-", "-m/    ds  .mo     hmhdh-            +m-", "-m/    ds   /m:    hh  /ds.          +m-", "-ms    ds    sd.   hh   `+do`        ym-", "-mm.   ds    `hy   hh     `od+`     -mm-", "-mmy`  ds     -mo  hh       .sd/   `hdm-", "-m+hy` ds      /m: hh         -yh:.hy/m-", "-m:`sd/ds       sd.hh           :mmo`:m-", "-m:  :hmy`      `hyhh         `/hy-  :m-", "-m:    :sdo:`    -mmh      `:sds-    :m-", "-m/......-+ydhs+/:smd-:/osddy/......./m-", ".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
 
@@ -1096,6 +1096,9 @@ top:
 				printString("You have been damaged for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " healthpoints!");
 
 			printString("Current HP " + to_string(playerHealth) + "/" + to_string(playerMaxHealth));
+
+			if (invItems[invSortPos[secondInput]].quantity == 0)
+				removeFromInvSortArray(secondInput);
 		}
 		//If item is a comsumable, but user health is full. Tell the user
 		else if (invItems[invSortPos[secondInput]].consumable == true && playerHealth == playerMaxHealth)
@@ -1421,7 +1424,7 @@ void battle(int enemyType)
 		else if (attack == "abilities" || attack == "Abilities" || attack == "ABILITIES")
 		{
 			//Call the function to select a ability based of talents
-			abilities();
+			abilities(playerClass);
 
 			//Generate random value and check if greater or equal to 6
 			if (rand() % 10 + 1 >= 6)
@@ -1604,21 +1607,21 @@ void battle(int enemyType)
 /// <summary>Used for the selectection and to print player abilities
 /// <para>Usage: abilities(e.g 1 depending on playerClass);</para>
 /// </summary>
-void abilities()
+void abilities(int playerClassInput)
 {
 	//Define variable types
 	int input;
 
 	//Check player class and print the right names
-	if (playerClass == 1)
+	if (playerClassInput == 1)
 	{
 		printString("[1] " + classOneTalents[talentOne - 1] + " [2] " + classOneTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClass == 2)
+	else if (playerClassInput == 2)
 	{
 		printString("[1] " + classTwoTalents[talentOne - 1] + " [2] " + classTwoTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClass == 3)
+	else if (playerClassInput == 3)
 	{
 		printString("[1] " + classThreeTalents[talentOne - 1] + " [2] " + classThreeTalents[2 + talentTwo - 1]);
 	}
@@ -1636,19 +1639,19 @@ void abilities()
 	{
 	case 1:
 		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot one was selected and repeat for every class
-		if (playerClass == 1)
+		if (playerClassInput == 1)
 		{
 			attackPower = classOneTalentsDamage[talentOne - 1];
 			healPower = classOneTalentsRedDamage[talentOne - 1];
 			talentUsed = classOneTalents[talentOne - 1];
 		}
-		else if (playerClass == 2)
+		else if (playerClassInput == 2)
 		{
 			attackPower = classTwoTalentsDamage[talentOne - 1];
 			healPower = classTwoTalentsRedDamage[talentOne - 1];
 			talentUsed = classTwoTalents[talentOne - 1];
 		}
-		else if (playerClass == 3)
+		else if (playerClassInput == 3)
 		{
 			attackPower = classThreeTalentsDamage[talentOne - 1];
 			healPower = classThreeTalentsRedDamage[talentOne - 1];
@@ -1657,19 +1660,19 @@ void abilities()
 		break;
 	case 2:
 		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot two was selected and repeat for every class
-		if (playerClass == 1)
+		if (playerClassInput == 1)
 		{
 			attackPower = classOneTalentsDamage[2 + talentTwo - 1];
 			healPower = classOneTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classOneTalents[2 + talentTwo - 1];
 		}
-		else if (playerClass == 2)
+		else if (playerClassInput == 2)
 		{
 			attackPower = classTwoTalentsDamage[2 + talentTwo - 1];
 			healPower = classTwoTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classTwoTalents[2 + talentTwo - 1];
 		}
-		else if (playerClass == 3)
+		else if (playerClassInput == 3)
 		{
 			attackPower = classThreeTalentsDamage[2 + talentTwo - 1];
 			healPower = classThreeTalentsRedDamage[2 + talentTwo - 1];
@@ -1966,7 +1969,7 @@ top:
 string genRandomString(int stringSize)
 {
 	//Define variable types
-	char availChars[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	char availChars [] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	int stringLength = sizeof(availChars) - 1;
 	char currentChar = availChars[rand() % stringLength];
 	string currentString;
@@ -2264,6 +2267,8 @@ void rinkeby()
 		//Define variable types
 		int input, random = rand() % 3 + 1, inputChoice;
 
+		system("cls");
+
 		cout << endl;
 
 		printString("You are now in Rinkeby!");
@@ -2277,6 +2282,7 @@ void rinkeby()
 		switch (inputChoice)
 		{
 		case 1:
+			system("cls");
 			//Do nothing
 			break;
 		case 2:
@@ -2305,6 +2311,8 @@ void rinkeby()
 
 			pause();
 
+			system("cls");
+
 			//Call function to print fight ascii
 			fightPrint();
 
@@ -2322,6 +2330,8 @@ void rinkeby()
 			printString("The guard ruined your new shoes.");
 
 			pause();
+
+			system("cls");
 
 			//Call function to print fight ascii
 			fightPrint();
@@ -2341,6 +2351,8 @@ void rinkeby()
 			printString("It wasn't your son..");
 
 			pause();
+
+			system("cls");
 
 			//Call function to print fight ascii
 			fightPrint();
@@ -2472,6 +2484,7 @@ void TC()
 {
 	//Define variable types
 	int choice;
+
 	system("cls");
 
 	cout << endl;
@@ -2626,7 +2639,9 @@ void fightPrint()
 /// </summary>
 void cigoteket()
 {
-
+	cout << "cig skit" << endl;
+	pause();
+	skanstull();
 }
 
 //Function to draw the victory screen
