@@ -160,7 +160,7 @@ void main()
 	enemy[4].health = 6; enemy[4].name = "Stranger"; enemy[4].damage = 2; enemy[4].xpGain = 100, enemy[4].maxHealth = 10; enemy[4].drop = 5; enemy[4].hasDrop = true; enemy[4].dropAmount = 2; enemy[4].potentialLoot = 13; enemy[4].goldDrop = 10;
 	enemy[5].health = 6; enemy[5].name = "Security Guard"; enemy[5].damage = 2; enemy[5].xpGain = 100, enemy[5].maxHealth = 10; enemy[5].drop = 5; enemy[5].hasDrop = true; enemy[5].dropAmount = 2; enemy[5].potentialLoot = 13; enemy[5].goldDrop = 10;
 	enemy[6].health = 6; enemy[6].name = "Langare"; enemy[6].damage = 2; enemy[6].xpGain = 100, enemy[6].maxHealth = 10; enemy[6].drop = 5; enemy[6].hasDrop = true; enemy[6].dropAmount = 2; enemy[6].potentialLoot = 13; enemy[6].goldDrop = 10;
-	enemy[7].health = 18; enemy[4].name = "DAS VAPELORD"; enemy[7].damage = 3; enemy[7].xpGain = 2000, enemy[7].maxHealth = 18; enemy[7].drop = 8; enemy[7].hasDrop = true; enemy[7].dropAmount = 4; enemy[7].potentialLoot = 2;
+	enemy[7].health = 18; enemy[7].name = "DAS VAPELORD"; enemy[7].damage = 3; enemy[7].xpGain = 200, enemy[7].maxHealth = 18; enemy[7].drop = 8; enemy[7].hasDrop = true; enemy[7].dropAmount = 4; enemy[7].potentialLoot = 2;
 	enemy[8].health = 20; enemy[8].name = "DJ Khaled"; enemy[8].damage = 3; enemy[8].xpGain = 10, enemy[8].maxHealth = 20; enemy[8].drop = 10; enemy[8].hasDrop = true; enemy[8].dropAmount = 5;
 
 	//ShopKeepers
@@ -1412,7 +1412,7 @@ void battle(int enemyType)
 			{
 				//Set attackPower to regular weapon damage
 				attackPower = invItems[equipedWeapon].damage;
-				printStringColor(7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, "  healthpoints!", 7, "", 7, "", false);
+				printStringColor(7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, " healthpoints!", 7, "", 7, "", false);
 			}
 
 			//Remove the damage from the enemys health pool
@@ -2560,6 +2560,8 @@ top:
 	//Define goto point
 wrongInput:
 
+	system("cls");
+
 	printString("What would you like to do?");
 
 	//If player has the item with item id 0 then don't print talk to the shady guy
@@ -2612,7 +2614,7 @@ wrongInput:
 		printString("I have some spicy info that you might like.");
 		printString("'It will only cost you 5 gold'");
 		printString("Do you buy the 'Spicy info' from the shady guy? ");
-		printString("[1] Yes. [2] No.");
+		printString("[1] Yes [2] No.");
 
 		inputSign();
 		cin >> secondChoice;
@@ -2637,11 +2639,14 @@ wrongInput:
 			grantItem(9, 1);
 
 			//Tell the player what they got with item name
+
 			printString("You got item " + invItems[9].name);
+			printString("You run back to TC subway and get on the next train back to Skanstull.");
+
 			pause();
 
-			//Goto wrongInput
-			goto wrongInput;
+			skanstull();
+
 			break;
 		case 2:
 			printString("'JUST TAKE THE GODDAMN INFO!'");
@@ -2650,10 +2655,15 @@ wrongInput:
 
 			printString("You got item " + invItems[9].name);
 			printString("You run back to TC subway and get on the next train back to Skanstull.");
+
+			pause();
+
 			skanstull();
+
 			break;
 		default:
 			//Break previous switch case
+
 			break;
 		}
 	case 9:
@@ -2665,6 +2675,7 @@ wrongInput:
 		break;
 	default:
 		printString("That is not an option!");
+		pasuse();
 		goto wrongInput;
 		break;
 	}
