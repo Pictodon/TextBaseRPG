@@ -161,7 +161,7 @@ void main()
 	enemy[5].health = 6; enemy[5].name = "Security Guard"; enemy[5].damage = 2; enemy[5].xpGain = 100, enemy[5].maxHealth = 10; enemy[5].drop = 5; enemy[5].hasDrop = true; enemy[5].dropAmount = 2; enemy[5].potentialLoot = 13; enemy[5].goldDrop = 10;
 	enemy[6].health = 6; enemy[6].name = "Langare"; enemy[6].damage = 2; enemy[6].xpGain = 100, enemy[6].maxHealth = 10; enemy[6].drop = 5; enemy[6].hasDrop = true; enemy[6].dropAmount = 2; enemy[6].potentialLoot = 13; enemy[6].goldDrop = 10;
 	enemy[7].health = 18; enemy[4].name = "DAS VAPELORD"; enemy[7].damage = 3; enemy[7].xpGain = 2000, enemy[7].maxHealth = 18; enemy[7].drop = 8; enemy[7].hasDrop = true; enemy[7].dropAmount = 4; enemy[7].potentialLoot = 2;
-	enemy[8].health = 20; enemy[8].name = "DJ Khaled"; enemy[8].damage = 3; enemy[8].xpGain = 10, enemy[8].maxHealth = 20 enemy[8].drop = 10; enemy[8].hasDrop = true; enemy[8].dropAmount = 5;
+	enemy[8].health = 20; enemy[8].name = "DJ Khaled"; enemy[8].damage = 3; enemy[8].xpGain = 10, enemy[8].maxHealth = 20; enemy[8].drop = 10; enemy[8].hasDrop = true; enemy[8].dropAmount = 5;
 
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 3; shopKeeper[0].items[1] = 3;
