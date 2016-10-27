@@ -30,7 +30,7 @@ void shop(int shopID);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, int color5, string stringInput5, bool instant);
 void asignDefaultRarityColor();
 void battle(int enemyType);
-void abilities(int playerClassInput);
+void abilities();
 void death();
 void levelUpCheck();
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4]);
@@ -82,12 +82,12 @@ bool beenToRinkeby;
 string classOneTalents[4] = { "Goodiebag", "Kurva", "Sverige", "Satan" };
 string classTwoTalents[4] = { "Dance Around", "Beer throw", "Shot", "Fall" };
 string classThreeTalents[4] = { "Rob", "Hit", "Walla", "Shoot" };
-int classOneTalentsDamage[4] = { 0,3,3,5 };
-int classOneTalentsRedDamage[4] = { 3,0,0,-2 };
-int classTwoTalentsDamage[4] = { 2,3,0,3 };
-int classTwoTalentsRedDamage[4] = { 1,0,3,-3 };
-int classThreeTalentsDamage[4] = { 1,1,0,2 };
-int classThreeTalentsRedDamage[4] = { 0,0,4,-3 };
+int classOneTalentsDamage[4] = { 0, 3, 3, 5 };
+int classOneTalentsRedDamage[4] = { 3, 0, 0, -2 };
+int classTwoTalentsDamage[4] = { 2, 3, 0, 3 };
+int classTwoTalentsRedDamage[4] = { 1, 0, 3, -3 };
+int classThreeTalentsDamage[4] = { 1, 1, 0, 2 };
+int classThreeTalentsRedDamage[4] = { 0, 0, 4, -3 };
 int talentOne = 0;
 int talentTwo = 0;
 string talentUsed;
@@ -163,8 +163,8 @@ void main()
 
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 1; shopKeeper[0].items[1] = 6; shopKeeper[0].items[2] = 7;
-	shopKeeper[0].ascii = { " _____                     _____ _         ", "| __  |_ _ ___ ___ ___ ___|  |  |_|___ ___ ", "| __ -| | |  _| . | -_|  _|    -| |   | . |", "|_____|___|_| |_  |___|_| |__|__|_|_|_|_  |", 	"              |___|                   |___|" }; shopKeeper[0].numberofCharsPerLine = 43; shopKeeper[0].numberOfAsciiLines = 5;
-	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.",	"-m+......-ohmho+:--hd--:+shmh+-....../m-",	"-m:    :yho-`      hh      `:ods-    :m-",	"-m:  :hmm.         hh         `:hh-  :m-",	"-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-",	"-mmy`  ds/m:       hh     `/yh+.   `hmm-",	"-md.   ds sd.      hh   -sds-       -mm-",	"-mo    ds `hy`     hh.+hy/`          ym-",	"-m/    ds  .mo     hmhdh-            +m-",	"-m/    ds   /m:    hh  /ds.          +m-",	"-ms    ds    sd.   hh   `+do`        ym-",	"-mm.   ds    `hy   hh     `od+`     -mm-",	"-mmy`  ds     -mo  hh       .sd/   `hdm-",	"-m+hy` ds      /m: hh         -yh:.hy/m-",	"-m:`sd/ds       sd.hh           :mmo`:m-",	"-m:  :hmy`      `hyhh         `/hy-  :m-",	"-m:    :sdo:`    -mmh      `:sds-    :m-",	"-m/......-+ydhs+/:smd-:/osddy/......./m-",	".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
+	shopKeeper[0].ascii = { " _____                     _____ _         ", "| __  |_ _ ___ ___ ___ ___|  |  |_|___ ___ ", "| __ -| | |  _| . | -_|  _|    -| |   | . |", "|_____|___|_| |_  |___|_| |__|__|_|_|_|_  |", "              |___|                   |___|" }; shopKeeper[0].numberofCharsPerLine = 43; shopKeeper[0].numberOfAsciiLines = 5;
+	shopKeeper[1].name = "Nordiska Kompaniet"; shopKeeper[1].greeting = "Hello, welcome to VaskButiken.exe"; shopKeeper[1].items[0] = 4; shopKeeper[1].items[1] = 6; shopKeeper[1].items[2] = 2; shopKeeper[1].ascii = { ".ssssssssssssssssssssssssssssssssssssss.", "-m+......-ohmho+:--hd--:+shmh+-....../m-", "-m:    :yho-`      hh      `:ods-    :m-", "-m:  :hmm.         hh         `:hh-  :m-", "-m:`yd:dmh`        hh           -dms`:m-", "-m+dy` dhmo        hh        .+hy:.hh/m-", "-mmy`  ds/m:       hh     `/yh+.   `hmm-", "-md.   ds sd.      hh   -sds-       -mm-", "-mo    ds `hy`     hh.+hy/`          ym-", "-m/    ds  .mo     hmhdh-            +m-", "-m/    ds   /m:    hh  /ds.          +m-", "-ms    ds    sd.   hh   `+do`        ym-", "-mm.   ds    `hy   hh     `od+`     -mm-", "-mmy`  ds     -mo  hh       .sd/   `hdm-", "-m+hy` ds      /m: hh         -yh:.hy/m-", "-m:`sd/ds       sd.hh           :mmo`:m-", "-m:  :hmy`      `hyhh         `/hy-  :m-", "-m:    :sdo:`    -mmh      `:sds-    :m-", "-m/......-+ydhs+/:smd-:/osddy/......./m-", ".ssssssssssssssssssssssssssssssssssssss." }; shopKeeper[1].numberOfAsciiLines = 20; shopKeeper[1].numberofCharsPerLine = 40;
 
 	asignDefaultRarityColor();
 
@@ -222,7 +222,7 @@ void nameGreeting()
 /// </summary>
 void classMenu()
 {
-	int classConfirm;
+	int classConfirm, classChoice;
 failSaver:
 
 	system("cls");
@@ -244,7 +244,7 @@ differentClass:
 
 	//Add the sign > where the input is supposed to go
 	inputSign();
-	cin >> playerClass;
+	cin >> classChoice;
 
 	if (!cin)
 	{
@@ -256,14 +256,14 @@ differentClass:
 
 	cout << endl;
 
-	switch (playerClass)
+	switch (classChoice)
 	{
 		//class choice switchcase
 	case 1:
 		printString("The pundare will have a different fighting technique");
- 		printString("The pundare wil use his willpower and augumented reality to win fights");
- 		printString("Plus you will also be abled to be one with nature");
- 		printString("(or just really high)");
+		printString("The pundare wil use his willpower and augumented reality to win fights");
+		printString("Plus you will also be abled to be one with nature");
+		printString("(or just really high)");
 		playerClass = 1;
 		break;
 	case 2:
@@ -271,15 +271,15 @@ differentClass:
 		printString("If you have less than 10 braincells then this is the class for you. ");
 		printString("I mean who would choose a class that just runs in to battle with their");
 		printString("head first. The smartest class would be gangster, but nevermind. ");
- 		printString("With the alkis class you can throw your baws ass drunken fists at your enemies.");
- 		printString("Just look at Kenta, he is a really cool alkis.");
+		printString("With the alkis class you can throw your baws ass drunken fists at your enemies.");
+		printString("Just look at Kenta, he is a really cool alkis.");
 		playerClass = 2;
 		break;
 	case 3:
 		printString("Oh so you're a gangster ");
- 		printString("This class is especially good when you want to attack at a long range with your 9mm.");
- 		printString("You have really powerful bullets that you can fire at your enemy. ");
- 		printString("If you are a real orten thug then this is the class for you. ");
+		printString("This class is especially good when you want to attack at a long range with your 9mm.");
+		printString("You have really powerful bullets that you can fire at your enemy. ");
+		printString("If you are a real orten thug then this is the class for you. ");
 		playerClass = 3;
 		break;
 	default:
@@ -916,7 +916,7 @@ top:
 			else
 			{
 				printStringColor(7, "  | ", invItems[i].inventoryColor, invItems[i].name, levelReqColor, string(31 - invItems[i].name.length() - levelReqText.length(), ' ') + levelReqText, 7, " |  ", 7, "", true);
-				
+
 				//If weapon is equiped add -> next to the slot on each side <-
 				if (equipedWeapon == i)
 					printStringColor(7, " -> | ", invItems[i].inventoryColor, invItems[i].quality, 7, " (" + invItems[i].type + ")" + string(19 - invItems[i].type.length() - invItems[i].quality.length() - to_string(invItems[i].damage).length(), ' ') + " Damage: ", 4, to_string(invItems[i].damage), 7, " | <- ", true);
@@ -1247,7 +1247,7 @@ top:
 		{
 			secondInput--;
 			//Check if selection is less than inventory items and item quantity is greater than 0 and is not equiped and also not a quest item else tell the user he can't buy the item
-			if (playerGold > invItems[shopKeeper[shopId].items[secondInput]].buyPrice)
+			if (playerGold >= invItems[shopKeeper[shopId].items[secondInput]].buyPrice)
 			{
 				//Set playerGold to playerGold - the buy price
 				playerGold -= invItems[shopKeeper[shopId].items[secondInput]].buyPrice;
@@ -1421,7 +1421,7 @@ void battle(int enemyType)
 		else if (attack == "abilities" || attack == "Abilities" || attack == "ABILITIES")
 		{
 			//Call the function to select a ability based of talents
-			abilities(playerClass);
+			abilities();
 
 			//Generate random value and check if greater or equal to 6
 			if (rand() % 10 + 1 >= 6)
@@ -1604,21 +1604,21 @@ void battle(int enemyType)
 /// <summary>Used for the selectection and to print player abilities
 /// <para>Usage: abilities(e.g 1 depending on playerClass);</para>
 /// </summary>
-void abilities(int playerClassInput)
+void abilities()
 {
 	//Define variable types
 	int input;
 
 	//Check player class and print the right names
-	if (playerClassInput == 1)
+	if (playerClass == 1)
 	{
 		printString("[1] " + classOneTalents[talentOne - 1] + " [2] " + classOneTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClassInput == 2)
+	else if (playerClass == 2)
 	{
 		printString("[1] " + classTwoTalents[talentOne - 1] + " [2] " + classTwoTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClassInput == 3)
+	else if (playerClass == 3)
 	{
 		printString("[1] " + classThreeTalents[talentOne - 1] + " [2] " + classThreeTalents[2 + talentTwo - 1]);
 	}
@@ -1636,19 +1636,19 @@ void abilities(int playerClassInput)
 	{
 	case 1:
 		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot one was selected and repeat for every class
-		if (playerClassInput == 1)
+		if (playerClass == 1)
 		{
 			attackPower = classOneTalentsDamage[talentOne - 1];
 			healPower = classOneTalentsRedDamage[talentOne - 1];
 			talentUsed = classOneTalents[talentOne - 1];
 		}
-		else if (playerClassInput == 2)
+		else if (playerClass == 2)
 		{
 			attackPower = classTwoTalentsDamage[talentOne - 1];
 			healPower = classTwoTalentsRedDamage[talentOne - 1];
 			talentUsed = classTwoTalents[talentOne - 1];
 		}
-		else if (playerClassInput == 3)
+		else if (playerClass == 3)
 		{
 			attackPower = classThreeTalentsDamage[talentOne - 1];
 			healPower = classThreeTalentsRedDamage[talentOne - 1];
@@ -1657,19 +1657,19 @@ void abilities(int playerClassInput)
 		break;
 	case 2:
 		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot two was selected and repeat for every class
-		if (playerClassInput == 1)
+		if (playerClass == 1)
 		{
 			attackPower = classOneTalentsDamage[2 + talentTwo - 1];
 			healPower = classOneTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classOneTalents[2 + talentTwo - 1];
 		}
-		else if (playerClassInput == 2)
+		else if (playerClass == 2)
 		{
 			attackPower = classTwoTalentsDamage[2 + talentTwo - 1];
 			healPower = classTwoTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classTwoTalents[2 + talentTwo - 1];
 		}
-		else if (playerClassInput == 3)
+		else if (playerClass == 3)
 		{
 			attackPower = classThreeTalentsDamage[2 + talentTwo - 1];
 			healPower = classThreeTalentsRedDamage[2 + talentTwo - 1];
@@ -1730,6 +1730,7 @@ void death()
 	instantPrint("`-.___,-.      .-.        ___,'            ||                    ");
 
 	printString("You have died :(");
+	printString("You return to Skanstull.");
 
 	pause();
 
@@ -1806,7 +1807,7 @@ void talents()
 	string input, talentNames[4], talentDesc[12] = { "Consume a goodiebag, healing you.", "Swear at your foes, dealing damage.", "Deal damage, for the motherland!", "Fett me damage.", "Dance around your foes.", "Exactly what the name says.", "Drink some more.", "Fall on the grund.", "Rob an old lady.", "Deals INSANE damage to enemy.", "Call your 'brothers'.", "Deals massive amount of damage." };
 	int secondInput, classNum;
 
-//Define goto point
+	//Define goto point
 top:
 
 	//Get player class
@@ -2152,7 +2153,7 @@ void skanstull()
 	//Define variable types
 	int choice;
 
-//Define goto point
+	//Define goto point
 top:
 
 	system("cls");
@@ -2350,7 +2351,7 @@ void rinkeby()
 			//Return to Rinkeby after fight
 			rinkeby();
 		}
-		
+
 		cin >> input;
 
 
@@ -2369,7 +2370,7 @@ void rinkeby()
 	printString("After a while the strange man offers you some good good (Candy)");
 	printString("Do you take the good good from the strange man?");
 
-//Define a goto point
+	//Define a goto point
 top:
 
 	printString("[1] Take the good good from the man.");
@@ -2491,7 +2492,7 @@ void TC()
 	printString("When you get up out of the subway you see a shady guys that looks interesting,");
 	printString("You also see your favourite foodplace Burger King. ");
 
-//Define goto point
+	//Define goto point
 wrongInput:
 	printString("What would you like to do?");
 
@@ -2577,8 +2578,8 @@ wrongInput:
 			skanstull();
 			break;
 		default:
-		//Break previous switch case
-		break;
+			//Break previous switch case
+			break;
 		}
 	default:
 		printString("That is not an option!");
@@ -2598,7 +2599,7 @@ void burgerKing()
 	system("cls");
 	cout << endl;
 	printString("After that amazing food you decide to go back to TC");
-	
+
 	//Call the function to go back to TC
 	TC();
 }
