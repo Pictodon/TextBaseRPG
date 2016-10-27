@@ -30,7 +30,7 @@ void shop(int shopID);
 void printStringColor(int color, string stringInput, int color2, string stringInput2, int color3, string stringInput3, int color4, string stringInput4, int color5, string stringInput5, bool instant);
 void asignDefaultRarityColor();
 void battle(int enemyType);
-void abilities(int playerClassInput);
+void abilities();
 void death();
 void levelUpCheck();
 void printTalentUI(int firstTalent, int secondTalent, string talentNames[4]);
@@ -41,9 +41,6 @@ void classAlkis();
 void classGangster();
 void skanstull();
 void rinkeby();
-void falafelShop();
-void plattan();
-void shadyGuy();
 void cigoteket();
 void djKhaled();
 void classCheck();
@@ -70,7 +67,8 @@ int defaultColor = 7;
 
 //Player related vars
 string playerName = "";
-int playerClass = 0;
+int playerClass;
+int playerTalents;
 int playerGold = 0;
 int playerLevel = 1;
 int playerExperience = 0;
@@ -79,6 +77,7 @@ int playerHealth = playerMaxHealth;
 int attackPower;
 int healPower;
 bool beenToRinkeby;
+bool akashAlive = false;
 string classOneTalents[4] = { "Goodiebag", "Kurva", "Sverige", "Satan" };
 string classTwoTalents[4] = { "Dance Around", "Beer throw", "Shot", "Fall" };
 string classThreeTalents[4] = { "Rob", "Hit", "Walla", "Shoot" };
@@ -150,7 +149,8 @@ void main()
 	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
 	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
 	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
-	invItems[13].name = "Good"; invItems[13].quantity = 0; invItems[13].quality = "Rare"; invItems[13].buyPrice = 20; invItems[13].consumable = true; invItems[13].healthRegen = playerMaxHealth;
+	invItems[11].name = "Good"; invItems[11].quantity = 0; invItems[11].quality = "Rare"; invItems[11].buyPrice = 20; invItems[11].consumable = true; invItems[11].healthRegen = playerMaxHealth;
+	invItems[12].name = "Akash's Vape"; invItems[12].quantity = 0, invItems[12].quality = "Legendary"; invItems[12].buyPrice = 3000; invItems[12].consumable = true; invItems[12].inventoryColor = 16;
 
 	//MOBS
 	enemy[0].health = 10; enemy[0].name = "Subwayguard"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 2; enemy[0].hasDrop = true; enemy[0].dropAmount = 1; enemy[0].potentialLoot = 2;
@@ -160,6 +160,8 @@ void main()
 	enemy[4].health = 6; enemy[4].name = "Stranger"; enemy[4].damage = 2; enemy[4].xpGain = 100, enemy[4].maxHealth = 10; enemy[4].drop = 5; enemy[4].hasDrop = true; enemy[4].dropAmount = 2; enemy[4].potentialLoot = 13; enemy[4].goldDrop = 10;
 	enemy[5].health = 6; enemy[5].name = "Security Guard"; enemy[5].damage = 2; enemy[5].xpGain = 100, enemy[5].maxHealth = 10; enemy[5].drop = 5; enemy[5].hasDrop = true; enemy[5].dropAmount = 2; enemy[5].potentialLoot = 13; enemy[5].goldDrop = 10;
 	enemy[6].health = 6; enemy[6].name = "Langare"; enemy[6].damage = 2; enemy[6].xpGain = 100, enemy[6].maxHealth = 10; enemy[6].drop = 5; enemy[6].hasDrop = true; enemy[6].dropAmount = 2; enemy[6].potentialLoot = 13; enemy[6].goldDrop = 10;
+	enemy[7].health = 20; enemy[4].name = "DAS VAPELORD"; enemy[7].damage = 3; enemy[7].xpGain = 2000, enemy[7].maxHealth = 20; enemy[7].drop = 8; enemy[7].hasDrop = true; enemy[7].dropAmount = 4; enemy[7].potentialLoot = 2;
+	enemy[8].health = 24; enemy[8].name = "DJ Khaled"; enemy[8].damage = 3; enemy[8].xpGain = 10, enemy[8].maxHealth = 24; enemy[8].drop = 10; enemy[8].hasDrop = true; enemy[8].dropAmount = 5;
 
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 3; shopKeeper[0].items[1] = 3;
@@ -265,6 +267,7 @@ differentClass:
 		printString("Plus you will also be abled to be one with nature");
 		printString("(or just really high)");
 		playerClass = 1;
+		playerTalents = 1;
 		break;
 	case 2:
 		//not sure vad jag har skrivit xD
@@ -274,6 +277,7 @@ differentClass:
 		printString("With the alkis class you can throw your baws ass drunken fists at your enemies.");
 		printString("Just look at Kenta, he is a really cool alkis.");
 		playerClass = 2;
+		playerTalents = 2;
 		break;
 	case 3:
 		printString("Oh so you're a gangster ");
@@ -281,6 +285,7 @@ differentClass:
 		printString("You have really powerful bullets that you can fire at your enemy. ");
 		printString("If you are a real orten thug then this is the class for you. ");
 		playerClass = 3;
+		playerTalents = 3;
 		break;
 	default:
 		printString("That is not an option.");
@@ -973,7 +978,7 @@ top:
 			//If number is less than items in sorting array and also item is a weapon since this is the equip part else throw an error to the user
 			if (secondInput < invSort && invItems[invSortPos[secondInput]].weapon == true)
 			{
-				if (playerLevel > invItems[invSortPos[secondInput]].levelRequirement)
+				if (playerLevel >= invItems[invSortPos[secondInput]].levelRequirement)
 				{
 					//Set equipedWeapon to the selected item
 					equipedWeapon = invSortPos[secondInput];
@@ -1424,7 +1429,7 @@ void battle(int enemyType)
 		else if (attack == "abilities" || attack == "Abilities" || attack == "ABILITIES")
 		{
 			//Call the function to select a ability based of talents
-			abilities(playerClass);
+			abilities();
 
 			//Generate random value and check if greater or equal to 6
 			if (rand() % 10 + 1 >= 6)
@@ -1561,6 +1566,7 @@ void battle(int enemyType)
 			{
 				//Set player xp to player xp + enemy xp reward and tell teh user
 				playerExperience += enemy[enemyType].xpGain;
+
 				printStringColor(7, enemy[enemyType].name + " successfully ", 4, "killed", 7, "! Which has granted you " + to_string(enemy[enemyType].xpGain) + " experience points!", 7, "", 7, "", false);
 
 				if (enemy[enemyType].goldDrop > 0)
@@ -1585,7 +1591,8 @@ void battle(int enemyType)
 					printString("You have been rewarded with " + to_string(enemy[enemyType].dropAmount) + " " + invItems[enemy[enemyType].drop].name);
 				}
 
-				//levelUpCheck();
+				//Call function to level up player
+				levelUpCheck();
 			}
 			else
 			{
@@ -1597,6 +1604,7 @@ void battle(int enemyType)
 
 		//If player health is less or equal 0 goto death function.
 		if (playerHealth <= 0)
+			//Call function to draw death screen
 			death();
 
 		pause();
@@ -1607,21 +1615,21 @@ void battle(int enemyType)
 /// <summary>Used for the selectection and to print player abilities
 /// <para>Usage: abilities(e.g 1 depending on playerClass);</para>
 /// </summary>
-void abilities(int playerClassInput)
+void abilities()
 {
 	//Define variable types
 	int input;
 
 	//Check player class and print the right names
-	if (playerClassInput == 1)
+	if (playerTalents == 1)
 	{
 		printString("[1] " + classOneTalents[talentOne - 1] + " [2] " + classOneTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClassInput == 2)
+	else if (playerTalents == 2)
 	{
 		printString("[1] " + classTwoTalents[talentOne - 1] + " [2] " + classTwoTalents[2 + talentTwo - 1]);
 	}
-	else if (playerClassInput == 3)
+	else if (playerTalents == 3)
 	{
 		printString("[1] " + classThreeTalents[talentOne - 1] + " [2] " + classThreeTalents[2 + talentTwo - 1]);
 	}
@@ -1639,19 +1647,19 @@ void abilities(int playerClassInput)
 	{
 	case 1:
 		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot one was selected and repeat for every class
-		if (playerClassInput == 1)
+		if (playerTalents == 1)
 		{
 			attackPower = classOneTalentsDamage[talentOne - 1];
 			healPower = classOneTalentsRedDamage[talentOne - 1];
 			talentUsed = classOneTalents[talentOne - 1];
 		}
-		else if (playerClassInput == 2)
+		else if (playerTalents == 2)
 		{
 			attackPower = classTwoTalentsDamage[talentOne - 1];
 			healPower = classTwoTalentsRedDamage[talentOne - 1];
 			talentUsed = classTwoTalents[talentOne - 1];
 		}
-		else if (playerClassInput == 3)
+		else if (playerTalents == 3)
 		{
 			attackPower = classThreeTalentsDamage[talentOne - 1];
 			healPower = classThreeTalentsRedDamage[talentOne - 1];
@@ -1660,19 +1668,19 @@ void abilities(int playerClassInput)
 		break;
 	case 2:
 		//Set attackPower and healPower to what damage and healing the talent does for each class if talent slot two was selected and repeat for every class
-		if (playerClassInput == 1)
+		if (playerTalents == 1)
 		{
 			attackPower = classOneTalentsDamage[2 + talentTwo - 1];
 			healPower = classOneTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classOneTalents[2 + talentTwo - 1];
 		}
-		else if (playerClassInput == 2)
+		else if (playerTalents == 2)
 		{
 			attackPower = classTwoTalentsDamage[2 + talentTwo - 1];
 			healPower = classTwoTalentsRedDamage[2 + talentTwo - 1];
 			talentUsed = classTwoTalents[2 + talentTwo - 1];
 		}
-		else if (playerClassInput == 3)
+		else if (playerTalents == 3)
 		{
 			attackPower = classThreeTalentsDamage[2 + talentTwo - 1];
 			healPower = classThreeTalentsRedDamage[2 + talentTwo - 1];
@@ -1969,7 +1977,7 @@ top:
 string genRandomString(int stringSize)
 {
 	//Define variable types
-	char availChars [] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	char availChars[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	int stringLength = sizeof(availChars) - 1;
 	char currentChar = availChars[rand() % stringLength];
 	string currentString;
@@ -2261,6 +2269,8 @@ void rinkeby()
 	//Define variable types
 	int choice;
 
+top:
+
 	//If player has previously beat the boss in Rinkeby, don't battle it again.
 	if (beenToRinkeby == true)
 	{
@@ -2273,7 +2283,7 @@ void rinkeby()
 
 		printString("You are now in Rinkeby!");
 
-		printString("[1] Take a walk [2] Return to Skanstull");
+		printString("[1] Take a walk [2] Return to Skanstull [9] Open Inventory");
 
 		inputSign();
 		cin >> inputChoice;
@@ -2290,6 +2300,12 @@ void rinkeby()
 
 			//Return to Skanstull
 			skanstull();
+			break;
+		case 9:
+			//Draw the inventory and return to top of this function when end of inventory is reached
+			drawInventory();
+
+			goto top;
 
 			break;
 		default:
@@ -2497,6 +2513,8 @@ void TC()
 
 	pause();
 
+	top:
+
 	system("cls");
 
 	cout << endl;
@@ -2511,12 +2529,14 @@ wrongInput:
 
 	//If player has the item with item id 0 then don't print talk to the shady guy
 	if (invItems[9].quantity > 0)
-		printString("[1] Go back to Skanstull [2] Go get some burgers ");
+		printString("[1] Go back to Skanstull [2] Go get some burgers [9] Open Inventory");
 	else
-		printString("[1] Go back to Skanstull [2] Go get some burgers [3] Talk to the shady guy");
+		printString("[1] Go back to Skanstull [2] Go get some burgers [3] Talk to the shady guy [9] Open Inventory");
 
 	inputSign();
 	cin >> choice;
+
+	system("cls");
 
 	//Gets the user input and does something acordingly
 	switch (choice)
@@ -2556,7 +2576,6 @@ wrongInput:
 
 		switch (secondChoice)
 		{
-
 		case 1:
 			//If player decides to buy item, take gold if player has enough. Otherwise give anyways.
 			if (playerGold >= 5)
@@ -2594,6 +2613,13 @@ wrongInput:
 			//Break previous switch case
 			break;
 		}
+	case 9:
+		//Draw the inventory and return to top of this function when end of inventory is reached
+		drawInventory();
+
+		goto top;
+
+		break;
 	default:
 		printString("That is not an option!");
 		goto wrongInput;
@@ -2639,9 +2665,68 @@ void fightPrint()
 /// </summary>
 void cigoteket()
 {
-	cout << "cig skit" << endl;
+	//Check if Akash has been killed before
+	if (akashAlive)
+	{
+		cout << endl;
+
+		printString("When you stand outside the Cigotek you see Akash inside ripping the fattest vape.");
+		printString("suddenly he notices you!");
+		printString("'HEY! WHAT ARE YOU DOING HERE!'");
+		printString("'You shouldn't be here, this is my secret hideout.'");
+		printString("'You wont get away with this easily'");
+
+		pause();
+
+		cout << endl;
+
+		//Print the fight ascii
+		fightPrint();
+
+		pause();
+
+		//Battle enemy with enemy id 7
+		battle(7);
+
+		//Set bool akashAlive to false
+		akashAlive = false;
+	}
+
+	//Goto djKhaled
+	djKhaled();
+}
+
+//Function to simulate location djKhaled
+/// <summary>Function to simulate location djKhaled
+/// <para>Usage: djKhaled();</para>
+/// </summary>
+void djKhaled()
+{
+	system("cls");
+
+	cout << endl;
+
+	printString("After the fight you decide to check out what the key Akash dropped leads to.");
+	printString("As you touch the key you hear in a distance:");
+	printString("I got the key, the keys, the keys.");
+	printString("I got the key, the keys, the keys.");
+	printString("Suddenly, a fat man jumps out of the bushes.");
+	printString("He starts talking in a language that sounds like english but not exactly.");
+	printString("As you get a closer look at the man you see that its,");
+	printString("DJ KHAAALEEEED!");
+	printString("Dj Khaled runs towards you and yells 'GIVE ME MY KEY!'.");
+
 	pause();
-	skanstull();
+
+	cout << endl;
+
+	//Print the fight ascii
+	fightPrint();
+
+	pause();
+
+	//Battle enemy with enemy id 8
+	battle(8);
 }
 
 //Function to draw the victory screen
@@ -2650,7 +2735,10 @@ void cigoteket()
 /// </summary>
 void victoryScreen()
 {
+	system("cls");
+
 	cout << endl;
+
 	printString("Thanks for playing our game!");
 	printString("We would like to thank Akash for participating in our game.");
 	printString("Enjoy");
