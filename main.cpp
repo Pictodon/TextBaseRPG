@@ -77,7 +77,7 @@ int playerHealth = playerMaxHealth;
 int attackPower;
 int healPower;
 bool beenToRinkeby;
-bool akashAlive = false;
+bool akashAlive = true;
 string classOneTalents[4] = { "Goodiebag", "Kurva", "Sverige", "Satan" };
 string classTwoTalents[4] = { "Dance Around", "Beer throw", "Shot", "Fall" };
 string classThreeTalents[4] = { "Rob", "Hit", "Walla", "Shoot" };
@@ -1405,14 +1405,14 @@ void battle(int enemyType)
 			{
 				//Set attackPower to equiped weapon damage + equiped weapon damage / 2 eg. 2 + 1 = 3
 				attackPower = invItems[equipedWeapon].damage + invItems[equipedWeapon].damage / 2;
-				printStringColor(4, "[Critical Hit!] ", 7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", false);
+				printStringColor(4, "[Critical Hit!] ", 7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, " healthpoints!", 7, "", false);
 			}
 			//Or otherwise just do regular damage
 			else
 			{
 				//Set attackPower to regular weapon damage
 				attackPower = invItems[equipedWeapon].damage;
-				printStringColor(7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, " of healthpoints!", 7, "", 7, "", false);
+				printStringColor(7, "You hit " + enemy[enemyType].name + " with ", 4, to_string(attackPower), 7, "  healthpoints!", 7, "", 7, "", false);
 			}
 
 			//Remove the damage from the enemys health pool
@@ -1446,7 +1446,7 @@ void battle(int enemyType)
 				//If ability has healPower print
 				if (healPower > 0)
 				{
-					printStringColor(4, "[Critical Hit!] ", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " of healthpoints!", 7, "", false);
+					printStringColor(4, "[Critical Hit!] ", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " healthpoints!", 7, "", false);
 				}
 				//If ability has a healPower that's negative print that the player was damaged
 				else if (healPower < 0)
@@ -1466,7 +1466,7 @@ void battle(int enemyType)
 				//Print if ability has healPower
 				if (healPower > 0)
 				{
-					printStringColor(7, "", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " of healthpoints!", 7, "", false);
+					printStringColor(7, "", 7, "You healed yourself with " + talentUsed + " for ", 4, to_string(healPower), 7, " healthpoints!", 7, "", false);
 				}
 				//Print if ability has negative healPower
 				else if (healPower < 0)
@@ -1548,11 +1548,11 @@ void battle(int enemyType)
 			{
 				//Print damage done if playerhealth is greater than 0
 				if (playerHealth > 0)
-					printStringColor(4, "[Critical Hit!] ", 7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " of healthpoints!", 7, "", false);
+					printStringColor(4, "[Critical Hit!] ", 7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " healthpoints!", 7, "", false);
 			}
 			else
 			{
-				printStringColor(7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " of healthpoints!", 7, "", 7, "", false);
+				printStringColor(7, enemy[enemyType].name + " hit you with ", 4, to_string(enemyAttackPower), 7, " healthpoints!", 7, "", 7, "", false);
 			}
 
 			//Print player health if player health is greater than 0
@@ -2164,9 +2164,6 @@ void skanstull()
 	//Define variable types
 	int choice;
 
-	//Define goto point
-top:
-
 	system("cls");
 
 	cout << endl;
@@ -2178,6 +2175,9 @@ top:
 	instantPrint("   0--0--0      0  0      0       0     0        0        0     ");
 
 	pause();
+
+//Define goto point
+top:
 
 	system("cls");
 
@@ -2195,6 +2195,14 @@ top:
 
 	inputSign();
 	cin >> choice;
+
+	if (!cin)
+	{
+		cin.clear();
+		string remove;
+		getline(cin, remove);
+		goto top;
+	}
 
 	switch (choice)
 	{
@@ -2288,6 +2296,14 @@ backTop:
 
 		inputSign();
 		cin >> inputChoice;
+
+		if (!cin)
+		{
+			cin.clear();
+			string remove;
+			getline(cin, remove);
+			goto backTop;
+		}
 
 		//Get user input
 		switch (inputChoice)
@@ -2408,6 +2424,14 @@ top:
 	inputSign();
 	cin >> choice;
 
+	if (!cin)
+	{
+		cin.clear();
+		string remove;
+		getline(cin, remove);
+		goto top;
+	}
+
 	//Get user input
 	switch (choice)
 	{
@@ -2514,7 +2538,8 @@ void TC()
 
 	pause();
 
-	top:
+//Define a goto point
+top:
 
 	system("cls");
 
@@ -2526,6 +2551,7 @@ void TC()
 
 	//Define goto point
 wrongInput:
+
 	printString("What would you like to do?");
 
 	//If player has the item with item id 0 then don't print talk to the shady guy
@@ -2537,6 +2563,14 @@ wrongInput:
 	inputSign();
 	cin >> choice;
 
+	if (!cin)
+	{
+		cin.clear();
+		string remove;
+		getline(cin, remove);
+		goto wrongInput;
+	}
+		
 	system("cls");
 
 	//Gets the user input and does something acordingly
@@ -2718,6 +2752,8 @@ void djKhaled()
 	printString("Dj Khaled runs towards you and yells 'GIVE ME MY KEY!'.");
 
 	pause();
+
+	system("cls");
 
 	cout << endl;
 
