@@ -64,6 +64,7 @@ int invSort = 1;
 int equipedWeapon = 1;
 int invSortPos[16];
 int defaultColor = 7;
+int colorLoop = 0;
 
 //Player related vars
 string playerName = "";
@@ -78,6 +79,7 @@ int attackPower;
 int healPower;
 bool beenToRinkeby;
 bool akashAlive = true;
+bool onShrooms = false;
 string classOneTalents[4] = { "Goodiebag", "Kurva", "Sverige", "Satan" };
 string classTwoTalents[4] = { "Dance Around", "Beer throw", "Shot", "Fall" };
 string classThreeTalents[4] = { "Rob", "Hit", "Walla", "Shoot" };
@@ -140,17 +142,17 @@ void main()
 {
 	//Assign name and info for every item in the game
 	invItems[1].name = "Stick"; invItems[1].quantity = 1; invItems[1].quality = "Common"; invItems[1].weapon = true; invItems[1].buyPrice = 1; invItems[1].type = "Weapon"; invItems[1].damage = 2; invItems[1].desc = "Just a stick";
-	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";
-	invItems[3].name = "Rotten burger"; invItems[3].quantity = 0; invItems[3].quality = "Common"; invItems[3].weapon = true; invItems[3].inventoryColor = 16; invItems[3].levelRequirement = 2; invItems[3].buyPrice = 20;
-	invItems[4].name = "Shrooms"; invItems[4].quantity = 0; invItems[4].quality = "Legendary"; invItems[4].levelRequirement = 2; invItems[4].buyPrice = 16; invItems[4].inventoryColor = 16;
-	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 50; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth;
-	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";
-	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3;
-	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true;
-	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true;
-	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16;
-	invItems[11].name = "Good"; invItems[11].quantity = 0; invItems[11].quality = "Rare"; invItems[11].buyPrice = 20; invItems[11].consumable = true; invItems[11].healthRegen = playerMaxHealth;
-	invItems[12].name = "Akash's Vape"; invItems[12].quantity = 0, invItems[12].quality = "Legendary"; invItems[12].buyPrice = 3000; invItems[12].consumable = true; invItems[12].inventoryColor = 16;
+	invItems[2].name = "Health potion"; invItems[2].quantity = 0; invItems[2].quality = "Uncommon"; invItems[2].consumable = true; invItems[2].buyPrice = 10; invItems[2].healthRegen = 5; invItems[2].desc = "Heals for 5 HP when used";  invItems[2].type = "Consumable";
+	invItems[3].name = "Rotten burger"; invItems[3].quantity = 0; invItems[3].quality = "Common"; invItems[3].consumable = true; invItems[3].buyPrice = 0; invItems[3].healthRegen = -2; invItems[3].desc = "Burger from Donken";  invItems[3].type = "Consumable";
+	invItems[4].name = "Shrooms"; invItems[4].quantity = 0; invItems[4].quality = "Legendary"; invItems[4].buyPrice = 16; invItems[4].inventoryColor = 16; invItems[4].consumable = true; invItems[4].healthRegen = 0; invItems[4].desc = "Smells like the rainbow";  invItems[4].type = "Consumable";
+	invItems[5].name = "Good Good"; invItems[5].quantity = 0; invItems[5].quality = "Rare"; invItems[5].buyPrice = 30; invItems[5].consumable = true; invItems[5].healthRegen = playerMaxHealth; invItems[5].desc = "Heals for max HP when used";  invItems[5].type = "Consumable";
+	invItems[6].name = "Gucci belt"; invItems[6].quantity = 0; invItems[6].quality = "Rare"; invItems[6].buyPrice = 100; invItems[6].weapon = true; invItems[6].damage = 5; invItems[6].desc = "Expensive shit";  invItems[6].type = "Weapon";
+	invItems[7].name = "Strange man's knife "; invItems[7].quantity = 0; invItems[7].quality = "Uncommon"; invItems[7].buyPrice = 50; invItems[7].weapon = true; invItems[7].levelRequirement = 2; invItems[7].damage = 3; invItems[7].desc = "The knife of a strange man";  invItems[7].type = "Weapon";
+	invItems[8].name = "The Key"; invItems[8].quantity = 0; invItems[8].quality = "Legendary"; invItems[8].inventoryColor = 16; invItems[8].levelRequirement = 2; invItems[8].questItem = true; invItems[8].desc = "The key";  invItems[8].type = "Quest";
+	invItems[9].name = "Akash's location"; invItems[9].quantity = 0; invItems[9].quality = "Rare"; invItems[9].questItem = true; invItems[9].desc = "Akash's location is revealed";  invItems[9].type = "Quest";
+	invItems[10].name = "Dank Kush"; invItems[10].quantity = 0; invItems[10].buyPrice = 2674; invItems[10].quality = "DANK"; invItems[10].inventoryColor = 16; invItems[10].desc = "y u hak our gaem? :'(";  invItems[10].type = "Cheat";
+	invItems[11].name = "Good"; invItems[11].quantity = 0; invItems[11].quality = "Rare"; invItems[11].buyPrice = 20; invItems[11].consumable = true; invItems[11].healthRegen = playerMaxHealth - 4; invItems[11].desc = "Heals a large amount of HP";  invItems[11].type = "Consumable";
+	invItems[12].name = "Akash's Vape"; invItems[12].quantity = 0, invItems[12].quality = "Legendary"; invItems[12].buyPrice = 3000; invItems[12].consumable = true; invItems[12].inventoryColor = 16; invItems[12].desc = "You will never be as cool as Akash";  invItems[12].type = "Vape";
 
 	//MOBS
 	enemy[0].health = 10; enemy[0].name = "Subwayguard"; enemy[0].damage = 1; enemy[0].xpGain = 100, enemy[0].maxHealth = 10; enemy[0].drop = 2; enemy[0].hasDrop = true; enemy[0].dropAmount = 1; enemy[0].potentialLoot = 2;
@@ -160,8 +162,8 @@ void main()
 	enemy[4].health = 6; enemy[4].name = "Stranger"; enemy[4].damage = 2; enemy[4].xpGain = 100, enemy[4].maxHealth = 10; enemy[4].drop = 5; enemy[4].hasDrop = true; enemy[4].dropAmount = 2; enemy[4].potentialLoot = 13; enemy[4].goldDrop = 10;
 	enemy[5].health = 6; enemy[5].name = "Security Guard"; enemy[5].damage = 2; enemy[5].xpGain = 100, enemy[5].maxHealth = 10; enemy[5].drop = 5; enemy[5].hasDrop = true; enemy[5].dropAmount = 2; enemy[5].potentialLoot = 13; enemy[5].goldDrop = 10;
 	enemy[6].health = 6; enemy[6].name = "Langare"; enemy[6].damage = 2; enemy[6].xpGain = 100, enemy[6].maxHealth = 10; enemy[6].drop = 5; enemy[6].hasDrop = true; enemy[6].dropAmount = 2; enemy[6].potentialLoot = 13; enemy[6].goldDrop = 10;
-	enemy[7].health = 18; enemy[7].name = "DAS VAPELORD"; enemy[7].damage = 3; enemy[7].xpGain = 200, enemy[7].maxHealth = 18; enemy[7].drop = 8; enemy[7].hasDrop = true; enemy[7].dropAmount = 4; enemy[7].potentialLoot = 2;
-	enemy[8].health = 20; enemy[8].name = "DJ Khaled"; enemy[8].damage = 3; enemy[8].xpGain = 10, enemy[8].maxHealth = 20; enemy[8].drop = 10; enemy[8].hasDrop = true; enemy[8].dropAmount = 5;
+	enemy[7].health = 18; enemy[7].name = "DAS VAPELORD"; enemy[7].damage = 3; enemy[7].xpGain = 200, enemy[7].maxHealth = 18; enemy[7].drop = 8; enemy[7].hasDrop = true; enemy[7].dropAmount = 1; enemy[7].potentialLoot = 2;
+	enemy[8].health = 20; enemy[8].name = "DJ Khaled"; enemy[8].damage = 3; enemy[8].xpGain = 10, enemy[8].maxHealth = 20; enemy[8].drop = 10; enemy[8].hasDrop = true; enemy[8].dropAmount = 1;
 
 	//ShopKeepers
 	shopKeeper[0].name = "BurgerKing"; shopKeeper[0].greeting = "Hello my friend, Grabben was here earlier and ate all the food, sry."; shopKeeper[0].items[0] = 3; shopKeeper[0].items[1] = 3;
@@ -445,10 +447,24 @@ void setTextColor(int col)
 void printString(string stringInput)
 {
 	int spacing = winWide / 2 - stringInput.length() / 2;
+	int rainbowColors[6]{ 12, 14, 10, 11, 9, 13 };
+
 	cout << string(spacing, ' ');
+
 	//For every letter in string do this
 	for (int i = 0; i < stringInput.length(); i++)
 	{
+		//Set text color to rainbow if on shrooms
+		if (onShrooms)
+		{
+			setTextColor(rainbowColors[colorLoop]);
+			colorLoop++;
+			if (colorLoop > 5)
+			{
+				colorLoop = 0;
+			}
+		}
+
 		//Print character and sleep for 30ms
 		cout << stringInput[i];
 		Sleep(30);
@@ -457,6 +473,16 @@ void printString(string stringInput)
 		{
 			for (int n = i + 1; n < stringInput.length(); n++)
 			{
+				if (onShrooms)
+				{
+					setTextColor(rainbowColors[colorLoop]);
+					colorLoop++;
+					if (colorLoop > 5)
+					{
+						colorLoop = 0;
+					}
+				}
+
 				cout << stringInput[n];
 			}
 			while (GetAsyncKeyState(VK_SHIFT) & 0x8000)
@@ -481,13 +507,12 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 	int totalLength = stringInput.length() + stringInput2.length() + stringInput3.length() + stringInput4.length() + stringInput5.length();
 	int spacing = winWide / 2 - totalLength / 2;
 	int rainbowColors[6]{ 12, 14, 10, 11, 9, 13 };
-	int colorLoop = 0;
 	bool isRainbow = false;
 
 	cout << string(spacing, ' ');
 
-	//Set text color to color if int isn't 16 = rainbow
-	if (color == 16)
+	//Set text color to color if int isn't 16 = rainbow or if on shrooms
+	if (color == 16 || onShrooms)
 	{
 		isRainbow = true;
 	}
@@ -543,8 +568,8 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set text color to color if int isn't 16 = rainbow
-	if (color2 == 16)
+	//Set text color to color if int isn't 16 = rainbow or if on shrooms
+	if (color2 == 16 || onShrooms)
 	{
 		isRainbow = true;
 	}
@@ -596,8 +621,8 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set text color to color if int isn't 16 = rainbow
-	if (color3 == 16)
+	//Set text color to color if int isn't 16 = rainbow or if on shrooms
+	if (color3 == 16 || onShrooms)
 	{
 		isRainbow = true;
 	}
@@ -649,8 +674,8 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set text color to color if int isn't 16 = rainbow
-	if (color4 == 16)
+	//Set text color to color if int isn't 16 = rainbow or if on shrooms
+	if (color4 == 16 || onShrooms)
 	{
 		isRainbow = true;
 	}
@@ -702,8 +727,8 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 
 	}
 
-	//Set color to color
-	if (color5 == 16)
+	//Set text color to color if int isn't 16 = rainbow or if on shrooms
+	if (color5 == 16 || onShrooms)
 	{
 		isRainbow = true;
 	}
@@ -768,14 +793,28 @@ void printStringColor(int color, string stringInput, int color2, string stringIn
 /// </summary>
 void instantPrint(string stringInput)
 {
-	//Get center of screen depending on string length
 	int spacing = winWide / 2 - stringInput.length() / 2;
+	int rainbowColors[6]{ 12, 14, 10, 11, 9, 13 };
 
-	//Print the spaces
 	cout << string(spacing, ' ');
 
-	//Print the string in the center
-	cout << stringInput;
+	//For every letter in string do this
+	for (int i = 0; i < stringInput.length(); i++)
+	{
+		//Set text color to rainbow if on shrooms
+		if (onShrooms)
+		{
+			setTextColor(rainbowColors[colorLoop]);
+			colorLoop++;
+			if (colorLoop > 5)
+			{
+				colorLoop = 0;
+			}
+		}
+
+		//Print character and sleep for 30ms
+		cout << stringInput[i];
+	}
 
 	cout << endl;
 }
@@ -1081,8 +1120,8 @@ top:
 			goto top;
 		}
 
-		//Check if item is a consumable and that you are bellow max health
-		if (invItems[invSortPos[secondInput]].consumable == true && playerHealth < playerMaxHealth)
+		//Check if item is a consumable and that you are bellow max health or item is shrooms
+		if (invItems[invSortPos[secondInput]].consumable == true && playerHealth < playerMaxHealth || invSortPos[secondInput] == 4)
 		{
 			//Set the quantity to the quantity - 1
 			invItems[invSortPos[secondInput]].quantity--;
@@ -1094,8 +1133,13 @@ top:
 			if (playerHealth > playerMaxHealth)
 				playerHealth = playerMaxHealth;
 
-			//Tell the user how much the user was healed for
-			if (invItems[invSortPos[secondInput]].healthRegen > 0)
+			//Tell the user how much the user was healed for except if item id 4 was eaten (Shrooms)
+			if (invSortPos[secondInput] == 4)
+			{ 
+				printString("You just ate some shrooms! You really shoudln't have done that..");
+				onShrooms = true;
+			}
+			else if (invItems[invSortPos[secondInput]].healthRegen > 0)
 				printString("You have been healed for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " healthpoints!");
 			else if (invItems[invSortPos[secondInput]].healthRegen < 0)
 				printString("You have been damaged for " + to_string(invItems[invSortPos[secondInput]].healthRegen) + " healthpoints!");
@@ -1639,8 +1683,19 @@ void abilities()
 		pause();
 	}
 
+//Define a goto point
+top:
+
 	inputSign();
 	cin >> input;
+
+	if (!cin)
+	{
+		cin.clear();
+		string remove;
+		getline(cin, remove);
+		goto top;
+	}
 
 	//Get user input
 	switch (input)
@@ -1699,6 +1754,8 @@ void death()
 	playerHealth = playerMaxHealth / 2;
 
 	system("cls");
+
+	onShrooms = false;
 
 	//Print reaper ascii
 	instantPrint("                                           .\"\"--.._            ");
@@ -2554,14 +2611,16 @@ top:
 	cout << endl;
 
 	printString("Welcome to TC!");
-	printString("When you get up out of the subway you see a shady guys that looks interesting,");
-	printString("You also see your favourite foodplace Burger King. ");
 
-	//Define goto point
-wrongInput:
-
-	system("cls");
-
+	if (invItems[9].quantity > 0)
+	{
+		printString("You see your favourite foodplace Burger King. ");
+	}
+	else
+	{
+		printString("When you get up out of the subway you see a shady guy that looks interesting,");
+		printString("You also see your favourite foodplace Burger King. ");
+	}
 	printString("What would you like to do?");
 
 	//If player has the item with item id 0 then don't print talk to the shady guy
@@ -2578,7 +2637,7 @@ wrongInput:
 		cin.clear();
 		string remove;
 		getline(cin, remove);
-		goto wrongInput;
+		goto top;
 	}
 		
 	system("cls");
@@ -2614,10 +2673,14 @@ wrongInput:
 		printString("I have some spicy info that you might like.");
 		printString("'It will only cost you 5 gold'");
 		printString("Do you buy the 'Spicy info' from the shady guy? ");
-		printString("[1] Yes [2] No.");
+		printString("[1] Yes [2] No");
 
 		inputSign();
 		cin >> secondChoice;
+
+		system("cls");
+
+		cout << endl;
 
 		switch (secondChoice)
 		{
@@ -2675,8 +2738,8 @@ wrongInput:
 		break;
 	default:
 		printString("That is not an option!");
-		pasuse();
-		goto wrongInput;
+		pause();
+		goto top;
 		break;
 	}
 }
@@ -2692,6 +2755,8 @@ void burgerKing()
 	system("cls");
 	cout << endl;
 	printString("After that amazing food you decide to go back to TC");
+
+	pause();
 
 	//Call the function to go back to TC
 	TC();
@@ -2722,6 +2787,8 @@ void cigoteket()
 	//Check if Akash has been killed before
 	if (akashAlive)
 	{
+		system("cls");
+
 		cout << endl;
 
 		printString("When you stand outside the Cigotek you see Akash inside ripping the fattest vape.");
@@ -2731,6 +2798,8 @@ void cigoteket()
 		printString("'You wont get away with this easily'");
 
 		pause();
+
+		system("cls");
 
 		cout << endl;
 
@@ -2783,6 +2852,9 @@ void djKhaled()
 
 	//Battle enemy with enemy id 8
 	battle(8);
+
+	//Goto end screen
+	victoryScreen();
 }
 
 //Function to draw the victory screen
@@ -2801,6 +2873,9 @@ void victoryScreen()
 
 	//Call the function to print the ascii of Akash
 	akashAscii();
+
+	//Set text color to default color
+	setTextColor(7);
 
 	pause();
 
